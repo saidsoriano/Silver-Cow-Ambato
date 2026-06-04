@@ -1,0 +1,1272 @@
+
+  /* ══════════════════════════════════════════════════
+     VARIABLES GLOBALES DE COLOR
+     Aquí defines todos los colores de la marca.
+     Si quieres cambiar un color, cámbialo aquí
+     y se actualiza en TODA la página automáticamente.
+  ══════════════════════════════════════════════════ */
+  :root {
+    --sapphire:       #0F2557; /* Azul zafiro principal de la marca */
+    --sapphire-deep:  #081840; /* Azul zafiro más oscuro, para fondos profundos */
+    --sapphire-mid:   #1a3a7a; /* Azul zafiro medio, para hover de botones */
+    --sapphire-light: #2a4fa0; /* Azul zafiro claro, para etiquetas y acentos */
+    --silver:         #C8D0DC; /* Color plata normal */
+    --silver-bright:  #E8EDF5; /* Plata brillante, para textos importantes */
+    --text-muted:     #8899BB; /* Texto secundario, gris azulado suave */
+    --black-deep:     #060C1A; /* Negro profundo para fondos principales */
+    --white-pure:     #FFFFFF; /* Blanco puro para títulos principales */
+  }
+
+  /* ── RESET GENERAL ──
+     Elimina márgenes y rellenos por defecto del navegador
+     para que todo se vea igual en Chrome, Firefox, Safari, etc. */
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior:smooth; } /* Hace que los enlaces internos (#seccion) bajen suavemente */
+
+  /* Estilo base del cuerpo de la página */
+  body {
+    font-family: 'Montserrat', sans-serif; /* Fuente principal de todos los textos */
+    background: var(--black-deep);         /* Fondo negro profundo */
+    color: var(--silver-bright);           /* Color de texto por defecto: plata brillante */
+    overflow-x: hidden;                    /* Evita scroll horizontal no deseado */
+  }
+
+  /* ── BARRA DE SCROLL PERSONALIZADA ──
+     Solo visible en navegadores basados en Chrome/Safari */
+  ::-webkit-scrollbar { width: 3px; }                                          /* Barra muy delgada (3px) */
+  ::-webkit-scrollbar-track { background: var(--black-deep); }                 /* Fondo de la barra: negro */
+  ::-webkit-scrollbar-thumb { background: var(--sapphire-light); border-radius: 2px; } /* Indicador azul zafiro */
+
+
+  /* ══════════════════════════════════════════════════
+     NAVBAR — BARRA DE NAVEGACIÓN FIJA
+     Siempre visible arriba al hacer scroll
+  ══════════════════════════════════════════════════ */
+  nav {
+    position: fixed;           /* Se queda fija en la parte superior al hacer scroll */
+    top: 0; left: 0; right: 0; /* Ocupa todo el ancho de la pantalla */
+    z-index: 1000;             /* Se pone encima de todo lo demás */
+    padding: 24px 60px;        /* Espaciado interno: arriba/abajo 24px, lados 60px */
+    display: flex;             /* Pone los elementos en fila horizontal */
+    align-items: center;       /* Los centra verticalmente */
+    justify-content: space-between; /* Logo a la izquierda, links al centro, botón a la derecha */
+    transition: all .5s ease;  /* Animación suave cuando cambia de estilo al hacer scroll */
+  }
+
+  /* Estado de la navbar cuando el usuario ha hecho scroll hacia abajo */
+  nav.scrolled {
+    background: rgba(6,12,26,.92);            /* Fondo semitransparente oscuro */
+    backdrop-filter: blur(24px);              /* Efecto de desenfoque tipo vidrio esmerilado */
+    -webkit-backdrop-filter: blur(24px);      /* Lo mismo pero para Safari */
+    padding: 16px 60px;                       /* Se hace un poco más pequeña al hacer scroll */
+    border-bottom: 1px solid rgba(200,208,220,.08); /* Línea sutil en la parte inferior */
+  }
+
+  /* Contenedor del logo (imagen + texto) */
+  .nav-logo {
+    display: flex;        /* Logo e imagen en fila */
+    align-items: center;  /* Centrados verticalmente */
+    gap: 14px;            /* Espacio entre la imagen y el texto */
+    text-decoration: none; /* Quita el subrayado del enlace */
+  }
+
+  /* Imagen del logo en la navbar */
+  .nav-logo-img {
+    width: 100px; height: 100px;       /* Tamaño del logo */
+    filter: invert(1) brightness(0.85); /* Invierte colores: negro → blanco/plata (para que se vea sobre fondo oscuro) */
+    opacity: 0.9;                     /* Ligeramente transparente para suavizar */
+  }
+
+  /* Texto "Silver Cow Ambato" junto al logo */
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif; /* Fuente elegante de lujo */
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: .25em;   /* Espaciado amplio entre letras para elegancia */
+    color: var(--silver-bright);
+    text-transform: uppercase; /* Todo en mayúsculas */
+    line-height: 1.2;
+  }
+
+  /* Subtexto pequeño debajo del nombre ("Joyería · Est. 2026") */
+  .nav-logo-text span {
+    display: block;           /* Lo pone en línea separada */
+    font-size: 12px;
+    letter-spacing: .3em;
+    color: var(--text-muted); /* Color más apagado para el subtítulo */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+
+  /* Lista de enlaces de navegación (Nosotros, Filosofía, etc.) */
+  .nav-links {
+    display: flex;     /* Pone los links en fila */
+    gap: 44px;         /* Espacio entre cada link */
+    list-style: none;  /* Quita los puntos de la lista */
+  }
+
+  /* Estilo de cada link de navegación */
+  .nav-links a {
+    text-decoration: none;
+    color: var(--silver);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    transition: color .3s; /* Cambio de color suave al pasar el mouse */
+    position: relative;    /* Necesario para el subrayado animado */
+  }
+
+  /* Línea de subrayado que aparece al hacer hover (efecto deslizante) */
+  .nav-links a::after {
+    content: '';           /* Elemento decorativo vacío */
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--silver-bright);
+    transform: scaleX(0);       /* Inicia invisible (ancho 0) */
+    transition: transform .3s ease;
+  }
+  .nav-links a:hover { color: var(--white-pure); } /* Al pasar mouse: texto blanco */
+  .nav-links a:hover::after { transform: scaleX(1); } /* Al pasar mouse: subrayado aparece deslizándose */
+
+  /* ── Botón carrito en navbar (reemplaza "Contactar") ── */
+  .nav-carrito {
+    position: relative;          /* Para posicionar el contador encima */
+    background: none;
+    border: 1px solid rgba(200,208,220,.2);
+    border-radius: 2px;
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--silver-bright);
+    transition: all .3s;
+  }
+  .nav-carrito:hover { border-color: rgba(200,208,220,.5); transform: translateY(-1px); }
+
+  /* Número rojo con la cantidad de items en el carrito */
+  .carrito-count {
+    position: absolute;
+    top: -8px; right: -8px;      /* Esquina superior derecha del ícono */
+    background: #c0392b;          /* Rojo para llamar la atención */
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;                   /* Invisible cuando el carrito está vacío */
+    transition: opacity .3s;
+  }
+  .carrito-count.visible { opacity: 1; } /* Se muestra cuando hay al menos 1 item */
+
+
+  /* ══════════════════════════════════════════════════
+     MODAL DEL CARRITO
+     Ventana emergente central con los productos seleccionados
+  ══════════════════════════════════════════════════ */
+
+  /* Fondo oscuro semitransparente detrás del modal */
+  .carrito-overlay {
+    display: none;               /* Oculto por defecto */
+    position: fixed;
+    inset: 0;                    /* Cubre toda la pantalla */
+    background: rgba(0,0,0,.75);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .carrito-overlay.abierto { display: flex; } /* Se muestra al abrir el carrito */
+
+  /* Ventana del carrito */
+  .carrito-modal {
+    background: #0a1628;         /* Fondo muy oscuro azulado */
+    border: 1px solid rgba(200,208,220,.1);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;            /* No ocupa más del 90% de la pantalla */
+    overflow-y: auto;            /* Scroll si hay muchos productos */
+    position: relative;
+  }
+
+  /* Encabezado del modal */
+  .carrito-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid rgba(200,208,220,.08);
+    position: sticky; top: 0;   /* Se queda fijo mientras se hace scroll */
+    background: #0a1628;
+    z-index: 1;
+  }
+  .carrito-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--white-pure);
+    letter-spacing: .1em;
+  }
+
+  /* Botón X para cerrar el modal */
+  .carrito-cerrar {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    transition: color .3s;
+    padding: 4px;
+  }
+  .carrito-cerrar:hover { color: var(--white-pure); }
+
+  /* Área de los productos dentro del modal */
+  .carrito-body { padding: 24px 32px; }
+
+  /* Mensaje cuando el carrito está vacío */
+  .carrito-vacio {
+    text-align: center;
+    padding: 48px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: .1em;
+  }
+
+  /* Cada fila de producto en el carrito */
+  .carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(200,208,220,.06);
+  }
+
+  /* Info del producto (nombre + precio unitario) */
+  .carrito-item-info { flex: 1; }
+  .carrito-item-nombre {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--white-pure);
+    margin-bottom: 4px;
+  }
+  .carrito-item-precio-unit {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: .1em;
+  }
+
+  /* Controles de cantidad (- número +) */
+  .carrito-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15,37,87,.3);
+    border: 1px solid rgba(200,208,220,.1);
+    border-radius: 2px;
+    padding: 4px 10px;
+  }
+  .qty-btn {
+    background: none;
+    border: none;
+    color: var(--silver);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 4px;
+    transition: color .2s;
+  }
+  .qty-btn:hover { color: var(--white-pure); }
+  .qty-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--silver-bright);
+    min-width: 20px;
+    text-align: center;
+  }
+
+  /* Precio total de esa línea (precio × cantidad) */
+  .carrito-item-subtotal {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--silver-bright);
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* Botón para eliminar el producto de la fila */
+  .carrito-item-del {
+    background: none;
+    border: none;
+    color: rgba(200,80,80,.5);
+    cursor: pointer;
+    font-size: 18px;
+    transition: color .2s;
+    padding: 0 4px;
+  }
+  .carrito-item-del:hover { color: rgba(200,80,80,1); }
+
+  /* Pie del modal: envío, cupón, total y botón WhatsApp */
+  .carrito-footer { padding: 20px 32px 28px; border-top: 1px solid rgba(200,208,220,.08); }
+
+  /* Selector de ubicación para calcular el envío */
+  .carrito-envio {
+    margin-bottom: 20px;
+  }
+  .carrito-envio label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: .3em;
+    color: var(--sapphire-light);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .envio-opciones { display: flex; gap: 10px; }
+  .envio-opt {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid rgba(200,208,220,.15);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .3s;
+    text-align: center;
+  }
+  .envio-opt.activo {
+    border-color: var(--sapphire-light);
+    background: rgba(15,37,87,.3);
+    color: var(--silver-bright);
+  }
+
+  /* Campo de cupón de descuento */
+  .carrito-cupon { margin-bottom: 20px; }
+  .carrito-cupon label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: .3em;
+    color: var(--sapphire-light);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .cupon-row { display: flex; gap: 10px; }
+  .cupon-input {
+    flex: 1;
+    background: rgba(15,37,87,.2);
+    border: 1px solid rgba(200,208,220,.15);
+    border-radius: 2px;
+    padding: 10px 16px;
+    color: var(--silver-bright);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color .3s;
+  }
+  .cupon-input:focus { border-color: rgba(200,208,220,.4); }
+  .cupon-input::placeholder { color: var(--text-muted); letter-spacing: .15em; }
+  .cupon-btn {
+    background: var(--sapphire);
+    border: none;
+    border-radius: 2px;
+    color: var(--silver-bright);
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .3s;
+  }
+  .cupon-btn:hover { background: var(--sapphire-mid); }
+
+  /* Mensaje de resultado del cupón (válido o inválido) */
+  .cupon-msg {
+    margin-top: 8px;
+    font-size: 12px;
+    letter-spacing: .1em;
+    display: none;               /* Se muestra solo al aplicar el cupón */
+  }
+  .cupon-msg.ok    { color: #6dbf8a; display: block; } /* Verde: cupón válido */
+  .cupon-msg.error { color: #e08080; display: block; } /* Rojo: cupón inválido */
+
+  /* Resumen de totales */
+  .carrito-totales { margin-bottom: 24px; }
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: .05em;
+    border-bottom: 1px solid rgba(200,208,220,.04);
+  }
+  .total-row.descuento { color: #6dbf8a; } /* Descuento en verde */
+  .total-row.final {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--white-pure);
+    border-bottom: none;
+    padding-top: 14px;
+  }
+
+  /* Botón final de enviar pedido por WhatsApp */
+  .carrito-whatsapp {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #25D366;         /* Verde WhatsApp */
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .3s, transform .3s;
+  }
+  .carrito-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
+  .carrito-whatsapp:disabled { opacity: .4; pointer-events: none; } /* Desactivado si el carrito está vacío */
+
+
+  /* ══════════════════════════════════════════════════
+     BOTÓN FLOTANTE DE WHATSAPP
+     Siempre visible en la esquina inferior derecha
+  ══════════════════════════════════════════════════ */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 32px; right: 32px;   /* Esquina inferior derecha */
+    z-index: 1500;
+    width: 56px; height: 56px;
+    background: #25D366;         /* Verde WhatsApp */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,.4);
+    transition: all .3s;
+    animation: waPulse 3s ease-in-out infinite; /* Pulso suave para llamar la atención */
+  }
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(37,211,102,.6);
+  }
+  @keyframes waPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+    50%       { box-shadow: 0 4px 32px rgba(37,211,102,.7); }
+  }
+
+  /* ══════════════════════════════════════════════════
+     HERO — SECCIÓN PRINCIPAL (PANTALLA DE BIENVENIDA)
+     Ocupa toda la pantalla al cargar la página
+  ══════════════════════════════════════════════════ */
+  #hero {
+    min-height: 100vh;       /* Ocupa al menos el 100% de la altura de la pantalla */
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    position: relative;      /* Necesario para los elementos decorativos absolutos */
+    overflow: hidden;        /* Oculta elementos que se salgan del borde */
+    background: var(--black-deep);
+  }
+
+  /* Gradientes de fondo decorativos del Hero (capas de color azul zafiro difuminado) */
+  .hero-bg {
+    position: absolute; inset: 0; /* Cubre todo el hero */
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(15,37,87,.55) 0%, transparent 70%), /* Brillo central */
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(26,58,122,.2) 0%, transparent 60%), /* Brillo esquina superior derecha */
+      radial-gradient(ellipse 30% 30% at 20% 80%, rgba(15,37,87,.15) 0%, transparent 60%); /* Brillo esquina inferior izquierda */
+  }
+
+  /* Textura de grano sutil para dar profundidad (casi invisible, solo 3% de opacidad) */
+  .hero-grain {
+    position: absolute; inset: 0;
+    opacity: .03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  /* Orbe/esfera de luz azul que flota suavemente en el centro del hero */
+  .hero-orb {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%; /* Lo hace circular */
+    background: radial-gradient(circle, rgba(15,37,87,.4) 0%, transparent 70%);
+    animation: orbFloat 8s ease-in-out infinite; /* Animación de flotación infinita */
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%); /* Lo centra exactamente */
+  }
+
+  /* Animación del orbe: sube y baja suavemente, cambia de tamaño */
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: .5; }
+    50%       { transform: translate(-50%, -54%) scale(1.08); opacity: .8; } /* Sube un poco y crece */
+  }
+
+  /* Contenedor del texto central del Hero */
+  .hero-content {
+    position: relative;
+    z-index: 2;          /* Se pone encima de los fondos decorativos */
+    text-align: center;
+    padding: 0 24px;
+    max-width: 950px;
+  }
+
+  /* Texto pequeño sobre el título ("Silver Cow Ambato — Plata Ley 925") */
+  .hero-eyebrow {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .4em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    opacity: 0;                              /* Inicia invisible */
+    animation: fadeUp 1s ease .3s forwards; /* Aparece desde abajo tras 0.3s */
+  }
+
+  /* Título principal gigante del Hero */
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 104px); /* Tamaño fluido: mínimo 52px, máximo 104px, adaptable */
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--white-pure);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1.1s ease .5s forwards; /* Aparece tras 0.5s */
+  }
+
+  /* Texto en cursiva dentro del título (con efecto degradado plateado) */
+  .hero-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, #C8D0DC, #E8EDF5, #9AABCC); /* Degradado plateado */
+    -webkit-background-clip: text;   /* Aplica el degradado al texto (Chrome/Safari) */
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtítulo descriptivo debajo del título principal */
+  .hero-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    line-height: 2;
+    max-width: 520px;
+    margin: 0 auto 56px;
+    opacity: 0;
+    animation: fadeUp 1.1s ease .7s forwards; /* Aparece tras 0.7s */
+  }
+
+  /* Contenedor de los dos botones del Hero */
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 1.1s ease .9s forwards; /* Aparece tras 0.9s — último en aparecer */
+  }
+
+  /* Botón principal (fondo azul zafiro) — usado en Hero y Catálogo */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--sapphire);
+    color: var(--silver-bright);
+    padding: 16px 40px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all .4s ease;
+    border: 1px solid rgba(200,208,220,.15);
+  }
+  .btn-primary:hover { background: var(--sapphire-mid); transform: translateY(-2px); box-shadow: 0 20px 60px rgba(15,37,87,.6); }
+
+  /* Botón secundario (fondo transparente con borde) */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--silver);
+    padding: 16px 32px;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(200,208,220,.2);
+    border-radius: 2px;
+    transition: all .4s ease;
+  }
+  .btn-ghost:hover { border-color: rgba(200,208,220,.5); color: var(--white-pure); }
+
+  /* Indicador de scroll en la parte inferior del Hero ("Explorar" + línea animada) */
+  .hero-scroll {
+    position: absolute;
+    bottom: 48px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.5s forwards; /* Aparece al final, tras 1.5s */
+  }
+  .hero-scroll span { font-size: 12px; letter-spacing: .35em; color: var(--text-muted); text-transform: uppercase; }
+
+  /* Línea vertical pulsante del indicador de scroll */
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--text-muted), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: .3; transform: scaleY(1); }
+    50%       { opacity: 1; transform: scaleY(.6); } /* Se encoge y crece como un latido */
+  }
+
+
+  /* ══════════════════════════════════════════════════
+     ESTILOS COMUNES A TODAS LAS SECCIONES
+  ══════════════════════════════════════════════════ */
+  section { padding: 140px 60px; } /* Espaciado generoso arriba/abajo en todas las secciones */
+
+  /* Etiqueta pequeña sobre los títulos ("Nuestra historia", "Nuestros pilares", etc.) */
+  .section-label {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .4em;
+    color: var(--sapphire-light); /* Azul zafiro claro */
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  /* Título grande de sección */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px); /* Adaptable: mínimo 36px, máximo 64px */
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white-pure);
+    margin-bottom: 32px;
+  }
+  .section-title em { font-style: italic; color: var(--silver); } /* Cursiva plateada en los títulos */
+
+  /* Párrafo de texto principal de cada sección */
+  .section-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 2.2; /* Interlineado amplio para facilitar lectura */
+    color: var(--text-muted);
+    max-width: 560px;
+  }
+
+  /* ── ANIMACIÓN DE APARICIÓN AL HACER SCROLL ──
+     Los elementos con clase "reveal" empiezan invisibles.
+     JavaScript les agrega "visible" cuando entran en pantalla. */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); } /* Aparece y sube a su posición */
+
+
+  /* ══════════════════════════════════════════════════
+     SECCIÓN: QUIÉNES SOMOS
+  ══════════════════════════════════════════════════ */
+  #nosotros { background: var(--black-deep); position: relative; overflow: hidden; }
+
+  /* Orbe decorativo en la esquina superior derecha */
+  #nosotros::before {
+    content: ''; position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(15,37,87,.25) 0%, transparent 70%);
+    pointer-events: none; /* No interfiere con clics */
+  }
+
+  /* Cuadrícula de dos columnas: tarjeta visual | texto */
+  .nosotros-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 100px;
+    align-items: center;
+  }
+
+  /* Tarjeta oscura con el logo y estadísticas */
+  .nosotros-card {
+    background: linear-gradient(145deg, rgba(15,37,87,.3), rgba(6,12,26,.8));
+    border: 1px solid rgba(200,208,220,.08);
+    border-radius: 4px;
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Línea decorativa en la parte superior de la tarjeta */
+  .nosotros-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,208,220,.3), transparent);
+  }
+
+  /* Logo grande dentro de la tarjeta */
+  .nosotros-logo-large {
+    width: 220px; height: 220px;
+    display: block;
+    margin: 0 auto 32px;
+    filter: invert(1) brightness(0.7); /* Negro → blanco/plata */
+    opacity: 0.6;
+  }
+
+  /* Contenedor de un número estadístico (925, 2026, 100%) */
+  .nosotros-stat { text-align: center; }
+
+  /* Número grande (ej: "925") */
+  .nosotros-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 300;
+    color: var(--silver-bright); line-height: 1;
+  }
+
+  /* Etiqueta debajo del número */
+  .nosotros-stat-label { font-size: 12px; letter-spacing: .3em; color: var(--text-muted); text-transform: uppercase; margin-top: 8px; }
+
+  /* Fila con las dos estadísticas secundarias (2026 y 100%) */
+  .nosotros-stats {
+    display: flex; gap: 40px;
+    margin-top: 40px; padding-top: 40px;
+    border-top: 1px solid rgba(200,208,220,.08);
+    justify-content: center;
+  }
+  .nosotros-stats .divider-v { width: 1px; background: rgba(200,208,220,.08); } /* Línea vertical separadora */
+
+  /* Caja de los fundadores */
+  .founders {
+    margin-top: 20px; padding: 32px;
+    background: rgba(15,37,87,.15);
+    border-radius: 4px;
+    border: 1px solid rgba(200,208,220,.06);
+  }
+  .founders-label { font-size: 12px; letter-spacing: .35em; color: var(--sapphire-light); text-transform: uppercase; margin-bottom: 12px; }
+  .founders-names { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--silver-bright); letter-spacing: .08em; }
+
+
+  /* ══════════════════════════════════════════════════
+     SECCIÓN: FILOSOFÍA (LOS 3 PILARES)
+  ══════════════════════════════════════════════════ */
+  #filosofia {
+    /* Fondo degradado: negro → azul zafiro profundo → negro */
+    background: linear-gradient(180deg, var(--black-deep) 0%, var(--sapphire-deep) 50%, var(--black-deep) 100%);
+    position: relative;
+  }
+  .filosofia-inner { max-width: 1100px; margin: 0 auto; }
+  .filosofia-header { text-align: center; margin-bottom: 100px; }
+
+  /* Cuadrícula de 3 columnas para los pilares */
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 2px;                               /* Separación mínima entre pilares */
+    background: rgba(200,208,220,.05);      /* Color del "gap" (efecto separador) */
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* Cada pilar individual */
+  .pilar {
+    background: rgba(6,12,26,.9);
+    padding: 56px 44px;
+    position: relative;
+    transition: background .4s;
+  }
+  .pilar:hover { background: rgba(15,37,87,.4); } /* Ilumina en azul al pasar mouse */
+
+  /* Línea azul que aparece en la parte superior del pilar al hacer hover */
+  .pilar::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--sapphire), var(--sapphire-light));
+    transform: scaleX(0);          /* Inicia sin ancho */
+    transition: transform .4s ease;
+  }
+  .pilar:hover::before { transform: scaleX(1); } /* Se despliega al hacer hover */
+
+  /* Número grande decorativo (01, 02, 03) */
+  .pilar-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; font-weight: 300;
+    color: rgba(15,37,87,.4); /* Muy sutil, casi invisible */
+    line-height: 1; margin-bottom: 32px;
+    transition: color .4s;
+  }
+  .pilar:hover .pilar-number { color: rgba(26,58,122,.6); } /* Se ilumina al hacer hover */
+
+  .pilar-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--white-pure); margin-bottom: 16px; line-height: 1.2; }
+  .pilar-text  { font-size: 14px; font-weight: 300; line-height: 2; color: var(--text-muted); }
+
+
+  /* ══════════════════════════════════════════════════
+     SECCIÓN: PROCESO DE ADQUISICIÓN (TIMELINE)
+  ══════════════════════════════════════════════════ */
+  #proceso { background: var(--black-deep); }
+  .proceso-inner { max-width: 1100px; margin: 0 auto; }
+  .proceso-header { text-align: center; margin-bottom: 100px; }
+
+  /* Cuadrícula de 5 columnas para los 5 pasos */
+  .proceso-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative; /* Necesario para la línea conectora */
+  }
+
+  /* Línea horizontal que conecta todos los pasos del proceso */
+  .proceso-steps::before {
+    content: ''; position: absolute;
+    top: 28px;                         /* Altura donde están los círculos */
+    left: calc(10% + 28px);            /* Empieza después del primer círculo */
+    right: calc(10% + 28px);           /* Termina antes del último círculo */
+    height: 1px;
+    background: linear-gradient(90deg, var(--sapphire), var(--sapphire-light), var(--sapphire));
+  }
+
+  /* Cada paso del proceso */
+  .step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; position: relative; }
+
+  /* Círculo con el número romano del paso */
+  .step-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--sapphire-deep);
+    border: 1px solid rgba(200,208,220,.15);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+    position: relative; z-index: 1; /* Encima de la línea conectora */
+    transition: all .4s;
+  }
+  .step:hover .step-circle { background: var(--sapphire); border-color: rgba(200,208,220,.4); box-shadow: 0 0 30px rgba(15,37,87,.8); }
+
+  .step-num   { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--silver-bright); }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--white-pure); margin-bottom: 12px; }
+  .step-text  { font-size: 13px; font-weight: 300; line-height: 1.8; color: var(--text-muted); }
+
+
+  /* ══════════════════════════════════════════════════
+     SECCIÓN: CATÁLOGO DE JOYAS
+  ══════════════════════════════════════════════════ */
+  #catalogo { background: var(--black-deep); padding: 140px 60px; }
+
+  /* Encabezado del catálogo */
+  .catalogo-header { text-align: center; margin-bottom: 80px; }
+  .catalogo-header .section-title { margin-bottom: 16px; }
+  .catalogo-header p { font-size: 15px; font-weight: 300; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
+
+  /* ── BOTONES DE FILTRO POR CATEGORÍA ── */
+  .cat-filters {
+    display: flex;
+    flex-wrap: wrap;        /* Si no caben en una línea, bajan a la siguiente */
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 72px;
+  }
+
+  /* Botón de filtro individual (Pulseras, Anillos, etc.) */
+  .cat-btn {
+    background: transparent;
+    border: 1px solid rgba(200,208,220,.15);
+    color: var(--text-muted);
+    padding: 10px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 300;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .cat-btn:hover { border-color: rgba(200,208,220,.4); color: var(--silver-bright); }
+  .cat-btn.active { background: var(--sapphire); border-color: var(--sapphire); color: var(--white-pure); } /* Botón seleccionado */
+
+  /* ── SECCIÓN DE UNA CATEGORÍA (ej: "Pulseras") ── */
+  .cat-section { margin-bottom: 80px; }
+  .cat-section.hidden { display: none; } /* Se oculta cuando el filtro no la incluye */
+
+  /* Fila del título de categoría (título + línea decorativa + contador) */
+  .cat-title-row { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
+  .cat-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--white-pure); letter-spacing: .05em; }
+  .cat-title-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(200,208,220,.12), transparent); } /* Línea que se extiende hasta el borde */
+  .cat-count { font-size: 11px; letter-spacing: .3em; color: var(--text-muted); text-transform: uppercase; } /* "2 disponibles · 3 piezas" */
+
+  /* ── CUADRÍCULA DE TARJETAS DE JOYAS ──
+     Se ajusta automáticamente según el ancho disponible */
+  .joyas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Columnas automáticas, mínimo 260px cada una */
+    gap: 24px;
+  }
+
+  /* ── TARJETA DE JOYA INDIVIDUAL ── */
+  .joya-card {
+    background: rgba(15,37,87,.1);
+    border: 1px solid rgba(200,208,220,.07);
+    border-radius: 4px;
+    overflow: hidden;      /* Oculta lo que se salga (ej: imagen al hacer hover) */
+    transition: all .4s;
+    position: relative;
+  }
+  .joya-card:hover { border-color: rgba(200,208,220,.2); transform: translateY(-4px); box-shadow: 0 24px 64px rgba(15,37,87,.4); } /* Sube al hacer hover */
+
+  /* Contenedor de la imagen (cuadrado perfecto 1:1) */
+  .joya-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;      /* Siempre cuadrada, sin importar el ancho */
+    overflow: hidden;
+    background: rgba(8,24,64,.4); /* Fondo mientras carga la imagen */
+  }
+
+  .joya-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;           /* La imagen llena el cuadrado sin deformarse */
+    transition: transform .5s ease;
+  }
+  .joya-card:hover .joya-img-wrap img { transform: scale(1.04); } /* Zoom suave al hacer hover */
+
+  /* ── ESTADO AGOTADO: imagen en gris con sello ── */
+  .joya-card.agotado .joya-img-wrap img { filter: grayscale(100%) brightness(.6); } /* Gris oscuro */
+
+  /* Sello "AGOTADO" que aparece encima de la imagen */
+  .sello-agotado {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg); /* Centrado y rotado 20 grados */
+    background: rgba(6,12,26,.85);
+    border: 2px solid rgba(200,208,220,.4);
+    color: var(--silver-bright);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; letter-spacing: .2em;
+    padding: 8px 20px;
+    text-transform: uppercase;
+    white-space: nowrap; /* No parte el texto en dos líneas */
+    display: none;        /* Invisible por defecto */
+  }
+  .joya-card.agotado .sello-agotado { display: block; } /* Solo visible en tarjetas con clase "agotado" */
+
+  /* ── BADGE DE ESTADO (esquina superior izquierda de la imagen) ── */
+  .joya-badge {
+    position: absolute;
+    top: 14px; left: 14px;
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-size: 10px; font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+  /* Los tres posibles estados con sus colores */
+  .badge-disponible { background: rgba(15,37,87,.9);  border: 1px solid rgba(200,208,220,.2); color: var(--silver-bright); } /* Azul: disponible */
+  .badge-agotado    { background: rgba(40,10,10,.9);  border: 1px solid rgba(220,80,80,.3);   color: #e08080; }               /* Rojo: agotado */
+  .badge-pedido     { background: rgba(8,40,64,.9);   border: 1px solid rgba(80,160,220,.3);  color: #80c0e0; }               /* Celeste: bajo pedido */
+
+  /* ── INFORMACIÓN DE LA JOYA (debajo de la imagen) ── */
+  .joya-info { padding: 20px 22px 22px; }
+
+  .joya-nombre   { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--white-pure); margin-bottom: 6px; line-height: 1.2; }
+  .joya-material { font-size: 10px; letter-spacing: .3em; color: var(--sapphire-light); text-transform: uppercase; margin-bottom: 10px; } /* "Plata Ley 925" */
+  .joya-desc     { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+
+  /* Fila inferior: precio a la izquierda, botón a la derecha */
+  .joya-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+  .joya-precio          { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--silver-bright); }
+  .joya-precio.tachado  { text-decoration: line-through; color: var(--text-muted); font-size: 18px; } /* Precio tachado para agotados */
+  .joya-precio-consulta { font-size: 12px; letter-spacing: .2em; color: var(--text-muted); text-transform: uppercase; } /* "Precio bajo consulta" */
+
+  /* Botón de acción de la joya (Adquirir / Cotizar) */
+  .joya-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--sapphire);
+    color: var(--silver-bright);
+    padding: 9px 16px;
+    font-size: 10px; font-weight: 400;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all .3s;
+    white-space: nowrap;
+    border: none; cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .joya-btn:hover { background: var(--sapphire-mid); transform: translateY(-1px); }
+
+  /* Variante del botón para "Cotizar" (fondo transparente) */
+  .joya-btn.btn-consulta { background: transparent; border: 1px solid rgba(200,208,220,.2); color: var(--silver); }
+  .joya-btn.btn-consulta:hover { border-color: rgba(200,208,220,.5); color: var(--white-pure); }
+
+  /* En tarjetas agotadas, el botón se desactiva visualmente */
+  .joya-card.agotado .joya-btn { opacity: .4; pointer-events: none; }
+
+
+  /* ══════════════════════════════════════════════════
+     SECCIÓN: CONTACTO
+  ══════════════════════════════════════════════════ */
+  #contacto { background: var(--black-deep); position: relative; overflow: hidden; }
+
+  /* Orbe decorativo en la parte inferior */
+  #contacto::before {
+    content: ''; position: absolute;
+    bottom: -300px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(15,37,87,.3) 0%, transparent 70%);
+  }
+
+  .contacto-inner { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
+
+  /* Título grande de contacto */
+  .contacto-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px,6vw,80px); font-weight: 300; line-height: 1.1; color: var(--white-pure); margin-bottom: 24px; }
+  .contacto-title em { font-style: italic; color: var(--silver); }
+  .contacto-sub { font-size: 16px; font-weight: 300; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 64px; line-height: 2; }
+
+  /* Fila de tarjetas de contacto (WhatsApp, Instagram, Domicilio) */
+  .contacto-cards { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+
+  /* Cada tarjeta de contacto */
+  .contacto-card {
+    background: rgba(15,37,87,.15);
+    border: 1px solid rgba(200,208,220,.08);
+    border-radius: 4px;
+    padding: 40px 48px;
+    text-decoration: none;
+    color: inherit;
+    transition: all .4s;
+    min-width: 220px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .contacto-card:hover { background: rgba(15,37,87,.35); border-color: rgba(200,208,220,.2); transform: translateY(-4px); box-shadow: 0 30px 80px rgba(15,37,87,.4); }
+
+  .contacto-card-label { font-size: 12px; letter-spacing: .35em; color: var(--sapphire-light); text-transform: uppercase; }
+  .contacto-card-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--silver-bright); }
+
+  /* Badge pequeño con el sello de calidad */
+  .ley-badge { display: inline-flex; align-items: center; gap: 12px; border: 1px solid rgba(200,208,220,.08); border-radius: 2px; padding: 14px 28px; font-size: 13px; letter-spacing: .2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 40px; }
+  .ley-dot { width: 6px; height: 6px; background: var(--sapphire-light); border-radius: 50%; } /* Puntito decorativo */
+
+
+  /* ══════════════════════════════════════════════════
+     FOOTER
+  ══════════════════════════════════════════════════ */
+  footer { padding: 40px 60px; border-top: 1px solid rgba(200,208,220,.05); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+  .footer-left   { font-size: 13px; font-weight: 300; letter-spacing: .1em; color: rgba(136,153,187,.6); }
+  .footer-center { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 300; letter-spacing: .3em; color: rgba(200,208,220,.4); text-transform: uppercase; }
+  .footer-right  { display: flex; gap: 24px; }
+  .footer-link   { font-size: 13px; font-weight: 300; letter-spacing: .1em; color: rgba(136,153,187,.6); text-decoration: none; text-transform: uppercase; transition: color .3s; }
+  .footer-link:hover { color: var(--silver); }
+
+
+  /* ══════════════════════════════════════════════════
+     ANIMACIONES GLOBALES
+  ══════════════════════════════════════════════════ */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } } /* Sube desde abajo y aparece */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } /* Aparece sin movimiento */
+
+
+  /* ══════════════════════════════════════════════════
+     BOTÓN "VER MÁS" DEL CATÁLOGO
+     Aparece debajo de las joyas si hay más de 5 en esa sección
+  ══════════════════════════════════════════════════ */
+  .ver-mas-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px; /* Espacio entre las tarjetas y el botón */
+  }
+
+  /* El botón en sí */
+  .btn-ver-mas {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid rgba(200,208,220,.2);
+    color: var(--silver);
+    padding: 14px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .4s;
+  }
+  .btn-ver-mas:hover {
+    border-color: rgba(200,208,220,.5);
+    color: var(--white-pure);
+    transform: translateY(-2px); /* Sube levemente al hacer hover */
+  }
+
+  /* La flecha dentro del botón baja al hacer hover */
+  .btn-ver-mas svg { transition: transform .3s; }
+  .btn-ver-mas:hover svg { transform: translateY(3px); }
+
+  /* Clase que oculta las tarjetas más allá del límite inicial */
+  /* JavaScript agrega/quita esta clase al hacer clic en "Ver más" */
+  .joya-card.oculta { display: none; }
+
+
+  /* ══════════════════════════════════════════════════
+     MENÚ HAMBURGUESA — Solo aparece en pantallas pequeñas
+  ══════════════════════════════════════════════════ */
+
+  /* Botón de las tres líneas */
+  .nav-hamburger {
+    display: none; /* Oculto en desktop, visible solo en móvil */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  /* Cada línea del ícono */
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--silver-bright);
+    transition: all .3s ease;
+  }
+
+  /* Animación hamburguesa → X cuando el menú está abierto */
+  .nav-hamburger.abierto span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.abierto span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.abierto span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Panel del menú móvil — cae desde arriba */
+  .nav-mobile-menu {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(6,12,26,.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    z-index: 999; /* Debajo del navbar (z-index 1000) pero encima de todo lo demás */
+    padding: 100px 32px 48px; /* Espacio arriba para no tapar el logo */
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid rgba(200,208,220,.08);
+  }
+  /* Cuando el menú está abierto se muestra */
+  .nav-mobile-menu.abierto { display: flex; }
+
+  /* Cada enlace del menú móvil */
+  .nav-mobile-menu a {
+    text-decoration: none;
+    color: var(--silver);
+    font-size: 28px; /* Grande para fácil toque con el dedo */
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: .1em;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(200,208,220,.06);
+    transition: color .3s;
+  }
+  .nav-mobile-menu a:hover { color: var(--white-pure); }
+
+  /* Botón de contacto dentro del menú móvil */
+  .nav-mobile-menu .nav-mobile-cta {
+    margin-top: 24px;
+    background: var(--sapphire);
+    color: var(--silver-bright) !important;
+    text-align: center;
+    padding: 16px !important;
+    border-radius: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: .2em;
+    border-bottom: none !important;
+  }
+
+
+  /* ══════════════════════════════════════════════════
+     RESPONSIVE — ADAPTACIÓN A PANTALLAS PEQUEÑAS
+     Se activa cuando la pantalla es menor a 900px
+  ══════════════════════════════════════════════════ */
+  @media(max-width: 900px) {
+
+    /* Navbar */
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }      /* Links normales ocultos — se usa hamburguesa */
+    .nav-cta { display: none; }        /* Botón "Contactar" oculto — está en el menú móvil */
+    .nav-hamburger { display: flex; }  /* Aparece el botón hamburguesa */
+
+    /* Secciones generales */
+    section { padding: 90px 20px; }
+
+    /* Hero */
+    .hero-title { font-size: clamp(40px, 10vw, 64px); }
+    .hero-subtitle { font-size: 14px; }
+    .hero-actions { flex-direction: column; gap: 12px; } /* Botones apilados verticalmente */
+    .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+
+    /* Nosotros */
+    .nosotros-grid { grid-template-columns: 1fr; gap: 36px; }
+
+    /* Filosofía */
+    .pilares-grid { grid-template-columns: 1fr; }
+
+    /* Proceso */
+    .proceso-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .proceso-steps::before { display: none; } /* Oculta la línea conectora horizontal */
+
+    /* Catálogo */
+    #catalogo { padding: 80px 20px; }
+    .cat-filters { gap: 6px; }
+    .cat-btn { padding: 8px 14px; font-size: 11px; letter-spacing: .15em; }
+    .joyas-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 2 columnas en móvil */
+    .joya-nombre { font-size: 16px; }
+    .joya-precio { font-size: 18px; }
+    .joya-btn { padding: 8px 12px; font-size: 9px; }
+
+    /* Contacto */
+    .contacto-cards { flex-direction: column; align-items: center; }
+    .contacto-title { font-size: clamp(32px, 8vw, 56px); }
+
+    /* Footer */
+    footer { flex-direction: column; align-items: center; text-align: center; padding: 28px 20px; gap: 16px; }
+  }
+
+  /* Pantallas muy pequeñas — celulares menores a 420px */
+  @media(max-width: 420px) {
+    .joyas-grid { grid-template-columns: 1fr; } /* 1 columna en pantallas muy chicas */
+    /* Filtros con scroll horizontal para que no se rompan */
+    .cat-filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+    .cat-btn { white-space: nowrap; flex-shrink: 0; }
+  }
