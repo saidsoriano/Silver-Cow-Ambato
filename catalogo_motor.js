@@ -108,9 +108,9 @@ function crearTarjeta(p) {
     footer = `
       <span class="joya-precio tachado">$${p.precio.toFixed(2)}</span>
       <button class="joya-btn" disabled>Agotado</button>`;
-  } else if (p.esPedido) {
+} else if (p.esPedido) {
     footer = `
-      <span class="joya-precio-consulta">Bajo Pedido</span>
+      <span class="joya-precio">$${p.precio.toFixed(2)}</span>
       <button class="joya-btn btn-consulta" onclick="agregarAlCarrito('${p.nombre.replace(/'/g,"\\'")}', ${p.precio}, true)">Agregar</button>`;
   } else {
     footer = `
