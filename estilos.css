@@ -964,7 +964,46 @@
     object-fit: cover;           /* La imagen llena el cuadrado sin deformarse */
     transition: transform .5s ease;
   }
-  .joya-card:hover .joya-img-wrap img { transform: scale(1.04); } /* Zoom suave al hacer hover */
+
+  /* Zoom tipo Amazon — solo en dispositivos con cursor (desktop) */
+  @media (hover: hover) and (pointer: fine) {
+    .joya-img-wrap { cursor: crosshair; }
+  }
+
+  /* ── LUPA: cuadrado que se mueve sobre la imagen ── */
+  .zoom-lens {
+    display: none;
+    position: absolute;
+    width: 80px; height: 80px;
+    border: 1px solid rgba(200,208,220,.5);
+    background: rgba(200,208,220,.08);
+    pointer-events: none;   /* No interfiere con los eventos del mouse */
+    z-index: 10;
+    box-sizing: border-box;
+  }
+
+  /* ── PANEL DE ZOOM: cuadro ampliado que aparece al lado ── */
+  .zoom-panel {
+    display: none;
+    position: absolute;
+    left: calc(100% + 12px);  /* Justo a la derecha de la tarjeta */
+    top: 0;
+    width: 300px; height: 300px;
+    border: 1px solid rgba(200,208,220,.2);
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-color: rgba(6,12,26,.97);
+    z-index: 200;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7);
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Mostrar lupa y panel solo en desktop al hacer hover sobre la imagen */
+  @media (hover: hover) and (pointer: fine) {
+    .joya-img-wrap:hover .zoom-lens  { display: block; }
+    .joya-img-wrap:hover .zoom-panel { display: block; }
+  }
 
   /* ── ESTADO AGOTADO: imagen en gris con sello ── */
   .joya-card.agotado .joya-img-wrap img { filter: grayscale(100%) brightness(.6); } /* Gris oscuro */
@@ -1006,6 +1045,8 @@
 
   .joya-nombre   { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--white-pure); margin-bottom: 6px; line-height: 1.2; }
   .joya-material { font-size: 10px; letter-spacing: .3em; color: var(--sapphire-light); text-transform: uppercase; margin-bottom: 10px; } /* "Plata Ley 925" */
+  /* Código de referencia del producto — ej: [P-AN-252] */
+  .joya-codigo   { font-size: 10px; font-weight: 300; letter-spacing: .15em; color: rgba(136,153,187,.6); margin-bottom: 8px; font-family: 'Montserrat', sans-serif; }
   .joya-desc     { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
 
   /* Fila inferior: precio a la izquierda, botón a la derecha */
@@ -1240,10 +1281,10 @@
 
     /* Hero */
     .hero-title { font-size: clamp(40px, 10vw, 64px); }
-    .hero-subtitle { font-size: 14px;   text-align: justify;
-  }
-    .hero-actions { flex-direction: column; gap: 12px; } /* Botones apilados verticalmente */
+    .hero-subtitle { font-size: 14px; text-align: justify; }
+    .hero-actions { flex-direction: column; gap: 12px; margin-bottom: 80px; } /* margen para no tapar "Explorar" */
     .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+    .hero-scroll { bottom: 20px; } /* "Explorar" sube un poco en móvil */
 
     /* Nosotros */
     .nosotros-grid { grid-template-columns: 1fr; gap: 36px; }

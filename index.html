@@ -560,23 +560,20 @@
   // precio: precio en USD (0 si es bajo pedido)
   // esPedido: true si es bajo pedido, false/undefined si es disponible
   // ══════════════════════════════════════════════════
-  function agregarAlCarrito(nombre, precio, esPedido = false) {
-    const existente = carrito.find(p => p.nombre === nombre);
-
-    if (existente) {
-      if (existente.cantidad >= 5) {
-        alert('Más de 5 unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp para coordinar tu pedido especial.');
-        return;
-      }
-      existente.cantidad++;
-    } else {
-      // Guarda si es bajo pedido para diferenciarlo en el mensaje
-      carrito.push({ nombre, precio, cantidad: 1, esPedido });
+function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
+  const existente = carrito.find(p => p.nombre === nombre);
+  if (existente) {
+    if (existente.cantidad >= 3) {
+      alert('Más de 3 unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp.');
+      return;
     }
-
-    actualizarCarrito();
-    abrirCarrito();
+    existente.cantidad++;
+  } else {
+    carrito.push({ nombre, precio, cantidad: 1, esPedido, codigo });
   }
+  actualizarCarrito();
+  abrirCarrito();
+}
 
   // ══════════════════════════════════════════════════
   // ABRIR / CERRAR EL MODAL DEL CARRITO
@@ -773,7 +770,8 @@
     if (disponibles.length > 0) {
       msg += '*✅ Piezas disponibles:*\n';
       disponibles.forEach(p => {
-        msg += `• ${p.nombre} × ${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
+        const ref1 = p.codigo ? ` ${p.codigo}` : '';
+        msg += `• ${p.nombre}${ref1} × ${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
       });
     }
 
@@ -781,7 +779,8 @@
     if (pedidos.length > 0) {
       msg += '\n*📋 Piezas bajo pedido:*\n';
       pedidos.forEach(p => {
-        msg += `• ${p.nombre} × ${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
+        const ref2 = p.codigo ? ` ${p.codigo}` : '';
+        msg += `• ${p.nombre}${ref2} × ${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
       });
     }
 

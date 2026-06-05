@@ -96,45 +96,65 @@ function crearTarjeta(p) {
   div.className = `joya-card${p.estado === 'agotado' ? ' agotado' : ''}`;
   div.dataset.estado = p.estado;
 
+  // Extrae el código del producto desde la descripción — ej: [P-AN-252]
+  const codigoMatch = p.desc ? p.desc.match(/\[[^\]]+\]/) : null;
+  const codigo      = codigoMatch ? codigoMatch[0] : '';
+
+  // Descripción sin el código al inicio (para mostrarlo limpio en la tarjeta)
+  const descLimpia = p.desc ? p.desc.replace(/^\[[^\]]+\]\s*/, '') : '';
+
   // Badge según estado
   const badgeClass = p.estado === 'disponible' ? 'badge-disponible' :
                      p.estado === 'agotado'    ? 'badge-agotado'    : 'badge-pedido';
   const badgeText  = p.estado === 'disponible' ? 'Disponible' :
                      p.estado === 'agotado'    ? 'Agotado'    : 'Bajo Pedido';
 
-  // Footer según estado
+  // Nombre seguro para usar dentro de onclick (escapa comillas)
+  const nombreSeguro = p.nombre.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  const codigoSeguro = codigo.replace(/'/g, "\\'");
+
+  // Footer según estado — pasa el código al carrito como 4to parámetro
   let footer = '';
   if (p.estado === 'agotado') {
     footer = `
       <span class="joya-precio tachado">$${p.precio.toFixed(2)}</span>
       <button class="joya-btn" disabled>Agotado</button>`;
-} else if (p.esPedido) {
+  } else if (p.esPedido) {
     footer = `
       <span class="joya-precio">$${p.precio.toFixed(2)}</span>
-      <button class="joya-btn btn-consulta" onclick="agregarAlCarrito('${p.nombre.replace(/'/g,"\\'")}', ${p.precio}, true)">Agregar</button>`;
+      <button class="joya-btn btn-consulta" onclick="agregarAlCarrito('${nombreSeguro}', ${p.precio}, true, '${codigoSeguro}')">Agregar</button>`;
   } else {
     footer = `
       <span class="joya-precio">$${p.precio.toFixed(2)}</span>
-      <button class="joya-btn" onclick="agregarAlCarrito('${p.nombre.replace(/'/g,"\\'")}', ${p.precio}, false)">Agregar</button>`;
+      <button class="joya-btn" onclick="agregarAlCarrito('${nombreSeguro}', ${p.precio}, false, '${codigoSeguro}')">Agregar</button>`;
   }
 
-  // Descripción opcional
-  const desc = p.desc ? `<p class="joya-desc">${p.desc}</p>` : '';
+  // Descripción limpia sin el código
+  const descHTML = descLimpia ? `<p class="joya-desc">${descLimpia}</p>` : '';
 
-  // loading="lazy" es clave — la imagen NO se descarga hasta que sea visible
+  // Código visible en la tarjeta (pequeño y discreto)
+  const codigoHTML = codigo ? `<div class="joya-codigo">${codigo}</div>` : '';
+
+  // loading="lazy" — la imagen NO se descarga hasta que sea visible
   div.innerHTML = `
     <div class="joya-img-wrap">
       <img src="${p.img}" alt="${p.nombre}" loading="lazy"
            onerror="this.parentElement.style.background='rgba(15,37,87,0.3)'">
       <span class="joya-badge ${badgeClass}">${badgeText}</span>
       <div class="sello-agotado">Agotado</div>
+      <div class="zoom-lens"></div>
+      <div class="zoom-panel"></div>
     </div>
     <div class="joya-info">
       <div class="joya-material">Plata Ley 925</div>
       <h4 class="joya-nombre">${p.nombre}</h4>
-      ${desc}
+      ${codigoHTML}
+      ${descHTML}
       <div class="joya-footer">${footer}</div>
     </div>`;
+
+  // Activa el zoom Amazon solo en desktop
+  activarZoom(div);
 
   return div;
 }
@@ -200,6 +220,68 @@ function quitarCinco(cat, productos) {
   // Scroll suave al inicio de la sección si se contrajo mucho
   if (nuevoTotal === LIMITE) {
     seccion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+
+// ── ZOOM TIPO AMAZON ──
+// Activa el panel de zoom al pasar el mouse por la imagen
+// Solo funciona en desktop (pointer: fine = mouse real)
+function activarZoom(card) {
+  // Detecta si es desktop con mouse
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const wrap  = card.querySelector('.joya-img-wrap');
+  const img   = card.querySelector('img');
+  const lens  = card.querySelector('.zoom-lens');
+  const panel = card.querySelector('.zoom-panel');
+
+  // Espera a que la imagen cargue para obtener sus dimensiones reales
+  img.addEventListener('load', () => configurarZoom());
+  if (img.complete && img.naturalWidth) configurarZoom(); // Ya cargada
+
+  function configurarZoom() {
+    wrap.addEventListener('mousemove', moverZoom);
+    wrap.addEventListener('mouseleave', () => {
+      lens.style.display  = 'none';
+      panel.style.display = 'none';
+    });
+    wrap.addEventListener('mouseenter', () => {
+      lens.style.display  = 'block';
+      panel.style.display = 'block';
+      // Fija la imagen de fondo del panel
+      panel.style.backgroundImage = `url(${img.src})`;
+    });
+  }
+
+  function moverZoom(e) {
+    const rect   = wrap.getBoundingClientRect();
+    const lensW  = lens.offsetWidth;
+    const lensH  = lens.offsetHeight;
+    const panelW = panel.offsetWidth;
+    const panelH = panel.offsetHeight;
+
+    // Posición del mouse relativa a la imagen
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    // Limita la lupa dentro de los bordes de la imagen
+    let lx = x - lensW / 2;
+    let ly = y - lensH / 2;
+    lx = Math.max(0, Math.min(lx, rect.width  - lensW));
+    ly = Math.max(0, Math.min(ly, rect.height - lensH));
+
+    // Mueve la lupa
+    lens.style.left = `${lx}px`;
+    lens.style.top  = `${ly}px`;
+
+    // Calcula el factor de zoom (panel / lente)
+    const zoomX = panelW / lensW;
+    const zoomY = panelH / lensH;
+
+    // Actualiza el fondo del panel para mostrar la zona ampliada
+    panel.style.backgroundSize     = `${rect.width * zoomX}px ${rect.height * zoomY}px`;
+    panel.style.backgroundPosition = `-${lx * zoomX}px -${ly * zoomY}px`;
   }
 }
 
