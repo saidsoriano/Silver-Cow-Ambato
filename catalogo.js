@@ -92,7 +92,7 @@ const CATALOGO = {
 
   // ── ARETES ──
   aretes: [
-    { estado: 'disponible', img: 'aretes/arete_1.jpg', nombre: "Argolla huggie", desc: "[P-AR-157] Argolla huggie plata 925 (b.rodio) cristal baguette 1.4 cm.", precio: 23.0, esPedido: false },
+    { estado: 'disponible', img: 'aretes/arete_1.jpg', nombre: "Argolla huggie N° 1", desc: "[P-AR-157] Argolla huggie plata 925 (b.rodio) cristal baguette 1.4 cm.", precio: 23.0, esPedido: false },
     { estado: 'disponible', img: 'aretes/arete_2.jpg', nombre: "Aretes Topo N° 1", desc: "[P-AR-237] Arretes Topo plata 925 circón verde cuadrado n2,5.", precio: 5.0, esPedido: false },
     { estado: 'disponible', img: 'aretes/arete_3.jpg', nombre: "Aretes Topo N° 2", desc: "[P-AR-247] Topo plata 925 liviano patitos", precio: 7.0, esPedido: false },
     { estado: 'disponible', img: 'aretes/arete_4.jpg', nombre: "Aretes Topo N° 3", desc: "[P-AR-351] Topo en plata ley 925 cristal redondo blanco #5", precio: 7.0, esPedido: false },
@@ -104,6 +104,30 @@ const CATALOGO = {
     { estado: 'pedido', img: 'aretes/arete_10.jpg', nombre: "Argolla huggie N° 2", desc: "[P-AR-183] Argolla huggie plata lisa 1.5 cm", precio: 28.0, esPedido: true },
     { estado: 'pedido', img: 'aretes/arete_11.jpg', nombre: "Argolla", desc: "[P-AR-356] Argollas en plata ley 925 lisa tipo hilo 4.5 cm", precio: 28.0, esPedido: true },
     { estado: 'pedido', img: 'aretes/arete_12.jpg', nombre: "Argolla lisa N° 2", desc: "[P-AR-198] Arete argolla lisa tubular 2,6cm plata 925", precio: 30.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_13.jpg', nombre: "Argolla lisa N° 3", desc: "[P-AR-295] Argolla plata 925 lisa gancho anzuelo 1,2cm", precio: 6.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_14.jpg', nombre: "Argolla lisa N° 4", desc: "[P-AR-294] Argolla plata 925 lisa gancho anzuelo 1cm", precio: 6.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_15.jpg', nombre: "Aretes Topo aros", desc: "[P-AR-562] Topo plata 925 aros", precio: 5.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_16.jpg', nombre: "Aretes Topo medialunas", desc: "[P-AR-560] Topo plata 925 mini medialunas", precio: 5.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_17.jpg', nombre: "Aretes Topo triángulos", desc: "[P-AR-559] Topo plata 925 triángulos troquelados", precio: 5.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_18.jpg', nombre: "Aretes Topo flechas", desc: "[P-AR-556] Topo plata 925 flechas", precio: 5.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_19.jpg', nombre: "Aretes Topo circón cuadrado", desc: "[P-AR-531] Topo plata ley 925 circón cuadrado blanco (7x7)", precio: 7.0, esPedido: true },
+    { estado: 'agotado', img: 'aretes/arete_20.jpg', nombre: "Aretes Topo repulgue", desc: "[P-AR-262] Topo plata ley 925 circón cuadrado blanco (7x7)", precio: 7.0, esPedido: false },
+    { estado: 'pedido', img: 'aretes/arete_21.jpg', nombre: "Aretes hello kitty", desc: "[P-AR-199] Aretes en Plata ley 925 hello kitty mini microcircón turquesa", precio: 7.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_22.jpg', nombre: "Aretes cerezas", desc: "[P-AR-192] Aretes en Plata ley 925 cerezas mini microcircón turquesa", precio: 9.20, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_23.jpg', nombre: "Aretes silueta corazón", desc: "[P-AR-205] Aretes en Plata ley 925 silueta corazón mini microcircón turquesa", precio: 9.20, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_24.jpg', nombre: "Aretes estrella", desc: "[P-AR-194] Aretes en Plata ley 925 estrella mini circón turquesa", precio: 9.20, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_25.jpg', nombre: "Argolla lisa N° 5", desc: "[P-AR-568] Argolla en plata ley 925 lisa 2 cm", precio: 9.20, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_26.jpg', nombre: "Aretes Totopo osos circones", desc: "[P-AR-566] Topo plata 925 osos con circones rosca de seguridad (ortopedico)", precio: 9.50, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_27.jpg', nombre: "Aretes Totopo tortugas esmaltadas", desc: "[P-AR-564] Topo plata 925 tortugas esmaltadas rosca de seguridad (ortopedico)", precio: 9.50, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_28.jpg', nombre: "Aretes Totopo margaritas esmaltadas", desc: "[P-AR-563] Topo plata 925 margaritas esmaltadas rosca de seguridad (ortopedico)", precio: 9.50, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_29.jpg', nombre: "Aretes Totopo pies", desc: "[P-AR-373] Topos en plata ley 925 pies rosca de seguridad (ortopedico)", precio: 9.50, esPedido: true },
+    { estado: 'agotado', img: 'aretes/arete_30.jpg', nombre: "Argolla huggie N° 3", desc: "[P-AR-370] Argolla huggie plata ley 925 lisa 1 cm", precio: 7.0, esPedido: false },
+    { estado: 'pedido', img: 'aretes/arete_31.jpg', nombre: "Aretes Topo cristal", desc: "[P-AR-248] Topo plata 925 cristal color redondo", precio: 7.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_32.jpg', nombre: "Aretes cuadrado", desc: "[P-AR-323] Arete plata 925 cuadrado 8mm", precio: 8.0, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_33.jpg', nombre: "Aretes Topo hoja palma", desc: "[P-AR-550] Topo plata 925 (b.rodio) hoja palma rosca de seguridad (ortopedico)", precio: 12.50, esPedido: true },
+    { estado: 'pedido', img: 'aretes/arete_34.jpg', nombre: "Aretes Topo perla y triángulo", desc: "[P-AR-547] Topo plata 925 (b.rodio) perla y triángulo rosca de seguridad (ortopedico)", precio: 12.50, esPedido: true },
+    { estado: 'agotado', img:'aretes/arete_35.jpg', nombre: "Aretes hojitas", desc: "[P-AR-504] Arete plata 925 rosca de seguridad (rodinado) hojitas", precio: 12.50, esPedido: false },
+
   ],
 
   // ── JUEGOS ──

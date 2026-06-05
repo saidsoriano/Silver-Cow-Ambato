@@ -36,9 +36,9 @@
   <!-- En móvil estos links se ocultan y se usa el menú hamburguesa -->
   <ul class="nav-links">
     <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
     <li><a href="#filosofia">Filosofía</a></li>
     <li><a href="#proceso">Proceso</a></li>
-    <li><a href="#catalogo">Catálogo</a></li>
     <li><a href="#contacto">Instagram</a></li>
   </ul>
 
@@ -69,9 +69,9 @@
 <div class="nav-mobile-menu" id="mobileMenu">
   <!-- Cada enlace cierra el menú al hacer clic (onclick="cerrarMenu()") -->
   <a href="#nosotros"  onclick="cerrarMenu()">Nosotros</a>
+  <a href="#catalogo"  onclick="cerrarMenu()">Catálogo</a>
   <a href="#filosofia" onclick="cerrarMenu()">Filosofía</a>
   <a href="#proceso"   onclick="cerrarMenu()">Proceso</a>
-  <a href="#catalogo"  onclick="cerrarMenu()">Catálogo</a>
   <a href="#contacto" onclick="cerrarMenu()">Instagram</a>
   <!-- Botón de WhatsApp al final del menú móvil -->
   <a href="https://wa.me/593990688287" target="_blank" class="nav-mobile-cta" onclick="cerrarMenu()">Contactar por WhatsApp</a>
@@ -132,9 +132,33 @@
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     QUIÉNES SOMOS — HISTORIA DE LA MARCA
-══════════════════════════════════════════════════ -->
+<section id="catalogo">
+
+  <!-- Encabezado del catálogo -->
+  <div class="catalogo-header reveal">
+    <p class="section-label">Colección Silver Cow</p>
+    <h2 class="section-title">Catálogo de<br><em>adquisiciones</em></h2>
+    <p>Todas las piezas son elaboradas en Plata Ley 925. Precios en USD.</p>
+  </div>
+
+  <!-- Botones de filtro por categoría — SIN "Todas" -->
+  <div class="cat-filters reveal" id="catFiltros">
+    <button class="cat-btn active" onclick="cargarCategoria('pulseras', this)">Pulseras</button>
+    <button class="cat-btn" onclick="cargarCategoria('anillos', this)">Anillos</button>
+    <button class="cat-btn" onclick="cargarCategoria('aretes', this)">Aretes</button>
+    <button class="cat-btn" onclick="cargarCategoria('juegos', this)">Juegos</button>
+    <button class="cat-btn" onclick="cargarCategoria('dijes', this)">Dijes</button>
+    <button class="cat-btn" onclick="cargarCategoria('cadenas', this)">Cadenas</button>
+    <button class="cat-btn" onclick="cargarCategoria('cadenas_dijes', this)">Cadenas con Dijes</button>
+  </div>
+
+  <!-- Contenedor donde se inyectan los productos dinámicamente -->
+  <!-- JavaScript limpia y rellena este div cada vez que cambias de categoría -->
+  <div id="catalogoContenedor"></div>
+
+</section>
+
+
 <section id="nosotros">
   <div class="nosotros-grid"> <!-- Cuadrícula de 2 columnas: visual | texto -->
 
@@ -166,19 +190,13 @@
         </div>
       </div><!-- fin nosotros-card -->
 
-      <!-- Caja de los fundadores, debajo de la tarjeta -->
-      <div class="founders">
-        <div class="founders-label">Fundadores</div>
-        <!-- FUNDADORES: cambia los nombres aquí si es necesario -->
-        <div class="founders-names">Said Soriano &amp; Byron Vaca</div> <!-- &amp; es el símbolo & en HTML -->
-      </div>
 
     </div><!-- fin columna izquierda -->
 
     <!-- COLUMNA DERECHA: texto de la historia -->
     <div class="reveal" style="transition-delay:.15s"> <!-- Aparece 0.15s después que la columna izquierda -->
       <p class="section-label">Nuestra historia</p>
-      <h2 class="section-title">Ambato,<br>el origen de<br><em>todo</em></h2>
+      <h2 class="section-title">Ambato,<br>Nuestra Historia<br></h2>
 
       <!-- HISTORIA: puedes editar este texto libremente -->
       <p class="section-body">
@@ -200,9 +218,6 @@
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     FILOSOFÍA — LOS 3 PILARES DE LA MARCA
-══════════════════════════════════════════════════ -->
 <section id="filosofia">
   <div class="filosofia-inner">
 
@@ -242,10 +257,6 @@
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     PROCESO — CÓMO FUNCIONA LA ADQUISICIÓN
-     Timeline de 5 pasos en línea horizontal
-══════════════════════════════════════════════════ -->
 <section id="proceso">
   <div class="proceso-inner">
 
@@ -299,40 +310,6 @@
 
     </div><!-- fin proceso-steps -->
   </div>
-</section>
-
-
-
-
-<!-- ══════════════════════════════════════════════════
-     CATÁLOGO — SECCIÓN DE ADQUISICIONES
-     Los productos se renderizan dinámicamente desde catalogo.js
-     No hay HTML de productos aquí — todo lo genera JavaScript
-══════════════════════════════════════════════════ -->
-<section id="catalogo">
-
-  <!-- Encabezado del catálogo -->
-  <div class="catalogo-header reveal">
-    <p class="section-label">Colección Silver Cow</p>
-    <h2 class="section-title">Catálogo de<br><em>adquisiciones</em></h2>
-    <p>Todas las piezas son elaboradas en Plata Ley 925. Precios en USD.</p>
-  </div>
-
-  <!-- Botones de filtro por categoría — SIN "Todas" -->
-  <div class="cat-filters reveal" id="catFiltros">
-    <button class="cat-btn active" onclick="cargarCategoria('pulseras', this)">Pulseras</button>
-    <button class="cat-btn" onclick="cargarCategoria('anillos', this)">Anillos</button>
-    <button class="cat-btn" onclick="cargarCategoria('aretes', this)">Aretes</button>
-    <button class="cat-btn" onclick="cargarCategoria('juegos', this)">Juegos</button>
-    <button class="cat-btn" onclick="cargarCategoria('dijes', this)">Dijes</button>
-    <button class="cat-btn" onclick="cargarCategoria('cadenas', this)">Cadenas</button>
-    <button class="cat-btn" onclick="cargarCategoria('cadenas_dijes', this)">Cadenas con Dijes</button>
-  </div>
-
-  <!-- Contenedor donde se inyectan los productos dinámicamente -->
-  <!-- JavaScript limpia y rellena este div cada vez que cambias de categoría -->
-  <div id="catalogoContenedor"></div>
-
 </section>
 
 <section id="contacto">

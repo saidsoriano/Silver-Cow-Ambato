@@ -67,52 +67,58 @@
   .nav-logo {
     display: flex;        /* Logo e imagen en fila */
     align-items: center;  /* Centrados verticalmente */
-    gap: 14px;            /* Espacio entre la imagen y el texto */
+    gap: 10px;            /* Espacio entre la imagen y el texto */
     text-decoration: none; /* Quita el subrayado del enlace */
+    min-width: 0;         /* Permite que se comprima en pantallas pequeñas */
+    flex-shrink: 1;       /* Permite que el logo ceda espacio a los links */
   }
 
   /* Imagen del logo en la navbar */
   .nav-logo-img {
-    width: 100px; height: 100px;       /* Tamaño del logo */
-    filter: invert(1) brightness(0.85); /* Invierte colores: negro → blanco/plata (para que se vea sobre fondo oscuro) */
-    opacity: 0.9;                     /* Ligeramente transparente para suavizar */
+    width: 48px; height: 48px;           /* Tamaño reducido para no ocupar tanto */
+    flex-shrink: 0;                       /* La imagen no se comprime */
+    filter: invert(1) brightness(0.85);   /* Invierte colores: negro → blanco/plata */
+    opacity: 0.9;
   }
 
   /* Texto "Silver Cow Ambato" junto al logo */
   .nav-logo-text {
-    font-family: 'Cormorant Garamond', serif; /* Fuente elegante de lujo */
-    font-size: 17px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(11px, 1.2vw, 17px); /* Se adapta al ancho de pantalla */
     font-weight: 400;
-    letter-spacing: .25em;   /* Espaciado amplio entre letras para elegancia */
+    letter-spacing: clamp(.08em, .5vw, .25em); /* Letter-spacing adaptable */
     color: var(--silver-bright);
-    text-transform: uppercase; /* Todo en mayúsculas */
+    text-transform: uppercase;
     line-height: 1.2;
+    white-space: nowrap;   /* Evita que el texto se parta en dos líneas */
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Subtexto pequeño debajo del nombre ("Joyería · Est. 2026") */
   .nav-logo-text span {
-    display: block;           /* Lo pone en línea separada */
-    font-size: 12px;
-    letter-spacing: .3em;
-    color: var(--text-muted); /* Color más apagado para el subtítulo */
+    display: block;
+    font-size: clamp(9px, .9vw, 12px);   /* También adaptable */
+    letter-spacing: clamp(.1em, .3vw, .3em);
+    color: var(--text-muted);
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
   }
 
   /* Lista de enlaces de navegación (Nosotros, Filosofía, etc.) */
   .nav-links {
-    display: flex;     /* Pone los links en fila */
-    gap: 44px;         /* Espacio entre cada link */
-    list-style: none;  /* Quita los puntos de la lista */
+    display: flex;
+    gap: clamp(16px, 2.5vw, 44px); /* Gap adaptable entre links */
+    list-style: none;
   }
 
   /* Estilo de cada link de navegación */
   .nav-links a {
     text-decoration: none;
     color: var(--silver);
-    font-size: 13px;
+    font-size: clamp(10px, 1vw, 13px); /* Tamaño de fuente adaptable */
     font-weight: 300;
-    letter-spacing: .2em;
+    letter-spacing: .15em;
     text-transform: uppercase;
     transition: color .3s; /* Cambio de color suave al pasar el mouse */
     position: relative;    /* Necesario para el subrayado animado */
@@ -576,6 +582,7 @@
     margin: 0 auto 56px;
     opacity: 0;
     animation: fadeUp 1.1s ease .7s forwards; /* Aparece tras 0.7s */
+    text-align: justify;
   }
 
   /* Contenedor de los dos botones del Hero */
@@ -685,6 +692,7 @@
     line-height: 2.2; /* Interlineado amplio para facilitar lectura */
     color: var(--text-muted);
     max-width: 560px;
+    text-align: justify; /* Texto justificado en párrafos de historia */
   }
 
   /* ── ANIMACIÓN DE APARICIÓN AL HACER SCROLL ──
@@ -828,7 +836,7 @@
   .pilar:hover .pilar-number { color: rgba(26,58,122,.6); } /* Se ilumina al hacer hover */
 
   .pilar-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--white-pure); margin-bottom: 16px; line-height: 1.2; }
-  .pilar-text  { font-size: 14px; font-weight: 300; line-height: 2; color: var(--text-muted); }
+  .pilar-text  { font-size: 14px; font-weight: 300; line-height: 2; color: var(--text-muted); text-align: justify; }
 
 
   /* ══════════════════════════════════════════════════
@@ -874,7 +882,7 @@
 
   .step-num   { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--silver-bright); }
   .step-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--white-pure); margin-bottom: 12px; }
-  .step-text  { font-size: 13px; font-weight: 300; line-height: 1.8; color: var(--text-muted); }
+  .step-text  { font-size: 13px; font-weight: 300; line-height: 1.8; color: var(--text-muted); text-align: justify; }
 
 
   /* ══════════════════════════════════════════════════
@@ -1051,7 +1059,7 @@
   /* Título grande de contacto */
   .contacto-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px,6vw,80px); font-weight: 300; line-height: 1.1; color: var(--white-pure); margin-bottom: 24px; }
   .contacto-title em { font-style: italic; color: var(--silver); }
-  .contacto-sub { font-size: 16px; font-weight: 300; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 64px; line-height: 2; }
+  .contacto-sub { font-size: 16px; font-weight: 300; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 64px; line-height: 2; text-align: center; }
 
   /* Fila de tarjetas de contacto (WhatsApp, Instagram, Domicilio) */
   .contacto-cards { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
@@ -1232,7 +1240,8 @@
 
     /* Hero */
     .hero-title { font-size: clamp(40px, 10vw, 64px); }
-    .hero-subtitle { font-size: 14px; }
+    .hero-subtitle { font-size: 14px;   text-align: justify;
+  }
     .hero-actions { flex-direction: column; gap: 12px; } /* Botones apilados verticalmente */
     .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
 
