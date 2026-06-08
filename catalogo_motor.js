@@ -143,7 +143,6 @@ function crearTarjeta(p) {
       <span class="joya-badge ${badgeClass}">${badgeText}</span>
       <div class="sello-agotado">Agotado</div>
       <div class="zoom-lens"></div>
-      <div class="zoom-panel"></div>
     </div>
     <div class="joya-info">
       <div class="joya-material">Plata Ley 925</div>
@@ -225,64 +224,81 @@ function quitarCinco(cat, productos) {
 
 
 // ── ZOOM TIPO AMAZON ──
-// Activa el panel de zoom al pasar el mouse por la imagen
+// Al pasar el mouse por la imagen, aparece un panel ampliado al lado
 // Solo funciona en desktop (pointer: fine = mouse real)
 function activarZoom(card) {
-  // Detecta si es desktop con mouse
+  // Solo en desktop con mouse real — no en táctil
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-  const wrap  = card.querySelector('.joya-img-wrap');
-  const img   = card.querySelector('img');
-  const lens  = card.querySelector('.zoom-lens');
-  const panel = card.querySelector('.zoom-panel');
+  const wrap = card.querySelector('.joya-img-wrap');
+  const img  = card.querySelector('img');
+  const lens = card.querySelector('.zoom-lens');
 
-  // Espera a que la imagen cargue para obtener sus dimensiones reales
-  img.addEventListener('load', () => configurarZoom());
-  if (img.complete && img.naturalWidth) configurarZoom(); // Ya cargada
+  // Crea el panel de zoom y lo agrega al BODY para que nunca quede cortado
+  const panel = document.createElement('div');
+  panel.className = 'zoom-panel';
+  panel.style.display = 'none';
+  document.body.appendChild(panel);
 
-  function configurarZoom() {
-    wrap.addEventListener('mousemove', moverZoom);
-    wrap.addEventListener('mouseleave', () => {
-      lens.style.display  = 'none';
-      panel.style.display = 'none';
-    });
-    wrap.addEventListener('mouseenter', () => {
-      lens.style.display  = 'block';
-      panel.style.display = 'block';
-      // Fija la imagen de fondo del panel
-      panel.style.backgroundImage = `url(${img.src})`;
-    });
-  }
+  wrap.addEventListener('mouseenter', () => {
+    if (!img.complete || img.naturalWidth === 0) return;
+    lens.style.display  = 'block';
+    panel.style.display = 'block';
+    panel.style.backgroundImage = `url(${img.src})`;
+  });
 
-  function moverZoom(e) {
+  wrap.addEventListener('mouseleave', () => {
+    lens.style.display  = 'none';
+    panel.style.display = 'none';
+  });
+
+  wrap.addEventListener('mousemove', (e) => {
+    if (!img.complete || img.naturalWidth === 0) return;
+
     const rect   = wrap.getBoundingClientRect();
-    const lensW  = lens.offsetWidth;
-    const lensH  = lens.offsetHeight;
-    const panelW = panel.offsetWidth;
-    const panelH = panel.offsetHeight;
+    const lensW  = 80;
+    const lensH  = 80;
+    const panelW = 300;
+    const panelH = 300;
 
-    // Posición del mouse relativa a la imagen
+    // Posición del mouse dentro de la imagen
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
 
-    // Limita la lupa dentro de los bordes de la imagen
-    let lx = x - lensW / 2;
-    let ly = y - lensH / 2;
-    lx = Math.max(0, Math.min(lx, rect.width  - lensW));
-    ly = Math.max(0, Math.min(ly, rect.height - lensH));
+    // Centra la lupa en el cursor — limitada dentro de la imagen
+    let lx = Math.max(0, Math.min(x - lensW / 2, rect.width  - lensW));
+    let ly = Math.max(0, Math.min(y - lensH / 2, rect.height - lensH));
 
-    // Mueve la lupa
+    // Posiciona la lupa dentro de la imagen
     lens.style.left = `${lx}px`;
     lens.style.top  = `${ly}px`;
 
-    // Calcula el factor de zoom (panel / lente)
+    // Posiciona el panel en posición fija — a la derecha de la tarjeta
+    let panelX = rect.right + 12;    // 12px a la derecha del borde de la imagen
+    let panelY = rect.top;           // Alineado con el tope de la imagen
+
+    // Si no cabe a la derecha, lo pone a la izquierda
+    if (panelX + panelW > window.innerWidth - 12) {
+      panelX = rect.left - panelW - 12;
+    }
+
+    // Si se sale por abajo, lo sube
+    if (panelY + panelH > window.innerHeight - 12) {
+      panelY = window.innerHeight - panelH - 12;
+    }
+
+    panel.style.position = 'fixed';
+    panel.style.left     = `${panelX}px`;
+    panel.style.top      = `${panelY}px`;
+    panel.style.width    = `${panelW}px`;
+    panel.style.height   = `${panelH}px`;
+
+    // Factor de ampliación y posición del fondo
     const zoomX = panelW / lensW;
     const zoomY = panelH / lensH;
-
-    // Actualiza el fondo del panel para mostrar la zona ampliada
     panel.style.backgroundSize     = `${rect.width * zoomX}px ${rect.height * zoomY}px`;
     panel.style.backgroundPosition = `-${lx * zoomX}px -${ly * zoomY}px`;
-  }
+  });
 }
 
 

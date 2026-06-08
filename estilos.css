@@ -1,5 +1,4 @@
-
-  /* ══════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
      VARIABLES GLOBALES DE COLOR
      Aquí defines todos los colores de la marca.
      Si quieres cambiar un color, cámbialo aquí
@@ -972,37 +971,30 @@
 
   /* ── LUPA: cuadrado que se mueve sobre la imagen ── */
   .zoom-lens {
-    display: none;
+    display: none;              /* JS lo muestra al hacer hover */
     position: absolute;
     width: 80px; height: 80px;
-    border: 1px solid rgba(200,208,220,.5);
-    background: rgba(200,208,220,.08);
-    pointer-events: none;   /* No interfiere con los eventos del mouse */
+    border: 1px solid rgba(200,208,220,.6);
+    background: rgba(200,208,220,.1);
+    pointer-events: none;       /* No bloquea eventos del mouse */
     z-index: 10;
     box-sizing: border-box;
   }
 
-  /* ── PANEL DE ZOOM: cuadro ampliado que aparece al lado ── */
+  /* ── PANEL DE ZOOM: ventana ampliada fija en pantalla ── */
+  /* position:fixed lo asigna JavaScript para que nunca quede cortado */
   .zoom-panel {
-    display: none;
-    position: absolute;
-    left: calc(100% + 12px);  /* Justo a la derecha de la tarjeta */
-    top: 0;
+    display: none;              /* JS lo muestra/oculta */
+    position: fixed;            /* Fijo en pantalla — JS controla left y top */
     width: 300px; height: 300px;
-    border: 1px solid rgba(200,208,220,.2);
-    border-radius: 4px;
+    border: 1px solid rgba(200,208,220,.25);
+    border-radius: 6px;
     background-repeat: no-repeat;
-    background-color: rgba(6,12,26,.97);
-    z-index: 200;
-    box-shadow: 0 20px 60px rgba(0,0,0,.7);
-    pointer-events: none;
+    background-color: rgba(6,12,26,.98);
+    z-index: 9999;              /* Encima de todo */
+    box-shadow: 0 24px 64px rgba(0,0,0,.8);
+    pointer-events: none;       /* No interfiere con el mouse */
     overflow: hidden;
-  }
-
-  /* Mostrar lupa y panel solo en desktop al hacer hover sobre la imagen */
-  @media (hover: hover) and (pointer: fine) {
-    .joya-img-wrap:hover .zoom-lens  { display: block; }
-    .joya-img-wrap:hover .zoom-panel { display: block; }
   }
 
   /* ── ESTADO AGOTADO: imagen en gris con sello ── */
