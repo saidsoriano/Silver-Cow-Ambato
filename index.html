@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silver Cow Ambato — Joyería de Alta Distinción</title>
+
+  <!-- Fuentes tipográficas desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Estilos separados en archivo externo para mejor rendimiento -->
+  <link rel="stylesheet" href="estilos.css">
+
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     NAVBAR — BARRA DE NAVEGACIÓN
+     Siempre visible en la parte superior de la página
+══════════════════════════════════════════════════ -->
+<nav id="navbar"> <!-- id="navbar" lo usa JavaScript para agregar clase "scrolled" -->
+
+  <!-- Logo: imagen + texto "Silver Cow Ambato" -->
+  <a href="#hero" class="nav-logo"> <!-- Al hacer clic vuelve al inicio -->
+    <!-- LOGO: Asegúrate que "Imagen.png" esté en la misma carpeta que este archivo HTML -->
+    <img src="logo.png" alt="Silver Cow Ambato" class="nav-logo-img">
+    <div class="nav-logo-text">
+      Silver Cow Ambato
+      <span>Joyería · Est. 2026</span> <!-- Subtexto debajo del nombre -->
+    </div>
+  </a>
+
+  <!-- Links de navegación — cada href="#id" lleva a esa sección -->
+  <!-- En móvil estos links se ocultan y se usa el menú hamburguesa -->
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#filosofia">Filosofía</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto">Instagram</a></li>
+  </ul>
+
+  <!-- Botón carrito en navbar — reemplaza "Contactar" -->
+  <!-- onclick abre el modal del carrito -->
+  <button class="nav-carrito" onclick="abrirCarrito()" aria-label="Abrir carrito">
+    <!-- Ícono de bolsa de compras (SVG) -->
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+    <!-- Contador de items — aparece cuando hay al menos 1 producto -->
+    <span class="carrito-count" id="carritoCount">0</span>
+  </button>
+
+  <!-- Botón hamburguesa — solo visible en móvil -->
+  <!-- onclick llama a la función toggleMenu() en JavaScript -->
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
+    <span></span> <!-- Línea 1 -->
+    <span></span> <!-- Línea 2 -->
+    <span></span> <!-- Línea 3 -->
+  </button>
+
+</nav>
+
+<!-- Menú móvil desplegable — oculto por defecto, aparece al tocar el hamburguesa -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <!-- Cada enlace cierra el menú al hacer clic (onclick="cerrarMenu()") -->
+  <a href="#nosotros"  onclick="cerrarMenu()">Nosotros</a>
+  <a href="#catalogo"  onclick="cerrarMenu()">Catálogo</a>
+  <a href="#filosofia" onclick="cerrarMenu()">Filosofía</a>
+  <a href="#proceso"   onclick="cerrarMenu()">Proceso</a>
+  <a href="#contacto" onclick="cerrarMenu()">Instagram</a>
+  <!-- Botón de WhatsApp al final del menú móvil -->
+  <a href="https://wa.me/593990688287" target="_blank" class="nav-mobile-cta" onclick="cerrarMenu()">Contactar por WhatsApp</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     HERO — PANTALLA DE BIENVENIDA
+     Primera sección que ve el usuario al entrar
+══════════════════════════════════════════════════ -->
+<section id="hero">
+
+  <div class="hero-bg"></div>    <!-- Capas de gradiente azul decorativas -->
+  <div class="hero-grain"></div> <!-- Textura de grano sutil -->
+  <div class="hero-orb"></div>   <!-- Esfera de luz azul flotante -->
+
+  <!-- Contenido central del Hero -->
+  <div class="hero-content">
+
+    <!-- Texto pequeño sobre el título -->
+    <p class="hero-eyebrow">Silver Cow Ambato — Plata Ley 925</p>
+
+    <!-- Título principal — PUEDES EDITAR ESTE TEXTO -->
+    <h1 class="hero-title">
+      No es una joya.<br>
+      <em>Es tu distinción</em><br> <!-- <em> aplica cursiva con efecto plateado degradado -->
+      hecha plata.
+    </h1>
+
+    <!-- Subtítulo descriptivo — PUEDES EDITAR ESTE TEXTO -->
+    <p class="hero-subtitle">
+      Piezas únicas creadas bajo pedido, verificadas con precisión absoluta.
+      Para quienes comprenden que la verdadera exclusividad no se encuentra — se encarga.
+    </p>
+
+    <!-- Botones de acción -->
+    <div class="hero-actions">
+      <!-- Botón principal: abre WhatsApp directamente -->
+      <a href="https://wa.me/593990688287?text=✨%20Hola%2C%20quiero%20más%20información%20para%20agendar%20un%20pedido.%20🐄🪙" target="_blank" class="btn-primary">
+        Iniciar una adquisición
+        <!-- Ícono de flecha diagonal (SVG dibujado en código) -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+        </svg>
+      </a>
+      <!-- Botón secundario: baja a la sección Nosotros -->
+      <a href="#nosotros" class="btn-ghost">Conocer la marca</a>
+    </div>
+
+  </div>
+
+  <!-- Indicador de scroll en la parte inferior -->
+  <div class="hero-scroll">
+    <span>Explorar</span>
+    <div class="scroll-line"></div> <!-- Línea vertical pulsante -->
+  </div>
+
+</section>
+
+
+<section id="catalogo">
+
+  <!-- Encabezado del catálogo -->
+  <div class="catalogo-header reveal">
+    <p class="section-label">Colección Silver Cow</p>
+    <h2 class="section-title">Catálogo de<br><em>adquisiciones</em></h2>
+    <p>Todas las piezas son elaboradas en Plata Ley 925. Precios en USD.</p>
+  </div>
+
+  <!-- Botones de filtro por categoría — SIN "Todas" -->
+  <div class="cat-filters reveal" id="catFiltros">
+    <button class="cat-btn active" onclick="cargarCategoria('pulseras', this)">Pulseras</button>
+    <button class="cat-btn" onclick="cargarCategoria('anillos', this)">Anillos</button>
+    <button class="cat-btn" onclick="cargarCategoria('aretes', this)">Aretes</button>
+    <button class="cat-btn" onclick="cargarCategoria('juegos', this)">Juegos</button>
+    <button class="cat-btn" onclick="cargarCategoria('dijes', this)">Dijes</button>
+    <button class="cat-btn" onclick="cargarCategoria('cadenas', this)">Cadenas</button>
+    <button class="cat-btn" onclick="cargarCategoria('cadenas_dijes', this)">Cadenas con Dijes</button>
+  </div>
+
+  <!-- Contenedor donde se inyectan los productos dinámicamente -->
+  <!-- JavaScript limpia y rellena este div cada vez que cambias de categoría -->
+  <div id="catalogoContenedor"></div>
+
+</section>
+
+
+<section id="nosotros">
+  <div class="nosotros-grid"> <!-- Cuadrícula de 2 columnas: visual | texto -->
+
+    <!-- COLUMNA IZQUIERDA: tarjeta visual con logo y estadísticas -->
+    <div class="nosotros-visual reveal"> <!-- "reveal" = aparece al hacer scroll -->
+
+      <!-- Tarjeta oscura principal -->
+      <div class="nosotros-card">
+        <!-- LOGO: misma carpeta que el HTML -->
+        <img src="logo.png" alt="Silver Cow Ambato" class="nosotros-logo-large">
+
+        <!-- Estadística principal: número 925 -->
+        <div class="nosotros-stat">
+          <div class="nosotros-stat-num">925</div>
+          <div class="nosotros-stat-label">Ley de pureza garantizada</div>
+        </div>
+
+        <!-- Dos estadísticas secundarias lado a lado -->
+        <div class="nosotros-stats">
+          <div class="nosotros-stat">
+            <div class="nosotros-stat-num" style="font-size:36px">2026</div>
+            <div class="nosotros-stat-label">Fundación</div>
+          </div>
+          <div class="divider-v"></div> <!-- Línea separadora vertical -->
+          <div class="nosotros-stat">
+            <div class="nosotros-stat-num" style="font-size:36px">100%</div>
+            <div class="nosotros-stat-label">Bajo pedido</div>
+          </div>
+        </div>
+      </div><!-- fin nosotros-card -->
+
+
+    </div><!-- fin columna izquierda -->
+
+    <!-- COLUMNA DERECHA: texto de la historia -->
+    <div class="reveal" style="transition-delay:.15s"> <!-- Aparece 0.15s después que la columna izquierda -->
+      <p class="section-label">Nuestra historia</p>
+      <h2 class="section-title">Ambato,<br>Nuestra Historia<br></h2>
+
+      <!-- HISTORIA: puedes editar este texto libremente -->
+      <p class="section-body">
+        Todo empezó con una visión y la certeza de que Ambato merecía algo distinto.
+        Said Soriano identificó en esta ciudad un mercado que valora la exclusividad
+        genuina — y junto a Byron Vaca, tomó la decisión estratégica de concentrar
+        toda la energía, pasión y excelencia de la marca en un solo lugar.
+        <br><br>
+        Lo que en Quito era un proyecto prometedor, en Ambato se convirtió en una
+        realidad que no para de crecer. Cerramos una etapa para abrir una superior:
+        aquella donde cada pieza que llevamos contiene el nombre de quien la porta
+        y la firma de quienes la crearon.
+        <br><br>
+        Silver Cow no es una joyería. Es la declaración de que usted merece lo mejor.
+      </p>
+    </div><!-- fin columna derecha -->
+
+  </div>
+</section>
+
+
+<section id="filosofia">
+  <div class="filosofia-inner">
+
+    <!-- Encabezado centrado -->
+    <div class="filosofia-header reveal">
+      <p class="section-label">Nuestros pilares</p>
+      <h2 class="section-title" style="text-align:center">La filosofía<br><em>Silver Cow</em></h2>
+    </div>
+
+    <!-- Los 3 pilares en cuadrícula -->
+    <div class="pilares-grid">
+
+      <!-- PILAR 1 -->
+      <div class="pilar reveal">
+        <div class="pilar-number">01</div> <!-- Número decorativo grande -->
+        <h3 class="pilar-title">Pureza<br>Absoluta</h3>
+        <!-- TEXTO DEL PILAR: puedes editarlo -->
+        <p class="pilar-text">Cada pieza es elaborada en Plata Ley 925 — el estándar más alto de pureza reconocido internacionalmente. No hay excepciones, no hay compromisos. Usted recibe exactamente lo que merece.</p>
+      </div>
+
+      <!-- PILAR 2 -->
+      <div class="pilar reveal" style="transition-delay:.15s"> <!-- Aparece 0.15s después -->
+        <div class="pilar-number">02</div>
+        <h3 class="pilar-title">Control de<br>Calidad Verificado</h3>
+        <p class="pilar-text">Antes de llegar a sus manos, cada adquisición pasa por un proceso de verificación técnica y estética minucioso. Su pieza no sale hasta que es impecable en cada detalle visible e invisible.</p>
+      </div>
+
+      <!-- PILAR 3 -->
+      <div class="pilar reveal" style="transition-delay:.3s"> <!-- Aparece 0.30s después -->
+        <div class="pilar-number">03</div>
+        <h3 class="pilar-title">Exclusividad<br>Bajo Pedido</h3>
+        <p class="pilar-text">Silver Cow elimina el mercado masivo de raíz. Cada pieza existe porque alguien la eligió. Su joya no está en ninguna vitrina — no la tiene nadie más. Es suya antes de existir.</p>
+      </div>
+
+    </div><!-- fin pilares-grid -->
+  </div>
+</section>
+
+
+<section id="proceso">
+  <div class="proceso-inner">
+
+    <!-- Encabezado centrado -->
+    <div class="proceso-header reveal">
+      <p class="section-label">Cómo funciona</p>
+      <h2 class="section-title" style="text-align:center">El proceso de<br><em>adquisición</em></h2>
+      <p class="section-body" style="max-width:460px;margin:0 auto;text-align:center">
+        Desde el primer contacto hasta la entrega en su puerta, cada etapa está diseñada
+        para una experiencia tan distinguida como la pieza que recibirá.
+      </p>
+    </div>
+
+    <!-- 5 pasos en fila — la línea conectora es un elemento CSS (::before) -->
+    <div class="proceso-steps">
+
+      <!-- PASO 1 -->
+      <div class="step reveal">
+        <div class="step-circle"><span class="step-num">I</span></div>
+        <h4 class="step-title">Contacto</h4>
+        <p class="step-text">Nos escribe por WhatsApp o Instagram. Su consulta es atendida con discreción y dedicación total.</p>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="step reveal" style="transition-delay:.1s">
+        <div class="step-circle"><span class="step-num">II</span></div>
+        <h4 class="step-title">Selección</h4>
+        <p class="step-text">Accede a nuestro catálogo privado y elige la pieza que representa su distinción.</p>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="step reveal" style="transition-delay:.2s">
+        <div class="step-circle"><span class="step-num">III</span></div>
+        <h4 class="step-title">Cotización</h4>
+        <p class="step-text">Recibe una cotización personalizada, transparente y sin compromisos ocultos.</p>
+      </div>
+
+      <!-- PASO 4 -->
+      <div class="step reveal" style="transition-delay:.3s">
+        <div class="step-circle"><span class="step-num">IV</span></div>
+        <h4 class="step-title">Elaboración</h4>
+        <p class="step-text">Con el 50% de adelanto, su pieza comienza a ser creada y verificada bajo control absoluto.</p>
+      </div>
+
+      <!-- PASO 5 -->
+      <div class="step reveal" style="transition-delay:.4s">
+        <div class="step-circle"><span class="step-num">V</span></div>
+        <h4 class="step-title">Entrega</h4>
+        <p class="step-text">Llegamos hasta usted. Servicio a domicilio en Ambato, sin que mueva un solo paso.</p>
+      </div>
+
+    </div><!-- fin proceso-steps -->
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="contacto-inner">
+
+    <!-- Bloque de título y subtítulo -->
+    <div class="reveal">
+      <!-- Badge de sello de calidad -->
+      <div class="ley-badge">
+        <span class="ley-dot"></span> <!-- Puntito decorativo izquierdo -->
+        Plata Ley 925 · Calidad Verificada · Ambato, Ecuador
+        <span class="ley-dot"></span> <!-- Puntito decorativo derecho -->
+      </div>
+
+      <!-- Título principal de contacto — PUEDES EDITAR ESTE TEXTO -->
+      <h2 class="contacto-title">Su distinción<br>comienza con<br><em>un mensaje.</em></h2>
+
+      <!-- Subtítulo — PUEDES EDITAR ESTE TEXTO -->
+      <p class="contacto-sub">
+        Estamos disponibles para atenderle con la exclusividad que usted merece.<br>
+        Escríbanos y demos inicio a su adquisición.
+      </p>
+    </div>
+
+    <!-- Tarjetas de contacto (aparecen 0.2s después que el título) -->
+    <div class="contacto-cards reveal" style="transition-delay:.2s">
+
+      <!-- TARJETA WHATSAPP — enlace directo -->
+      <a href="https://wa.me/593990688287" target="_blank" class="contacto-card">
+        <!-- Ícono de mensaje (SVG) -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.2">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        <div class="contacto-card-label">WhatsApp</div>
+        <!-- TELÉFONO: cambia este número si cambia -->
+        <div class="contacto-card-value">+593 990 688 287</div>
+      </a>
+
+      <!-- TARJETA INSTAGRAM — enlace directo -->
+      <a href="https://instagram.com/Silver_Cow_Ambato" target="_blank" class="contacto-card">
+        <!-- Ícono de Instagram (SVG) -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.2">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="var(--silver)"/>
+        </svg>
+        <div class="contacto-card-label">Instagram</div>
+        <!-- INSTAGRAM: cambia el usuario si cambia -->
+        <div class="contacto-card-value">@Silver_Cow_Ambato</div>
+      </a>
+
+      <!-- TARJETA DOMICILIO — no es enlace, solo informativa -->
+      <div class="contacto-card" style="pointer-events:none"> <!-- pointer-events:none = no es clickeable -->
+        <!-- Ícono de ubicación (SVG) -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.2">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <div class="contacto-card-label">Servicio a domicilio</div>
+        <div class="contacto-card-value">Ambato, Ecuador</div>
+      </div>
+
+    </div><!-- fin contacto-cards -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER — PIE DE PÁGINA
+══════════════════════════════════════════════════ -->
+<footer>
+  <!-- Copyright izquierda — actualiza el año si es necesario -->
+  <div class="footer-left">© 2026 Silver Cow Ambato. Todos los derechos reservados.</div>
+
+  <!-- Nombre de la marca en el centro -->
+  <div class="footer-center">Silver Cow · Ambato</div>
+
+  <!-- Links de redes sociales a la derecha -->
+  <div class="footer-right">
+    <a href="https://wa.me/593990688287" target="_blank" class="footer-link">WhatsApp</a>
+    <a href="https://instagram.com/Silver_Cow_Ambato" target="_blank" class="footer-link">Instagram</a>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════════
+     JAVASCRIPT — LÓGICA DE LA PÁGINA
+     Se coloca al final para que el HTML cargue primero
+══════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════
+     MODAL DEL CARRITO
+     Ventana emergente central — se abre al hacer clic en el ícono del navbar
+══════════════════════════════════════════════════ -->
+<!-- Fondo oscuro detrás del modal — clic aquí lo cierra -->
+<div class="carrito-overlay" id="carritoOverlay" onclick="cerrarCarritoOverlay(event)">
+
+  <!-- Ventana del carrito -->
+  <div class="carrito-modal">
+
+    <!-- Encabezado fijo -->
+    <div class="carrito-header">
+      <h3>Tu Selección</h3>
+      <button class="carrito-cerrar" onclick="cerrarCarrito()">✕</button>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="carrito-body" id="carritoBody">
+      <!-- Mensaje cuando el carrito está vacío -->
+      <div class="carrito-vacio" id="carritoVacio">
+        Aún no has seleccionado ninguna pieza.<br>
+        Explora el catálogo y agrega lo que desees.
+      </div>
+      <!-- Los productos se insertan aquí dinámicamente por JavaScript -->
+    </div>
+
+    <!-- Pie del modal: envío, cupón, totales y botón WhatsApp -->
+    <div class="carrito-footer" id="carritoFooter" style="display:none">
+
+      <!-- ── SELECTOR DE UBICACIÓN ── -->
+      <div class="carrito-envio">
+        <label>Ubicación de entrega</label>
+        <div class="envio-opciones">
+          <!-- Opción Ambato: envío gratis -->
+          <button class="envio-opt activo" id="btnAmbato" onclick="seleccionarEnvio('ambato')">
+            🏙 Ambato<br><small>Envío gratis</small>
+          </button>
+          <!-- Opción otra ciudad: $5.00 -->
+          <button class="envio-opt" id="btnOtraCiudad" onclick="seleccionarEnvio('otra')">
+            📦 Otra ciudad<br><small>$5.00</small>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── CUPÓN DE DESCUENTO ── -->
+      <!-- ════════════════════════════════════════════════
+           CUPONES VIP — CAMBIA LAS PALABRAS AQUÍ
+           Cada cupón tiene: código (palabra secreta) y descuento en %
+           CUPÓN 1: 1.5% de descuento
+           CUPÓN 2: 2.2% de descuento
+           CUPÓN 3: 3.0% de descuento
+           Los códigos se definen en el JavaScript más abajo
+      ════════════════════════════════════════════════ -->
+      <div class="carrito-cupon">
+        <label>Cupón exclusivo</label>
+        <div class="cupon-row">
+          <input
+            type="text"
+            class="cupon-input"
+            id="cuponInput"
+            placeholder="Ingresa tu código"
+            maxlength="20"
+          >
+          <button class="cupon-btn" onclick="aplicarCupon()">Aplicar</button>
+        </div>
+        <!-- Mensaje de resultado del cupón -->
+        <div class="cupon-msg" id="cuponMsg"></div>
+      </div>
+
+      <!-- ── RESUMEN DE TOTALES ── -->
+      <div class="carrito-totales">
+        <!-- Subtotal (suma de todos los productos) -->
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span id="totalSubtotal">$0.00</span>
+        </div>
+        <!-- Descuento del cupón — solo visible si se aplicó uno válido -->
+        <div class="total-row descuento" id="filaDescuento" style="display:none">
+          <span id="labelDescuento">Descuento</span>
+          <span id="totalDescuento">-$0.00</span>
+        </div>
+        <!-- Costo de envío -->
+        <div class="total-row">
+          <span>Envío</span>
+          <span id="totalEnvio">Gratis</span>
+        </div>
+        <!-- Total final en grande -->
+        <div class="total-row final">
+          <span>Total</span>
+          <span id="totalFinal">$0.00</span>
+        </div>
+      </div>
+
+      <!-- ── BOTÓN ENVIAR PEDIDO POR WHATSAPP ── -->
+      <!-- Al hacer clic genera el resumen y abre WhatsApp con el mensaje -->
+      <button class="carrito-whatsapp" id="btnWhatsapp" onclick="enviarPedidoWhatsApp()">
+        <!-- Ícono de WhatsApp (SVG) -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M11.997 2C6.477 2 2 6.477 2 11.997c0 1.76.46 3.41 1.26 4.85L2 22l5.25-1.38A9.953 9.953 0 0011.997 22C17.52 22 22 17.52 22 11.997 22 6.477 17.52 2 11.997 2z" fill="none" stroke="white" stroke-width="1.5"/>
+        </svg>
+        Enviar pedido por WhatsApp
+      </button>
+
+    </div><!-- fin carrito-footer -->
+  </div><!-- fin carrito-modal -->
+</div><!-- fin carrito-overlay -->
+
+
+<!-- ══════════════════════════════════════════════════
+     BOTÓN FLOTANTE DE WHATSAPP
+     Siempre visible en la esquina inferior derecha
+══════════════════════════════════════════════════ -->
+<a
+  href="https://wa.me/593990688287"
+  target="_blank"
+  class="whatsapp-float"
+  aria-label="Contactar por WhatsApp"
+>
+  <!-- Ícono de WhatsApp (SVG) -->
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M11.997 2C6.477 2 2 6.477 2 11.997c0 1.76.46 3.41 1.26 4.85L2 22l5.25-1.38A9.953 9.953 0 0011.997 22C17.52 22 22 17.52 22 11.997 22 6.477 17.52 2 11.997 2z" fill="none" stroke="white" stroke-width="1.5"/>
+  </svg>
+</a>
+
+<!-- ══════════════════════════════════════════════════
+     CONFIGURACIÓN GLOBAL — Cambia aquí los valores
+     ══════════════════════════════════════════════════ -->
+<script>
+const CONFIG = {
+  WHATSAPP_NUM: '593990688287',
+  WHATSAPP_DISPLAY: '+593 990 688 287',
+  INSTAGRAM_HANDLE: 'Silver_Cow_Ambato',
+  PLATA_LEY: 'Plata Ley 925',
+  ENVIO_AMBATO: 0,
+  ENVIO_OTRA: 5,
+};
+</script>
+
+<!-- Datos del catálogo — todos los productos -->
+<script src="catalogo.js"></script>
+
+<!-- Motor dinámico del catálogo — renderizado, paginación, lazy loading -->
+<script src="catalogo_motor.js"></script>
+
+<!-- Lógica del carrito, hamburguesa y scroll -->
+<script>
+
+
+  // ══════════════════════════════════════════════════
+  // CUPONES VIP — EDITA AQUÍ LAS PALABRAS SECRETAS
+  // Formato: 'PALABRA': porcentaje de descuento
+  // ══════════════════════════════════════════════════
+  const CUPONES = {
+    'SILVERVIPGT':  5.0,  // Cupón 1 → 5.0% de descuento — CAMBIA "SILVERVIP1" por tu palabra secreta
+    'SILVERVIPVF1':  7.0,  // Cupón 2 → 7.0% de descuento — CAMBIA "SILVERVIP2" por tu palabra secreta
+    'SILVERVIP':  10.0,  // Cupón 3 → 10.0% de descuento — CAMBIA "SILVERVIP3" por tu palabra secreta
+  };
+
+  // ══════════════════════════════════════════════════
+  // ESTADO GLOBAL DEL CARRITO
+  // Todas las variables que controlan el carrito
+  // ══════════════════════════════════════════════════
+  let carrito       = [];        // Array con los productos agregados
+  let envioTipo     = 'ambato';  // 'ambato' = gratis, 'otra' = $5.00
+  let cuponActivo   = null;      // Cupón aplicado actualmente (null = ninguno)
+  let cuponPct      = 0;         // Porcentaje de descuento activo
+
+  // ══════════════════════════════════════════════════
+  // AGREGAR AL CARRITO
+  // nombre: nombre de la joya
+  // precio: precio en USD (0 si es bajo pedido)
+  // esPedido: true si es bajo pedido, false/undefined si es disponible
+  // ══════════════════════════════════════════════════
+function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
+  const existente = carrito.find(p => p.nombre === nombre);
+  if (existente) {
+    if (existente.cantidad >= 3) {
+      alert('Más de 3 unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp.');
+      return;
+    }
+    existente.cantidad++;
+  } else {
+    carrito.push({ nombre, precio, cantidad: 1, esPedido, codigo });
+  }
+  actualizarCarrito();
+  abrirCarrito();
+}
+
+  // ══════════════════════════════════════════════════
+  // ABRIR / CERRAR EL MODAL DEL CARRITO
+  // ══════════════════════════════════════════════════
+  function abrirCarrito() {
+    document.getElementById('carritoOverlay').classList.add('abierto');
+    document.body.style.overflow = 'hidden'; // Bloquea scroll del fondo
+  }
+
+  function cerrarCarrito() {
+    document.getElementById('carritoOverlay').classList.remove('abierto');
+    document.body.style.overflow = ''; // Restaura el scroll
+  }
+
+  // Cierra el carrito si el usuario hace clic en el fondo oscuro (fuera del modal)
+  function cerrarCarritoOverlay(e) {
+    if (e.target === document.getElementById('carritoOverlay')) cerrarCarrito();
+  }
+
+  // ══════════════════════════════════════════════════
+  // CAMBIAR CANTIDAD DE UN PRODUCTO
+  // delta = +1 para aumentar, -1 para disminuir
+  // ══════════════════════════════════════════════════
+  function cambiarCantidad(nombre, delta) {
+    const item = carrito.find(p => p.nombre === nombre);
+    if (!item) return;
+
+    const nuevaCantidad = item.cantidad + delta;
+
+    if (nuevaCantidad > 5) {
+      // Alerta si intenta superar 5 unidades
+      alert('Más de 5 unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp para coordinar tu pedido especial.');
+      return;
+    }
+
+    if (nuevaCantidad <= 0) {
+      // Si llega a 0, elimina el producto del carrito
+      eliminarDelCarrito(nombre);
+      return;
+    }
+
+    item.cantidad = nuevaCantidad;
+    actualizarCarrito();
+  }
+
+  // ══════════════════════════════════════════════════
+  // ELIMINAR UN PRODUCTO DEL CARRITO
+  // ══════════════════════════════════════════════════
+  function eliminarDelCarrito(nombre) {
+    carrito = carrito.filter(p => p.nombre !== nombre); // Quita el producto del array
+    actualizarCarrito();
+  }
+
+  // ══════════════════════════════════════════════════
+  // SELECTOR DE TIPO DE ENVÍO
+  // 'ambato' = gratis | 'otra' = $5.00
+  // ══════════════════════════════════════════════════
+  function seleccionarEnvio(tipo) {
+    envioTipo = tipo;
+    // Actualiza estilos de los botones de selección
+    document.getElementById('btnAmbato').classList.toggle('activo', tipo === 'ambato');
+    document.getElementById('btnOtraCiudad').classList.toggle('activo', tipo === 'otra');
+    actualizarTotales(); // Recalcula el total con el nuevo envío
+  }
+
+  // ══════════════════════════════════════════════════
+  // APLICAR CUPÓN DE DESCUENTO
+  // Valida el código y aplica el porcentaje correspondiente
+  // ══════════════════════════════════════════════════
+  function aplicarCupon() {
+    const codigo = document.getElementById('cuponInput').value.trim().toUpperCase();
+    const msg    = document.getElementById('cuponMsg');
+
+    if (CUPONES[codigo]) {
+      // Cupón válido
+      cuponActivo = codigo;
+      cuponPct    = CUPONES[codigo];
+      msg.className   = 'cupon-msg ok';
+      msg.textContent = `✓ Cupón aplicado — ${cuponPct}% de descuento en tu pedido`;
+    } else {
+      // Cupón inválido
+      cuponActivo = null;
+      cuponPct    = 0;
+      msg.className   = 'cupon-msg error';
+      msg.textContent = '✕ Código no válido. Verifica e intenta de nuevo.';
+    }
+
+    actualizarTotales(); // Recalcula con o sin descuento
+  }
+
+  // ══════════════════════════════════════════════════
+  // ACTUALIZAR TODA LA UI DEL CARRITO
+  // Renderiza los productos y recalcula los totales
+  // ══════════════════════════════════════════════════
+  function actualizarCarrito() {
+    const body   = document.getElementById('carritoBody');
+    const vacio  = document.getElementById('carritoVacio');
+    const footer = document.getElementById('carritoFooter');
+    const count  = document.getElementById('carritoCount');
+
+    // Total de unidades para el contador del navbar
+    const totalUnidades = carrito.reduce((s, p) => s + p.cantidad, 0);
+    count.textContent = totalUnidades;
+    count.classList.toggle('visible', totalUnidades > 0); // Muestra el número si hay items
+
+    if (carrito.length === 0) {
+      // Carrito vacío: muestra mensaje y oculta el footer
+      vacio.style.display  = 'block';
+      footer.style.display = 'none';
+      // Limpia los items anteriores
+      body.querySelectorAll('.carrito-item').forEach(el => el.remove());
+      return;
+    }
+
+    // Carrito con productos
+    vacio.style.display  = 'none';
+    footer.style.display = 'block';
+
+    // Limpia los items anteriores para redibujar
+    body.querySelectorAll('.carrito-item').forEach(el => el.remove());
+
+    // Dibuja cada producto en el carrito
+    carrito.forEach(item => {
+      // Muestra el precio siempre — tanto disponibles como bajo pedido
+      const subtotalItem = `$${(item.precio * item.cantidad).toFixed(2)}`;
+      const precioUnit   = `$${item.precio.toFixed(2)} c/u · ${CONFIG.PLATA_LEY}${item.esPedido ? ' · Bajo Pedido' : ''}`;
+      const div = document.createElement('div');
+      div.className = 'carrito-item';
+      div.innerHTML = `
+        <div class="carrito-item-info">
+          <div class="carrito-item-nombre">${item.nombre}</div>
+          <div class="carrito-item-precio-unit">${precioUnit}</div>
+        </div>
+        <div class="carrito-item-qty">
+          <button class="qty-btn" onclick="cambiarCantidad('${item.nombre}', -1)">−</button>
+          <span class="qty-num">${item.cantidad}</span>
+          <button class="qty-btn" onclick="cambiarCantidad('${item.nombre}', +1)">+</button>
+        </div>
+        <div class="carrito-item-subtotal">${subtotalItem}</div>
+        <button class="carrito-item-del" onclick="eliminarDelCarrito('${item.nombre}')" title="Eliminar">✕</button>
+      `;
+      body.appendChild(div);
+    });
+
+    actualizarTotales(); // Recalcula los totales
+  }
+
+  // ══════════════════════════════════════════════════
+  // CALCULAR Y MOSTRAR TOTALES
+  // Subtotal + envío + descuento = total final
+  // ══════════════════════════════════════════════════
+  function actualizarTotales() {
+    // Suma TODOS los productos — disponibles y bajo pedido (ahora todos tienen precio)
+    const subtotal   = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
+    const costoEnvio = envioTipo === 'ambato' ? CONFIG.ENVIO_AMBATO : CONFIG.ENVIO_OTRA;
+    const descuento  = cuponPct > 0 ? (subtotal * cuponPct / 100) : 0;
+    const total      = subtotal - descuento + costoEnvio;
+
+    // Verifica si hay items bajo pedido para mostrar nota informativa
+    const hayPedidos = carrito.some(p => p.esPedido);
+
+    document.getElementById('totalSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('totalEnvio').textContent    = costoEnvio === 0 ? 'Gratis' : `$${costoEnvio.toFixed(2)}`;
+    document.getElementById('totalFinal').textContent    = `$${total.toFixed(2)}${hayPedidos ? '*' : ''}`;
+
+    const filaDesc = document.getElementById('filaDescuento');
+    if (descuento > 0) {
+      filaDesc.style.display = 'flex';
+      document.getElementById('labelDescuento').textContent = `Descuento (${cuponPct}%)`;
+      document.getElementById('totalDescuento').textContent = `-$${descuento.toFixed(2)}`;
+    } else {
+      filaDesc.style.display = 'none';
+    }
+  }
+
+  // ══════════════════════════════════════════════════
+  // ENVIAR PEDIDO POR WHATSAPP
+  // Genera el resumen completo y abre WhatsApp con el mensaje
+  // ══════════════════════════════════════════════════
+  function enviarPedidoWhatsApp() {
+    if (carrito.length === 0) return;
+
+    const disponibles = carrito.filter(p => !p.esPedido);
+    const pedidos     = carrito.filter(p => p.esPedido);
+    const subtotal    = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
+    const costoEnvio  = envioTipo === 'ambato' ? CONFIG.ENVIO_AMBATO : CONFIG.ENVIO_OTRA;
+    const descuento   = cuponPct > 0 ? (subtotal * cuponPct / 100) : 0;
+    const total       = subtotal - descuento + costoEnvio;
+
+    let msg = '🐄 *PEDIDO SILVER COW AMBATO*\n';
+    msg    += '━━━━━━━━━━━━━━━━━━━━━━\n\n';
+
+    // Piezas disponibles con precio
+    if (disponibles.length > 0) {
+      msg += '*✅ Piezas disponibles:*\n';
+      disponibles.forEach(p => {
+        const ref1 = p.codigo ? ` ${p.codigo}` : '';
+        msg += `• ${p.nombre}${ref1} × ${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
+      });
+    }
+
+    // Piezas bajo pedido — ahora también muestran precio
+    if (pedidos.length > 0) {
+      msg += '\n*📋 Piezas bajo pedido:*\n';
+      pedidos.forEach(p => {
+        const ref2 = p.codigo ? ` ${p.codigo}` : '';
+        msg += `• ${p.nombre}${ref2} × ${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
+      });
+    }
+
+    msg += `\n━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `Subtotal: $${subtotal.toFixed(2)}\n`;
+
+    if (descuento > 0) {
+      msg += `Descuento (${cuponPct}% - Cupón ${cuponActivo}): -$${descuento.toFixed(2)}\n`;
+    }
+
+    msg += `Envío: ${costoEnvio === 0 ? 'Gratis (Ambato)' : `$${costoEnvio.toFixed(2)} (Otra ciudad)`}\n`;
+    msg += `\n*TOTAL: $${total.toFixed(2)}*\n`;
+
+    if (pedidos.length > 0) {
+      msg += `_*Nota: Los precios de piezas bajo pedido son referenciales y pueden ajustarse en la cotización final._\n`;
+    }
+
+    msg += `\n_${CONFIG.PLATA_LEY} — Silver Cow Ambato_`;
+
+    const url = `https://wa.me/${CONFIG.WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    // Si bajó más de 60px agrega clase "scrolled" (fondo oscuro), si no la quita
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+
+  // ══════════════════════════════════════════════════
+  // MENÚ HAMBURGUESA — abrir y cerrar en móvil
+  // ══════════════════════════════════════════════════
+  function toggleMenu() {
+    const menu       = document.getElementById('mobileMenu');  // Panel del menú
+    const hamburger  = document.getElementById('hamburger');   // Botón hamburguesa
+    const abierto    = menu.classList.toggle('abierto');       // Alterna la clase "abierto"
+    hamburger.classList.toggle('abierto', abierto);            // Anima el ícono → X
+    // Bloquea el scroll del body cuando el menú está abierto
+    document.body.style.overflow = abierto ? 'hidden' : '';
+  }
+
+  // Cierra el menú al hacer clic en un enlace
+  function cerrarMenu() {
+    document.getElementById('mobileMenu').classList.remove('abierto');
+    document.getElementById('hamburger').classList.remove('abierto');
+    document.body.style.overflow = ''; // Restaura el scroll
+  }
+
+
+  // ══════════════════════════════════════════════════
+  // ANIMACIÓN DE APARICIÓN AL HACER SCROLL
+  // Los elementos con clase "reveal" aparecen al entrar en pantalla
+  // ══════════════════════════════════════════════════
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {              // Si el elemento entró en pantalla...
+        e.target.classList.add('visible'); // ...agrega clase "visible" que lo hace aparecer
+      }
+    });
+  }, { threshold: .08 }); // Se activa cuando al menos el 8% del elemento es visible
+  reveals.forEach(r => obs.observe(r));
+
+
+  // ══════════════════════════════════════════════════
+  // ACTUALIZAR ENLACES Y TEXTOS DESDE CONFIG
+  // ══════════════════════════════════════════════════
+  document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
+    const raw = a.getAttribute('href');
+    const text = raw.includes('?text=') ? '?text=' + raw.split('?text=')[1] : '';
+    a.href = `https://wa.me/${CONFIG.WHATSAPP_NUM}${text}`;
+  });
+  document.querySelectorAll('a[href*="instagram.com/"]').forEach(a => {
+    a.href = `https://instagram.com/${CONFIG.INSTAGRAM_HANDLE}`;
+  });
+  document.querySelectorAll('.contacto-card').forEach(card => {
+    const label = card.querySelector('.contacto-card-label');
+    if (!label) return;
+    if (label.textContent === 'WhatsApp') {
+      card.querySelector('.contacto-card-value').textContent = CONFIG.WHATSAPP_DISPLAY;
+    }
+    if (label.textContent === 'Instagram') {
+      card.querySelector('.contacto-card-value').textContent = `@${CONFIG.INSTAGRAM_HANDLE}`;
+    }
+  });
+
+
+</script>
+</body>
+</html><li><a href="#catalogo">Catálogo</a></li>
