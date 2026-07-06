@@ -303,8 +303,4 @@ function activarZoom(card) {
 
 
 // ── INICIALIZACIÓN ──
-// Carga la primera categoría al abrir la página
-document.addEventListener('DOMContentLoaded', () => {
-  const primerBtn = document.querySelector('.cat-btn');
-  if (primerBtn) cargarCategoria('pulseras', primerBtn);
-});
+// La primera categoría se carga desde catalogo.js después del fetch
