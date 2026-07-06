@@ -4,7 +4,7 @@
 // ══════════════════════════════════════════════════
 
 // URL del Google Apps Script — CAMBIA ESTA URL cuando publiques tu script
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw3uqoeT2pbxSLmruMfz4UHolA5LabcDR2pJ3XjNPgXijcKJ9QyGisyHux1jeBaVbaA/exec' + '?_=' + Date.now();
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwN-2Ee7YTiKae_PIr2SjMETDqL6y-u-Hi135y0xc9v1i2gk1SUNijUUR7OUJi4u48d/exec' + '?_=' + Date.now();
 
 let CATALOGO = {};
 
