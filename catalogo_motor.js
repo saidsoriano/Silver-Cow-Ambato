@@ -15,6 +15,8 @@ let productosMostrados = 0;        // Cuántos productos están en el DOM ahora
 // Se llama al hacer clic en un botón de filtro
 // cat: nombre de la categoría | btnEl: el botón que se hizo clic
 function cargarCategoria(cat, btnEl) {
+  console.log('catalogo_motor.js: cargarCategoria llamada con:', cat);
+  
   // Actualiza botón activo
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btnEl.classList.add('active');
@@ -25,13 +27,24 @@ function cargarCategoria(cat, btnEl) {
 
   // Limpia el contenedor
   const contenedor = document.getElementById('catalogoContenedor');
+  console.log('catalogo_motor.js: contenedor encontrado:', !!contenedor);
   contenedor.innerHTML = '';
+
+  // Verificar que CATALOGO tenga la categoría
+  if (!CATALOGO[cat]) {
+    console.error('catalogo_motor.js: CATEGORÍA NO ENCONTRADA:', cat);
+    console.log('catalogo_motor.js: Categorías disponibles:', Object.keys(CATALOGO));
+    contenedor.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#ff6b6b;">Error: Categoría no encontrada</div>';
+    return;
+  }
 
   // Ordena: disponibles primero, pedido segundo, agotados al final
   const peso = { disponible: 0, pedido: 1, agotado: 2 };
   const productos = [...CATALOGO[cat]].sort((a, b) =>
     (peso[a.estado] ?? 1) - (peso[b.estado] ?? 1)
   );
+  
+  console.log('catalogo_motor.js:', productos.length, 'productos en', cat);
 
   // Crea la sección con título y contador
   const seccion = document.createElement('div');
