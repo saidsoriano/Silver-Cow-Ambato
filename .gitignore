@@ -1,3 +1,5 @@
 *.zip
 .DS_Store
 .env
+.venv
+extraer_proveedor.py
