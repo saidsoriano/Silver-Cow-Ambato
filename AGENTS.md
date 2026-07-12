@@ -1,39 +1,60 @@
-# Silver Cow Ambato — AGENTS.md
+# Silver Cow Ambato
 
-## Architecture
-- Static HTML/CSS/JS site hosted on GitHub Pages (no build tools, no server)
-- Script load order in `index.html`: CONFIG inline → `catalogo.js` → `catalogo_motor.js` → inline carrito+cupones JS
-- Data from Google Sheets via Apps Script; images in local category folders (`pulseras/`, `anillos/`, etc.)
-- `catalogo_importar.csv` = master product list (221 products, original import)
+Catálogo web de joyería de plata 925. Página estática para clientes, administrada por el dueño mediante Google Sheets + GitHub.
 
-## Google Sheets <> Site Data Flow
-- Apps Script `doGet()` reads all sheet headers dynamically, serves per-sheet JSON
-- Frontend expects per-product fields: `nombre`, `precio`, `codigo`, `estado`, `esPedido`, `img`, `desc`
-  - `desc` combines codigo + description text (frontend extracts code via `\[[^\]]+\]`)
+## Stack
+- Lenguaje: JavaScript (vanilla, sin frameworks ni bundlers)
+- Hosting: GitHub Pages (auto-deploy en push a main)
+- Datos: Google Sheets → Google Apps Script → JSON
+- Script auxiliar: Python 3 + requests + beautifulsoup4 (en `.venv/`, solo local)
+- Control de versiones: Git + GitHub
+
+## Comandos
+- `.venv/bin/python extraer_proveedor.py pulseras` — extrae una categoría del proveedor (CSV + imágenes)
+- `.venv/bin/python extraer_proveedor.py todas` — extrae las 7 categorías
+- `git add . && git commit -m "msg" && git push` — despliega en GitHub Pages (~1-2 min)
+- (No hay test, lint, ni build — es HTML/JS plano)
+
+## Estructura del proyecto
+- `index.html` — entrada única del sitio (~892 líneas, todo el HTML + carrito JS inline + cupones)
+- `catalogo.js` — fetch desde Google Sheets + caché en localStorage
+- `catalogo_motor.js` — renderizado del grid, paginación (5 por bloque), zoom, lazy loading
+- `estilos.css` — todos los estilos (~1314 líneas), colores de marca en variables CSS
+- `google_apps_script.js` — código que va pegado en Extensiones → Apps Script de Google Sheets
+- `extraer_proveedor.py` — script local para importar productos del proveedor (excluido de git)
+- `catalogo_importar.csv` — importación original (221 productos, 8 columnas)
+- `pulseras/`, `anillos/`, `aretes/`, `cadenas/`, `cadenas_dijes/`, `dijes/`, `juegos/` — imágenes por categoría
+- `AGENTS.md` — este archivo
+
+## Convenciones
+- Imágenes: `{codigo}.jpg` dentro de la carpeta de su categoría (ej: `pulseras/P-PL-296.jpg`)
+- Códigos de producto: formato `[P-XX-NNN]` (ej: `[P-PL-296]`)
+- Productos en Google Sheets: columnas `nombre`, `precio`, `codigo`, `estado`, `esPedido`, `img`, `desc`
   - `estado`: `disponible` | `pedido` | `agotado`
-  - `esPedido`: boolean — `FALSE` (in stock) | `TRUE` (bajo pedido/consulta)
-- Apps Script line 40-41: builds `desc` = codigo + desc from sheet columns
-- Cache-busting: manual `?v=N` in `SHEETS_URL` (increment when products change)
-- localStorage cache key: `silvercow_catalogo`
-- First Apps Script request after inactivity: ~5-10s cold start
+  - `esPedido`: `FALSE` (stock directo) | `TRUE` (bajo pedido/consulta)
+- `desc` en sheets combina el código + texto de descripción (el frontend extrae el código con regex `\[[^\]]+\]`)
+- CONFIG global (inline en index.html): `WHATSAPP_NUM`, `INSTAGRAM_HANDLE`, `PLATA_LEY`, `ENVIO_AMBATO`, `ENVIO_OTRA`
+- Marca de lujo — evitar "oferta", "descuento barato", "buy now"
+- Todo pricing, descuentos y cupones es 100% client-side (sin backend)
+- Scripts cargan en orden: CONFIG inline → `catalogo.js` → `catalogo_motor.js` → carrito+cupones inline
 
-## Key Commands
-```bash
-.venv/bin/python extraer_proveedor.py pulseras   # single category
-.venv/bin/python extraer_proveedor.py todas       # all 7 categories
-git add . && git commit -m "msg" && git push      # deploy to GitHub Pages
-```
+## No hagas
+- No instalar dependencias npm ni frameworks — el sitio es vanilla JS
+- No tocar los archivos dentro de `.venv/` (entorno virtual de Python, solo local)
+- No cambiar nombres de columnas en Google Sheets sin actualizar TAMBIÉN `google_apps_script.js` y `catalogo_motor.js`
+- No subir `extraer_proveedor.py` ni `.venv/` a GitHub (están en `.gitignore`)
+- No forzar push con `--force` ni modificar el historial de git
+- No subir archivos `.env*` al repositorio
 
-## Conventions
-- Luxury brand — avoid "oferta", "descuento barato", "buy now"
-- All pricing, discounts, and coupons are client-side only (no backend)
-- Image naming: `{codigo}.jpg` (e.g., `P-PL-296.jpg`) in category folders
-- Product code format: `[P-XX-NNN]` (e.g., `[P-PL-296]`)
-- CONFIG object (inline in index.html): `WHATSAPP_NUM`, `INSTAGRAM_HANDLE`, `PLATA_LEY`, `ENVIO_*`
-- `.gitignore`: `*.zip`, `.DS_Store`, `.env`, `.venv`, `extraer_proveedor.py`
+## Flujo de trabajo
+- Para cambios no triviales, propón un plan antes de implementar.
+- Una tarea a la vez. Al terminar, resume qué cambiaste.
+- Si no estás seguro al 80%, pregunta antes de actuar.
 
-## Quirks
-- Apps Script `setupSheets()` uses header `desc` — CSV must match
-- Changing column names requires updating BOTH Apps Script AND `catalogo_motor.js`
-- `extraer_proveedor.py` only runs locally (excluded from git)
-- GitHub Pages auto-deploys on push to main (~1-2 min delay)
+## Documentación
+- Google Sheets integración: `google_apps_script.js` (contiene `doGet`, `setupSheets`, `colorByStatus`)
+- Script de importación de proveedor: `extraer_proveedor.py` (usa `.venv/bin/python`)
+- Cache de datos: localStorage key `silvercow_catalogo`; cache-busting con `?v=N` en `SHEETS_URL`
+- Tiempo de carga: primer request al Apps Script tras inactividad = 5-10s (cold start)
+- GitHub Pages: auto-deploy en push a `main`, URL pública se actualiza en ~1-2 min
+- Favicon generado desde `logo_ig_transparente.png` (archivo `favicon.ico`)
