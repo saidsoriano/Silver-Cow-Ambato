@@ -5,15 +5,17 @@
      y se actualiza en TODA la página automáticamente.
   ══════════════════════════════════════════════════ */
   :root {
-    --sapphire:       #0F2557; /* Azul zafiro principal de la marca */
-    --sapphire-deep:  #081840; /* Azul zafiro más oscuro, para fondos profundos */
-    --sapphire-mid:   #1a3a7a; /* Azul zafiro medio, para hover de botones */
-    --sapphire-light: #2a4fa0; /* Azul zafiro claro, para etiquetas y acentos */
-    --silver:         #C8D0DC; /* Color plata normal */
-    --silver-bright:  #E8EDF5; /* Plata brillante, para textos importantes */
-    --text-muted:     #8899BB; /* Texto secundario, gris azulado suave */
-    --black-deep:     #060C1A; /* Negro profundo para fondos principales */
-    --white-pure:     #FFFFFF; /* Blanco puro para títulos principales */
+    --sapphire:       #0F2557;
+    --sapphire-deep:  #081840;
+    --sapphire-mid:   #1a3a7a;
+    --sapphire-light: #2a4fa0;
+    --silver:         #C8D0DC;
+    --silver-bright:  #E8EDF5;
+    --text-muted:     #8899BB;
+    --black-deep:     #060C1A;
+    --white-pure:     #FFFFFF;
+    --gold-accent:    #C9A84C;
+    --gold-glow:      rgba(201,168,76,.15);
   }
 
   /* ── RESET GENERAL ──
@@ -21,7 +23,16 @@
      para que todo se vea igual en Chrome, Firefox, Safari, etc. */
   * { margin:0; padding:0; box-sizing:border-box; }
 
-  html { scroll-behavior:smooth; } /* Hace que los enlaces internos (#seccion) bajen suavemente */
+  html { scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 
   /* Estilo base del cuerpo de la página */
   body {
@@ -564,8 +575,8 @@
   /* Texto en cursiva dentro del título (con efecto degradado plateado) */
   .hero-title em {
     font-style: italic;
-    background: linear-gradient(135deg, #C8D0DC, #E8EDF5, #9AABCC); /* Degradado plateado */
-    -webkit-background-clip: text;   /* Aplica el degradado al texto (Chrome/Safari) */
+    background: linear-gradient(135deg, #E8EDF5, #C8D0DC, #C9A84C);
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
@@ -661,7 +672,7 @@
   /* ══════════════════════════════════════════════════
      ESTILOS COMUNES A TODAS LAS SECCIONES
   ══════════════════════════════════════════════════ */
-  section { padding: 140px 60px; } /* Espaciado generoso arriba/abajo en todas las secciones */
+  section { padding: 140px 60px; }
 
   /* Etiqueta pequeña sobre los títulos ("Nuestra historia", "Nuestros pilares", etc.) */
   .section-label {
@@ -697,8 +708,10 @@
   /* ── ANIMACIÓN DE APARICIÓN AL HACER SCROLL ──
      Los elementos con clase "reveal" empiezan invisibles.
      JavaScript les agrega "visible" cuando entran en pantalla. */
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); } /* Aparece y sube a su posición */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.25,.1,.25,1), transform .9s cubic-bezier(.25,.1,.25,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  ::selection { background: rgba(201,168,76,.3); color: var(--white-pure); }
 
 
   /* ══════════════════════════════════════════════════
@@ -918,7 +931,7 @@
     transition: all .3s;
   }
   .cat-btn:hover { border-color: rgba(200,208,220,.4); color: var(--silver-bright); }
-  .cat-btn.active { background: var(--sapphire); border-color: var(--sapphire); color: var(--white-pure); } /* Botón seleccionado */
+  .cat-btn.active { background: var(--sapphire); border-color: var(--sapphire); color: var(--white-pure); box-shadow: 0 0 20px rgba(15,37,87,.5); }
 
   /* ── SECCIÓN DE UNA CATEGORÍA (ej: "Pulseras") ── */
   .cat-section { margin-bottom: 80px; }
@@ -947,7 +960,18 @@
     transition: all .4s;
     position: relative;
   }
-  .joya-card:hover { border-color: rgba(200,208,220,.2); transform: translateY(-4px); box-shadow: 0 24px 64px rgba(15,37,87,.4); } /* Sube al hacer hover */
+  .joya-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .4s;
+    background: linear-gradient(135deg, rgba(201,168,76,.04), transparent 50%);
+  }
+  .joya-card:hover { border-color: rgba(200,208,220,.2); transform: translateY(-4px); box-shadow: 0 24px 64px rgba(15,37,87,.4); }
+  .joya-card:hover::after { opacity: 1; }
 
   /* Contenedor de la imagen (cuadrado perfecto 1:1) */
   .joya-img-wrap {
@@ -960,9 +984,10 @@
 
   .joya-img-wrap img {
     width: 100%; height: 100%;
-    object-fit: cover;           /* La imagen llena el cuadrado sin deformarse */
-    transition: transform .5s ease;
+    object-fit: cover;
+    transition: transform .6s cubic-bezier(.25,.1,.25,1);
   }
+  .joya-card:hover .joya-img-wrap img { transform: scale(1.06); }
 
   /* Zoom tipo Amazon — solo en dispositivos con cursor (desktop) */
   @media (hover: hover) and (pointer: fine) {
@@ -1133,8 +1158,12 @@
   /* ══════════════════════════════════════════════════
      ANIMACIONES GLOBALES
   ══════════════════════════════════════════════════ */
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } } /* Sube desde abajo y aparece */
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } /* Aparece sin movimiento */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .reveal { transition: opacity .9s cubic-bezier(.25,.1,.25,1), transform .9s cubic-bezier(.25,.1,.25,1); }
+
+  ::selection { background: rgba(201,168,76,.3); color: var(--white-pure); }
 
 
   /* ══════════════════════════════════════════════════

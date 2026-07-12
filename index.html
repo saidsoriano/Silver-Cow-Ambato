@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Silver Cow Ambato — Joyería de plata ley 925. Piezas únicas bajo pedido en Ambato. Exclusividad hecha plata.">
   <title>Silver Cow Ambato — Joyería de Alta Distinción</title>
 
   <!-- Favicon: icono de pestaña del navegador -->
@@ -11,6 +12,7 @@
   <!-- Fuentes tipográficas desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" as="style">
 
   <!-- Estilos separados en archivo externo para mejor rendimiento -->
   <link rel="stylesheet" href="estilos.css">
@@ -175,7 +177,7 @@
 
         <!-- Estadística principal: número 925 -->
         <div class="nosotros-stat">
-          <div class="nosotros-stat-num">925</div>
+          <div class="nosotros-stat-num count-up" data-target="925">0</div>
           <div class="nosotros-stat-label">Ley de pureza garantizada</div>
         </div>
 
@@ -856,12 +858,37 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {              // Si el elemento entró en pantalla...
-        e.target.classList.add('visible'); // ...agrega clase "visible" que lo hace aparecer
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
       }
     });
-  }, { threshold: .08 }); // Se activa cuando al menos el 8% del elemento es visible
+  }, { threshold: .08 });
   reveals.forEach(r => obs.observe(r));
+
+
+  // ══════════════════════════════════════════════════
+  // COUNT-UP — ANIMA NÚMEROS AL ENTRAR EN PANTALLA
+  // ══════════════════════════════════════════════════
+  const countEls = document.querySelectorAll('.count-up');
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 1500;
+        const start = performance.now();
+        function frame(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target);
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+        countObs.unobserve(el);
+      }
+    });
+  }, { threshold: .5 });
+  countEls.forEach(el => countObs.observe(el));
 
 
   // ══════════════════════════════════════════════════
@@ -889,4 +916,4 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
 
 </script>
 </body>
-</html><li><a href="#catalogo">Catálogo</a></li>
+</html>
