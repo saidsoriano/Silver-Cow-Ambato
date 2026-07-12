@@ -1,0 +1,221 @@
+﻿nombre,categoria,precio,codigo,estado,esPedido,img,desc
+Pulsera Clásica,pulseras,25,[P-PL-136],disponible,FALSE,pulseras/pulsera_1.jpg,"Diseño elegante de cadena fina, ideal para uso diario."
+Pulsera Cristal,pulseras,20,[P-PL-291],disponible,FALSE,pulseras/pulsera_2.jpg,Pulsera plata ley 925 cristales blancos
+Pulsera Clasica N°2,pulseras,60,[P-PL-284],pedido,TRUE,pulseras/pulsera_3.jpg,Pulsera en plata tejido barbabda recta 21 cm.
+Pulsera Ala Cristal,pulseras,18,[P-PL-200],pedido,TRUE,pulseras/pulsera_4.jpg,Pulsera en plata ley 925 dije ala cristal.
+Pulsera rígida N°1,pulseras,60,[P-PL-205],pedido,TRUE,pulseras/pulsera_5.jpg,Pulsera rígida tres mariposas.
+Pulsera rígida N°2,pulseras,55,[P-PL-206],pedido,TRUE,pulseras/pulsera_6.jpg,Pulsera rígida una mariposa.
+Pulsera semi-rígida,pulseras,37,[P-PL-105],pedido,TRUE,pulseras/pulsera_7.jpg,Pulsera en plata quemada 925 guaya y hoja
+Pulsera plata Búho,pulseras,35,[P-PL-176],pedido,TRUE,pulseras/pulsera_8.jpg,Pulsera plata ley 925 con cristales violetas y encantos de búho
+Pulsera ajustabe,pulseras,15,[P-PL-322],pedido,TRUE,pulseras/pulsera_9.jpg,Pulsera en plata ley 925 ajustable hilo rojo tejido 7 balines
+Pulsera ajustabe,pulseras,16,[P-PL-327],pedido,TRUE,pulseras/pulsera_10.jpg,Pulsera en plata ley 925 cordón ajustable negros balines
+Pulsera eslabones,pulseras,60,[P-PL-104],pedido,TRUE,pulseras/pulsera_11.jpg,Pulsera en plata 925 eslabones caña bolas flor y palo azul rojo
+Pulsera medalla,pulseras,55,[P-PL-163],pedido,TRUE,pulseras/pulsera_12.jpg,Pulsera en plata ley 925 bolas medalla san benito
+Pulsera cordón ajustable beige,pulseras,12,[P-PL-330],pedido,TRUE,pulseras/pulsera_13.jpg,Pulsera en plata ley 925 cordón ajustable beige balines de plata bola ágata hielo.
+Pulsera cordón ajustable blanco,pulseras,12,[P-PL-321],pedido,TRUE,pulseras/pulsera_14.jpg,Pulsera en plata ley 925 cordón ajustable blanco balines bola microcirconia cubica azul rodinado.
+Pulsera ala ángel,pulseras,20,[P-PL-250],pedido,TRUE,pulseras/pulsera_15.jpg,Pulsera plata ley 925 dije ala ángel.
+Pulsera ala ángel,pulseras,25,[P-PL-288],pedido,TRUE,pulseras/pulsera_16.jpg,Pulsera en plata ley 925 esclava bebé mariquita esmaltado 12cm con extensión.
+Pulsera circones rojos,pulseras,38,[P-PL-173],pedido,TRUE,pulseras/pulsera_17.jpg,Pulseras plata quemada ley 925 circones rojos.
+Pulsera marquesita ovalo N° 1,pulseras,40,[P-PL-304],pedido,TRUE,pulseras/pulsera_18.jpg,Pulsera plata quemada ley 925 marquesita ovalo circones violeta.
+Pulsera marquesita flor,pulseras,40,[P-PL-303],pedido,TRUE,pulseras/pulsera_19.jpg,Pulsera plata quemada ley 925 marquesita flor circones verdes.
+Pulsera ovalo N° 1,pulseras,40,[P-PL-301],pedido,TRUE,pulseras/pulsera_20.jpg,Pulsera plata quemada ley 925 marquesita ovalo cristal azul.
+Pulsera ovalo N° 2,pulseras,40,[P-PL-299],pedido,TRUE,pulseras/pulsera_21.jpg,Pulsera plata quemada ley 925 marquesita ovalo cristal verdes.
+Pulsera marquesita círculo,pulseras,40,[P-PL-298],pedido,TRUE,pulseras/pulsera_22.jpg,Pulsera plata quemada ley 925 marquesita círculo cristales violeta.
+Pulsera marquesita ovalo N° 2,pulseras,40,[P-PL-295],pedido,TRUE,pulseras/pulsera_23.jpg,Pulsera plata quemada ley 925 marquesita ovalo circones negros.
+Pulsera marquesita circones,pulseras,40,[P-PL-283],pedido,TRUE,pulseras/pulsera_24.jpg,Pulsera en plata ley 925 plata quemada marquesita circones negros.
+Pulsera gotas circones,pulseras,40,[P-PL-172],pedido,TRUE,pulseras/pulsera_25.jpg,Pulseras plata quemada ley 925 gotas circones magenta.
+Pulsera marquesita ramitas,pulseras,40,[P-PL-302],pedido,TRUE,pulseras/pulsera_26.jpg,Pulsera plata quemada ley 925 marquesita ramitas circones rojos.
+Anillo Ajustable N° 1,anillos,20,[P-AN-368],pedido,TRUE,anillos/anillo_1.jpg,Anillo en plata ley 925 corazón estetoscopio ajustable
+Anillo Ajustable N° 2,anillos,20,[P-AN-107],pedido,TRUE,anillos/anillo_2.jpg,Anillo plata 925 estilo ajustable media luna
+Anillo circón,anillos,20,[P-AN-215],pedido,TRUE,anillos/anillo_3.jpg,Anillo en Plata ley 925 circón color magenta
+Anillo circón,anillos,20,[P-AN-210],pedido,TRUE,anillos/anillo_4.jpg,Anillo en Plata ley 925 circón blanco tipo solitario
+Anillo pisargolla,anillos,50,[P-AN-108],pedido,TRUE,anillos/anillo_5.jpg,"Anillo en plata ley 925 pisargolla set x 2 - talla 7 ""Pregunte por más información"""
+Anillo alianza N° 1,anillos,35,[P-AN-223],pedido,TRUE,anillos/anillo_6.jpg,Anillo plata 925 alianza matrimonio lisas 6mm
+Anillo alianza N° 2,anillos,35,[P-AN-222],pedido,TRUE,anillos/anillo_7.jpg,Anillo plata 925 alianza matrimonio lisas 4mm x unidad
+Anillo alianza N° 3,anillos,35,[P-AN-196],pedido,TRUE,anillos/anillo_8.jpg,Anillo plata 925 alianza x2 circon love
+Anillo y oro,anillos,20,[P-AN-199],pedido,TRUE,anillos/anillo_9.jpg,Anillo plata 925 y oro dos lineas doradas
+Anillo esmeralda N° 1,anillos,165,[P-AN-242],pedido,TRUE,anillos/anillo_10.jpg,Anillo edición especial esmeralda autentica plata 925
+Anillo esmeralda N° 2,anillos,145,[P-AN-243],pedido,TRUE,anillos/anillo_11.jpg,Anillo edición especial esmeralda autentica plata 925
+Anillo esmeralda N° 3,anillos,135,[P-AN-244],pedido,TRUE,anillos/anillo_12.jpg,Anillo edición especial esmeralda autentica plata 925
+Anillo laminado,anillos,25,[P-AN-385],pedido,TRUE,anillos/anillo_13.jpg,Anillo plata ley 925 y laminado oro - talla 8
+Anillo Ajustable N° 3,anillos,20,[P-AN-357],disponible,FALSE,anillos/anillo_14.jpg,Anillo en plata ley 925 flor circon ajustable
+Anillo triangulo,anillos,12,[P-AN-168],pedido,TRUE,anillos/anillo_16.jpg,Anillo plata 925 hilo fino triangulo.
+Anillo ojo,anillos,12,[P-AN-167],pedido,TRUE,anillos/anillo_17.jpg,Anillo plata 925 hilo fino ojo pestañas.
+Anillo ajustabel puntos,anillos,12,[P-AN-174],pedido,TRUE,anillos/anillo_18.jpg,Anillo plata 925 ajustable puntos circones.
+Anillo infinito,anillos,15,[P-AN-152],pedido,TRUE,anillos/anillo_19.jpg,Anillo plata 925 infinito plata quemada.
+Anillo van cleef corazón,anillos,15,[P-AN-240],pedido,TRUE,anillos/anillo_20.jpg,Anillo plata ley 925 van cleef corazón color surtido.
+Anillo colgante circon,anillos,15,[P-AN-141],pedido,TRUE,anillos/anillo_21.jpg,Anillo plata 925 colgante circon cuadrado.
+Anillo tejido,anillos,15,[P-AN-179],pedido,TRUE,anillos/anillo_22.jpg,Anillo plata 925 tejido tipo cinturón.
+Anillo solitario,anillos,15,[P-AN-171],pedido,TRUE,anillos/anillo_23.jpg,Anillo plata ley 925 tipo solitario circón azul.
+Anillo circón redondo,anillos,15,[P-AN-151],pedido,TRUE,anillos/anillo_24.jpg,Anillo plata ley 925 circón redondo verde.
+Anillo silueta corazón,anillos,18,[P-AN-369],pedido,TRUE,anillos/anillo_25.jpg,Anillo en plata ley 925 silueta corazón.
+Anillo corazones dobles,anillos,20,[P-AN-356],pedido,TRUE,anillos/anillo_26.jpg,Anillo en plata ley 925 corazones dobles.
+Anillo trenzado,anillos,21,[P-AN-233],pedido,TRUE,anillos/anillo_27.jpg,Anillo en plata ley 925 trenzado talla 8.
+Anillo lazo microcircones,anillos,20,[P-AN-156],pedido,TRUE,anillos/anillo_28.jpg,Anillo plata 925 lazo microcircones de color.
+Anillo engranaje,anillos,21,[P-AN-160],pedido,TRUE,anillos/anillo_29.jpg,Anillo plata 925 engranaje microcircones blancos.
+Anillo circulo,anillos,21,[P-AN-358],pedido,TRUE,anillos/anillo_30.jpg,Anillo en plata ley 925 circulo microcircones regulable.
+Anillo aro,anillos,23,[P-AN-350],pedido,TRUE,anillos/anillo_31.jpg,Anillo en plata ley 925 aro diamantado.
+Anillo thai circulo,anillos,23,[P-AN-219],pedido,TRUE,anillos/anillo_32.jpg,Anillo en plata ley 925 thai circulo cristales baguette.
+Anillo puntos circones,anillos,23,[P-AN-146],pedido,TRUE,anillos/anillo_33.jpg,Anillo plata 925 puntos circones redondos azules.
+Anillo thai osito,anillos,25,[P-AN-212],pedido,TRUE,anillos/anillo_34.jpg,Anillo en plata ley 925 thai osito color surtido.
+Anillo tipo bola,anillos,25,[P-AN-248],pedido,TRUE,anillos/anillo_35.jpg,Anillo plata ley 925 tipo solitario bola humor.
+Anillo barra lisa,anillos,25,[P-AN-227],pedido,TRUE,anillos/anillo_36.jpg,Anillo plata ley 925 barra lisa microcircones laterales.
+Anillo alas libélula,anillos,25,[P-AN-225],pedido,TRUE,anillos/anillo_37.jpg,Anillo plata ley 925 alas libélula.
+Anillo mariposa esmaltada,anillos,25,[P-AN-211],pedido,TRUE,anillos/anillo_38.jpg,Anillo plata ley 925 mariposa esmaltada.
+Anillo flor circon,anillos,25,[P-AN-138],pedido,TRUE,anillos/anillo_39.jpg,Anillo plata 925 flor circon color.
+Anillo mariposas doble,anillos,25.5,[P-AN-246],pedido,TRUE,anillos/anillo_40.jpg,Anillo en Plata ley 925 mariposas doble esmaltadas.
+Anillo thai microcirconia,anillos,25.5,[P-AN-205],pedido,TRUE,anillos/anillo_41.jpg,Anillo en plata 925 thai microcirconia surtido.
+Anillo solitario cuadrado,anillos,25.5,[P-AN-366],pedido,TRUE,anillos/anillo_42.jpg,Anillo en plata ley 925 tipo solitario circón verde / azul.
+Anillo dos rositas,anillos,28,[P-AN-379],pedido,TRUE,anillos/anillo_43.jpg,Anillo en plata ley 925 dos rositas microcircones blanco / color.
+Anillo puntos circones blancos,anillos,25.5,[P-AN-157],pedido,TRUE,anillos/anillo_44.jpg,Anillo plata 925 puntos circones blancos
+Anillo circón modelo 2,anillos,25.5,[P-AN-153],pedido,TRUE,anillos/anillo_45.jpg,Anillo plata ley 925 tipo solitario circón modelo 2.
+Anillo círculo baguette,anillos,25.5,[P-AN-257],pedido,TRUE,anillos/anillo_46.jpg,Anillo plata ley 925 círculo cristales baguette.
+Anillo cristal negro,anillos,25.5,[P-AN-254],pedido,TRUE,anillos/anillo_47.jpg,Anillo plata ley 925 cristal negro gota.
+Anillo cristal ovalado,anillos,25.5,[P-AN-253],pedido,TRUE,anillos/anillo_48.jpg,Anillo plata ley 925 cristal verde ovalado.
+Anillo cristal redondo,anillos,25.5,[P-AN-252],pedido,TRUE,anillos/anillo_49.jpg,Anillo plata ley 925 cristal redondo magenta.
+Anillo ovalo microcircones,anillos,25.5,[P-AN-251],pedido,TRUE,anillos/anillo_50.jpg,Anillo plata ley 925 ovalo microcircones blancos.
+Argolla huggie N° 1,aretes,23,[P-AR-157],disponible,FALSE,aretes/arete_1.jpg,Argolla huggie plata 925 (b.rodio) cristal baguette 1.4 cm.
+Aretes Topo N° 1,aretes,5,[P-AR-237],disponible,FALSE,aretes/arete_2.jpg,"Arretes Topo plata 925 circón verde cuadrado n2,5."
+Aretes Topo N° 2,aretes,7,[P-AR-247],disponible,FALSE,aretes/arete_3.jpg,Topo plata 925 liviano patitos
+Aretes Topo N° 3,aretes,7,[P-AR-351],disponible,FALSE,aretes/arete_4.jpg,Topo en plata ley 925 cristal redondo blanco #5
+Aretes Topo N° 4,aretes,5,[P-AR-226],disponible,FALSE,aretes/arete_5.jpg,Topo en plata ley 925 cristal redondo blanco #5
+Aretes Gota,aretes,18,[P-AR-569],disponible,FALSE,aretes/arete_6.jpg,Aretes de plata ley 925 Cristal Gota magenta
+Argolla Lisa N° 1,aretes,5,[P-AR-293],disponible,FALSE,aretes/arete_7.jpg,"Argolla plata 925 lisa 1,2cm"
+Aretes Topo N° 5,aretes,7,[P-AR-238],disponible,FALSE,aretes/arete_8.jpg,Arretes Topo plata 925 circón verde cuadrado n6.
+Aretes Topo N° 6,aretes,7,[P-AR-552],disponible,FALSE,aretes/arete_9.jpg,Arretes Topo plata 925 mini corazones.
+Argolla huggie N° 2,aretes,28,[P-AR-183],pedido,TRUE,aretes/arete_10.jpg,Argolla huggie plata lisa 1.5 cm
+Argolla,aretes,28,[P-AR-356],pedido,TRUE,aretes/arete_11.jpg,Argollas en plata ley 925 lisa tipo hilo 4.5 cm
+Argolla lisa N° 2,aretes,30,[P-AR-198],pedido,TRUE,aretes/arete_12.jpg,"Arete argolla lisa tubular 2,6cm plata 925"
+Argolla lisa N° 3,aretes,6,[P-AR-295],pedido,TRUE,aretes/arete_13.jpg,"Argolla plata 925 lisa gancho anzuelo 1,2cm"
+Argolla lisa N° 4,aretes,6,[P-AR-294],pedido,TRUE,aretes/arete_14.jpg,Argolla plata 925 lisa gancho anzuelo 1cm
+Aretes Topo aros,aretes,5,[P-AR-562],pedido,TRUE,aretes/arete_15.jpg,Topo plata 925 aros
+Aretes Topo medialunas,aretes,5,[P-AR-560],pedido,TRUE,aretes/arete_16.jpg,Topo plata 925 mini medialunas
+Aretes Topo triángulos,aretes,5,[P-AR-559],pedido,TRUE,aretes/arete_17.jpg,Topo plata 925 triángulos troquelados
+Aretes Topo flechas,aretes,5,[P-AR-556],pedido,TRUE,aretes/arete_18.jpg,Topo plata 925 flechas
+Aretes Topo circón cuadrado,aretes,7,[P-AR-531],pedido,TRUE,aretes/arete_19.jpg,Topo plata ley 925 circón cuadrado blanco (7x7)
+Aretes Topo repulgue,aretes,7,[P-AR-262],agotado,FALSE,aretes/arete_20.jpg,Topo plata ley 925 circón cuadrado blanco (7x7)
+Aretes hello kitty,aretes,7,[P-AR-199],pedido,TRUE,aretes/arete_21.jpg,Aretes en Plata ley 925 hello kitty mini microcircón turquesa
+Aretes cerezas,aretes,9.2,[P-AR-192],pedido,TRUE,aretes/arete_22.jpg,Aretes en Plata ley 925 cerezas mini microcircón turquesa
+Aretes silueta corazón,aretes,9.2,[P-AR-205],pedido,TRUE,aretes/arete_23.jpg,Aretes en Plata ley 925 silueta corazón mini microcircón turquesa
+Aretes estrella,aretes,9.2,[P-AR-194],pedido,TRUE,aretes/arete_24.jpg,Aretes en Plata ley 925 estrella mini circón turquesa
+Argolla lisa N° 5,aretes,9.2,[P-AR-568],pedido,TRUE,aretes/arete_25.jpg,Argolla en plata ley 925 lisa 2 cm
+Aretes Totopo osos circones,aretes,9.5,[P-AR-566],pedido,TRUE,aretes/arete_26.jpg,Topo plata 925 osos con circones rosca de seguridad (ortopedico)
+Aretes Totopo tortugas esmaltadas,aretes,9.5,[P-AR-564],pedido,TRUE,aretes/arete_27.jpg,Topo plata 925 tortugas esmaltadas rosca de seguridad (ortopedico)
+Aretes Totopo margaritas esmaltadas,aretes,9.5,[P-AR-563],pedido,TRUE,aretes/arete_28.jpg,Topo plata 925 margaritas esmaltadas rosca de seguridad (ortopedico)
+Aretes Totopo pies,aretes,9.5,[P-AR-373],pedido,TRUE,aretes/arete_29.jpg,Topos en plata ley 925 pies rosca de seguridad (ortopedico)
+Argolla huggie N° 3,aretes,7,[P-AR-370],agotado,FALSE,aretes/arete_30.jpg,Argolla huggie plata ley 925 lisa 1 cm
+Aretes Topo cristal,aretes,7,[P-AR-248],pedido,TRUE,aretes/arete_31.jpg,Topo plata 925 cristal color redondo
+Aretes cuadrado,aretes,8,[P-AR-323],pedido,TRUE,aretes/arete_32.jpg,Arete plata 925 cuadrado 8mm
+Aretes Topo hoja palma,aretes,12.5,[P-AR-550],pedido,TRUE,aretes/arete_33.jpg,Topo plata 925 (b.rodio) hoja palma rosca de seguridad (ortopedico)
+Aretes Topo perla y triángulo,aretes,12.5,[P-AR-547],pedido,TRUE,aretes/arete_34.jpg,Topo plata 925 (b.rodio) perla y triángulo rosca de seguridad (ortopedico)
+Aretes hojitas,aretes,13,[P-AR-210],pedido,TRUE,aretes/arete_35.jpg,Arete plata 925 rosca de seguridad (rodinado) hojitas
+Aretes Topo medalla,aretes,12.5,[P-AR-273],pedido,TRUE,aretes/arete_36.jpg,Topo plata 925 medalla virgen milagrosa
+Aretes colita,aretes,12.5,[P-AR-142],pedido,TRUE,aretes/arete_37.jpg,Aretes pequeño plata 925 colita de sirena
+Aretes circulo esmaltado,aretes,13,[P-AR-541],pedido,TRUE,aretes/arete_38.jpg,Aretes en plata ley 925 sistema gancho circulo esmaltado blanco estrella verde
+Aretes cristales,aretes,13,[P-AR-128],pedido,TRUE,aretes/arete_39.jpg,Aretes en plata ley 925 (b.rodio) cristales baguette círculo
+Argolla disco,aretes,14,[P-AR-326],pedido,TRUE,aretes/arete_40.jpg,Argolla plata 925 con disco arandela
+Aretes topo Ojitos,aretes,13,[P-AR-270],pedido,TRUE,aretes/arete_41.jpg,"Topo plata 925 ojitos ovalados (blancos, azules, rojos)"
+Aretes aro liso,aretes,13,[P-AR-110],pedido,TRUE,aretes/arete_42.jpg,Aretes plata 925 baño rodio medio aro liso
+Aretes zanahoria,aretes,13.5,[P-AR-272],pedido,TRUE,aretes/arete_43.jpg,Topo plata 925 zanahoria
+Aretes microcircones,aretes,14.5,[P-AR-313],pedido,TRUE,aretes/arete_44.jpg,Aretes plata 925 (b.rodio) tipo microcircones blancos
+Aretes cristal cubo,aretes,15.5,[P-AR-119],pedido,TRUE,aretes/arete_45.jpg,Aretes plata 925 (b.rodio) cuadrado cristal cubo tornasol
+Argolla lisa N° 6,aretes,15.5,[P-AR-109],pedido,TRUE,aretes/arete_46.jpg,Argolla plata 925 baño rodio lisa 1.4 cm
+Aretes rectángulo diamantado,aretes,17.5,[P-AR-109],pedido,TRUE,aretes/arete_47.jpg,Aretes en plata 925 rectángulo diamantado y corazón
+Aretes colita de sirena,aretes,17.5,[P-AR-141],pedido,TRUE,aretes/arete_48.jpg,Aretes largos plata 925 (b.rodio) colita de sirena microcircones
+Argolla huggie N° 4,aretes,17.5,[P-AR-135],pedido,TRUE,aretes/arete_49.jpg,Argolla huggie plata 925 (b.rodio) cilindro piedras baguette 1 cm
+Aretes circon ojitos,aretes,17.5,[P-AR-266],pedido,TRUE,aretes/arete_50.jpg,Topo plata 925 micro circón ojitos rojos
+Aretes largos,aretes,19,[P-AR-393],pedido,TRUE,aretes/arete_51.jpg,Aretes en plata ley 925 sistema pasar llave 2
+Aretes entorchadas,aretes,17,[P-AR-238],pedido,TRUE,aretes/arete_52.jpg,Argollas en plata ley 925 entorchadas 2.3 cm
+Aretes entorchadas,aretes,17,[P-AR-238],pedido,TRUE,aretes/arete_52.jpg,Argollas en plata ley 925 entorchadas 2.3 cm
+Juego de plata cuadrado,juegos,45,[P-JU-212],disponible,FALSE,juegos/juego_1.jpg,Juego de plata ley 925 cuadrado cristales blancos
+Juego de plata mariposa,juegos,45,[P-JU-206],disponible,FALSE,juegos/juego_2.jpg,Juego de plata ley 925 mariposa micrones blancos
+Juego oro medalla,juegos,55,[P-JU-190],pedido,TRUE,juegos/juego_3.jpg,Juego en plata y oro medalla virgen microcircon color surtido
+Juego gota,juegos,55,[P-JU-181],pedido,TRUE,juegos/juego_4.jpg,Juego en plata ley 925 gota microcircones blancos
+Juego corazón llave,juegos,50,[P-JU-198],pedido,TRUE,juegos/juego_5.jpg,Juego en plata ley 925 corazón llave microcirconia
+Juego thai,juegos,50,[P-JU-118],pedido,TRUE,juegos/juego_6.jpg,Juego plata 925 thai broche catalan lazo cristal azul
+Juego media luna,juegos,35,[P-JU- 208],pedido,TRUE,juegos/juego_7.jpg,Juego en plata ley 925 media luna circón
+Juego unicornio,juegos,35,[P-JU- 197],pedido,TRUE,juegos/juego_8.jpg,Juego para niña en plata ley 925 unicornio
+Juego thai flor,juegos,40,[P-JU- 187],pedido,TRUE,juegos/juego_9.jpg,Juego en plata ley 925 thai flor circón rojo
+Juego especial 15,juegos,40,[P-JU- 146],pedido,TRUE,juegos/juego_10.jpg,Juego plata 925 especial joya corazón quince años
+Juego ositos,juegos,45,[P-JU- 102],pedido,TRUE,juegos/juego_11.jpg,Juego plata 925 ositos circones
+Dije estrella,dijes,7,[P-DJ|- 224],disponible,FALSE,dijes/dije_1.jpg,Dije plata ley 925 estrella
+Dije mariposa,dijes,7,[P-DJ-181],disponible,FALSE,dijes/dije_2.jpg,Dije plata ley 925 mariposa
+Dije medalla,dijes,35,[P-DJ-248],pedido,TRUE,dijes/dije_3.jpg,Dije en plata ley 925 medalla especial enjoyada
+Dije cruz,dijes,7,[P-DJ-141],disponible,FALSE,dijes/dije_4.jpg,Dije plata 925 cruz puntas cristo 1.8 cm
+Dije inicial,dijes,10,[P-DJ-208],pedido,TRUE,dijes/dije_5.jpg,Dije en plata ley 925 inicial - letras: b-e-f-h-l-o-s-t-v-w-x-y
+Dije inicial redonda,dijes,10,[P-DJ-207],pedido,TRUE,dijes/dije_6.jpg,Dije en plata ley 925 dije inicial redonda - letras: i - m - r - x
+Dije inicial cursiva,dijes,10,[P-DJ-206],pedido,TRUE,dijes/dije_7.jpg,Dije en plata ley 925 letra inicial cursiva - letra m
+Dije familia,dijes,12,[P-DJ-364],pedido,TRUE,dijes/dije_8.jpg,Dije en plata ley 925 familia
+Dije corazón,dijes,7,[P-DJ-146],pedido,TRUE,dijes/dije_9.jpg,Dije plata 925 corazón delfines
+Dije búho,dijes,7,[P-DJ-219],pedido,TRUE,dijes/dije_10.jpg,Dije en plata ley 925 búho modelo 2
+Dije estrella,dijes,7,[P-DJ-366],pedido,TRUE,dijes/dije_11.jpg,Dije en plata ley 925 estrella de david
+Dije herradura,dijes,10,[P-DJ-139],pedido,TRUE,dijes/dije_12.jpg,Dije plata ley 925 herradura caballo 2 cm
+Dije guitarra,dijes,10.5,[P-DJ-228],pedido,TRUE,dijes/dije_13.jpg,Dije en plata ley 925 guitarra
+Dije pantera,dijes,12.5,[P-DJ-251],pedido,TRUE,dijes/dije_14.jpg,Dije en plata ley 925 pantera microcircones
+Dije búho,dijes,14.5,[P-DJ-362],pedido,TRUE,dijes/dije_15.jpg,Dije en plata ley 925 búho
+Dije herradura,dijes,12.5,[P-DJ-359],pedido,TRUE,dijes/dije_16.jpg,Dije en plata ley 925 herradura
+Dije aguila,dijes,14.5,[P-DJ-213],pedido,TRUE,dijes/dije_17.jpg,Dije en plata ley 925 aguila
+Dije corazón,dijes,15.5,[P-DJ-361],pedido,TRUE,dijes/dije_18.jpg,Dije en plata ley 925 corazón soplado
+Dije manito,dijes,15.5,[P-DJ-230],pedido,TRUE,dijes/dije_19.jpg,Dije en plata ley 925 manito microcircones
+Dije enjoyado N° 1,dijes,16.5,[P-DJ-250],pedido,TRUE,dijes/dije_20.jpg,Dije en plata ley 925 enjoyado libélula
+Dije enjoyado N° 2,dijes,17.5,[P-DJ-155],pedido,TRUE,dijes/dije_21.jpg,Dije plata ley 925 enjoyado ojito color surtido
+Dije manito,dijes,17.5,[P-DJ-356],pedido,TRUE,dijes/dije_22.jpg,Dije en plata ley 925 manito hamsa
+Dije colibrí,dijes,17.5,[P-DJ-349],pedido,TRUE,dijes/dije_23.jpg,Dije en plata ley 925 colibrí
+Dije corazón,dijes,18.5,[P-DJ-236],pedido,TRUE,dijes/dije_24.jpg,Dije en plata ley 925 corazón grande martillado
+Dije enjoyado N° 3,dijes,18.5,[P-DJ-159],pedido,TRUE,dijes/dije_25.jpg,Dije plata ley 925 enjoyado mano hamsa color surtido
+Dije manito,dijes,18.5,[P-DJ-130],pedido,TRUE,dijes/dije_26.jpg,Dije en plata ley 925 manito hansa circionia lila
+Dije música,dijes,19.5,[P-DJ-344],pedido,TRUE,dijes/dije_27.jpg,Dije en plata ley 925 música
+Dije kit medicina,dijes,20.5,[P-DJ-345],pedido,TRUE,dijes/dije_28.jpg,Dije en plata ley 925 kit medicina
+Dije moto,dijes,22.5,[P-DJ-354],pedido,TRUE,dijes/dije_29.jpg,Dije en plata ley 925 kit moto
+Dije cruz,dijes,23.5,[P-DJ-237],pedido,TRUE,dijes/dije_30.jpg,Dije en plata ley 925 cruz cristo 5cm
+Dije enjoyado N° 4,dijes,28.5,[P-DJ-173],pedido,TRUE,dijes/dije_31.jpg,Dije plata ley 925 enjoyado cruz microcircones negros 4cm
+Cadena barbada,cadenas,20,[P-CD-177],disponible,FALSE,cadenas/cadena_2.jpg,"Cadena plata ley 925 de 45cm, tejido barbada extra fina."
+Cadena tejido veneciana,cadenas,35,[P-CD-138],disponible,FALSE,cadenas/cadena_1.jpg,Cadena plata 925 tejido veneciana 45cm.
+Cadena tejido marinero,cadenas,35,[P-CD-183],disponible,FALSE,cadenas/cadena_3.jpg,Cadena en plata ley 925 tejido marinero 60 cm
+Cadena tejido bilbao,cadenas,12.5,[P-CD-103],pedido,TRUE,cadenas/cadena_4.jpg,Cadena plata 925 tejido bilbao 45 cm
+Cadena tejido cartier,cadenas,19,[P-CD- 176],pedido,TRUE,cadenas/cadena_5.jpg,Cadena plata 925 tejido bilbao 45 cm
+Cadena tejido forzada,cadenas,19,[P-CD-105],pedido,TRUE,cadenas/cadena_6.jpg,Cadena plata 925 tejido forzada 45cm
+Cadena tejido  plano,cadenas,19,[P-CD-178],pedido,TRUE,cadenas/cadena_7.jpg,Cadena en plata ley 925 tejido plano diamantada 45 cm
+Cadena tejido  plano marinero,cadenas,24,[P-CD-179],pedido,TRUE,cadenas/cadena_8.jpg,Cadena en plata ley 925 tejido plano marinero diamantada 50 cm
+Cadena tejido cordón,cadenas,24,[P-CD-141],pedido,TRUE,cadenas/cadena_9.jpg,Cadena plata 925 tejido cordón 45 cm.
+Cadena tejido forzada,cadenas,28,[P-CD-108],pedido,TRUE,cadenas/cadena_10.jpg,Cadena plata 925 tejido forzada 45cm modelo 2.
+Cadena tejido valentino / marinero,cadenas,34,[P-CD-182],pedido,TRUE,cadenas/cadena_11.jpg,Cadena en plata ley 925 tejido valentino / marinero 45 cm.
+Cadena rolo,cadenas,34,[P-CD-139],pedido,TRUE,cadenas/cadena_12.jpg,Cadena plata 925 rolo 45 cm.
+Cadena plano,cadenas,90,[P-CD-133],pedido,TRUE,cadenas/cadena_13.jpg,Cadena plata 925 tejido plano 5mm 65 cm.
+Cadena tejido forzada gruesa,cadenas,40,[P-CD-135],pedido,TRUE,cadenas/cadena_14.jpg,Cadena en plata ley 925 tejido forzada gruesa 50 cm.
+Cadena tejido plano,cadenas,40,[P-CD-166],pedido,TRUE,cadenas/cadena_15.jpg,Cadena plata ley tejido plano 2.5mm x 60cm.
+Cadena tejido valentino,cadenas,42,[P-CD-167],pedido,TRUE,cadenas/cadena_16.jpg,Cadena plata ley 925 tejido valentino 3mm x 60cm.
+Cadena tejido barbada,cadenas,77,[P-CD-160],pedido,TRUE,cadenas/cadena_17.jpg,Cadena plata 925 tejido barbada 50cm 4mm.
+Cadena tejido plano,cadenas,80,[P-CD-122],pedido,TRUE,cadenas/cadena_18.jpg,Cadena plata 925 tejido plano 5mm 55 cm.
+Cadena tejido cordón,cadenas,80,[P-CD-171],pedido,TRUE,cadenas/cadena_19.jpg,Cadena plata ley 925 tejido cordón 2.5mm x60cm.
+Cadena tejido cartier,cadenas,90,[P-CD-172],pedido,TRUE,cadenas/cadena_20.jpg,Cadena plata ley 925 tejido cartier 7 escalera 4mm x 60cm.
+Cadena con Dije corazón,cadenas_dijes,25,,disponible,FALSE,cadenas_dijes/cadena_dije_1.jpg,Cadena con dije plata ley 925 de corazon con circón rojo.
+Cadena con dije perla,cadenas_dijes,15,[P-CDD-223],pedido,TRUE,cadenas_dijes/cadena_dije_2.jpg,Cadena con dije perla solitario gold plata 925.
+Cadena con dije cubo,cadenas_dijes,15,[P-CDD-221],pedido,TRUE,cadenas_dijes/cadena_dije_3.jpg,Cadena con dije cubo cristal gold plata 925.
+Cadena con dije cilindro,cadenas_dijes,15,[P-CDD-221],pedido,TRUE,cadenas_dijes/cadena_dije_4.jpg,Cadena con dije cilindro plata 925.
+Cadena con dije inicial,cadenas_dijes,17,[P-CDD-152],pedido,TRUE,cadenas_dijes/cadena_dije_5.jpg,"Collar en plata ley 925 dije inicial microcircones 9 mm ""R-Z-W-S-D-T-I-F-A-P-K-N-G-O-H-J-B-Y-V-U-X-E-M-L-C""."
+Cadena con dije inicial,cadenas_dijes,17,[P-CDD-128],pedido,TRUE,cadenas_dijes/cadena_dije_6.jpg,"Collar en plata ley 925 dije inicial microcircones 1.2 cm ""B-J-I-N-S-V-K-R-G-Y-P-L-M-F-Z-T""."
+Cadena con dije huellitas,cadenas_dijes,18,[P-CDD-232],pedido,TRUE,cadenas_dijes/cadena_dije_7.jpg,Collar en plata ley 925 huellitas microcircones blancos.
+Cadena con dije rombo,cadenas_dijes,23,[P-CDD-262],pedido,TRUE,cadenas_dijes/cadena_dije_8.jpg,Collar en plata ley 925 baño en oro rosa rombo.
+Cadena con dije harry potter,cadenas_dijes,23,[P-CDD-179],pedido,TRUE,cadenas_dijes/cadena_dije_9.jpg,Collar plata 925 baño rodio tono rosa harry potter.
+Cadena con dije punto de luz,cadenas_dijes,23,[P-CDD-178],pedido,TRUE,cadenas_dijes/cadena_dije_10.jpg,Collar plata 925 baño rodio tono rosa circón punto de luz.
+Cadena con dije círculo,cadenas_dijes,23,[P-CDD-175],pedido,TRUE,cadenas_dijes/cadena_dije_11.jpg,Collar plata 925 baño rodio dorado círculo microcircones blancos.
+Cadena con dije pez,cadenas_dijes,23,[P-CDD-172],pedido,TRUE,cadenas_dijes/cadena_dije_12.jpg,Collar plata 925 baño rodio dorado pez perlitas.
+Cadena con dije saturno,cadenas_dijes,23,[P-CDD-170],pedido,TRUE,cadenas_dijes/cadena_dije_13.jpg,Collar plata 925 baño rodio llave saturno ópalo.
+Cadena con dije luna saturno,cadenas_dijes,23,[P-CDD-168],pedido,TRUE,cadenas_dijes/cadena_dije_14.jpg,Collar plata 925 baño rodio media luna saturno ópalo.
+Cadena con dije látido,cadenas_dijes,23,[P-CDD-166],pedido,TRUE,cadenas_dijes/cadena_dije_15.jpg,Collar plata 925 baño rodio látido corazón.
+Cadena con dije hojita,cadenas_dijes,23,[P-CDD-250],pedido,TRUE,cadenas_dijes/cadena_dije_16.jpg,Collar en plata ley 925 dije hojita.
+Cadena con dije círculo N° 1,cadenas_dijes,23,[P-CDD-245],pedido,TRUE,cadenas_dijes/cadena_dije_17.jpg,Collar plata 925 baño rodio círculo cristales.
+Cadena con dije doble círculo,cadenas_dijes,23,[P-CDD-253],pedido,TRUE,cadenas_dijes/cadena_dije_18.jpg,Collar en plata ley 925 baño oro gold rose doble círculo.
+Cadena con dije círculo N° 2,cadenas_dijes,26,[P-CDD-255],pedido,TRUE,cadenas_dijes/cadena_dije_19.jpg,Collar en plata ley 925 círculo microcircones.
+Cadena con dije círculo nácar,cadenas_dijes,26,[P-CDD-256],pedido,TRUE,cadenas_dijes/cadena_dije_20.jpg,Collar en plata ley 925 círculo nácar.
+Cadena con dije cuarzo,cadenas_dijes,28,[P-CDD-244],pedido,TRUE,cadenas_dijes/cadena_dije_21.jpg,Collar en plata ley 925 cuarzo natural.
+Cadena con dije cruces,cadenas_dijes,28,[P-CDD-235],pedido,TRUE,cadenas_dijes/cadena_dije_22.jpg,Collar en plata ley 925 dijes cruces.
+Cadena con dije mariposa,cadenas_dijes,28,[P-CDD-233],pedido,TRUE,cadenas_dijes/cadena_dije_23.jpg,Collar en plata ley 925 mariposa microcircones blancos.
+Cadena con dije mariposas N° 1,cadenas_dijes,30,[P-CDD-238],pedido,TRUE,cadenas_dijes/cadena_dije_24.jpg,Collar en plata ley 925 dijes mariposa modelo 2.
+Cadena con dije mariposas N° 2,cadenas_dijes,30,[P-CDD-239],pedido,TRUE,cadenas_dijes/cadena_dije_25.jpg,Collar en plata ley 925 dijes mariposa.
+Cadena con dije círculo sol,cadenas_dijes,30,[P-CDD-237],pedido,TRUE,cadenas_dijes/cadena_dije_26.jpg,Collar en plata ley 925 círculo sol.
+Cadena con dije van cleef,cadenas_dijes,35,[P-CDD-236],pedido,TRUE,cadenas_dijes/cadena_dije_27.jpg,Collar en plata ley 925 dijes van cleef.
+Cadena con dije doble círculos,cadenas_dijes,32,[P-CDD-110],pedido,TRUE,cadenas_dijes/cadena_dije_28.jpg,Collar en plata ley 925 doble círculos cristales.
+Cadena con dije corazones,cadenas_dijes,32,[P-CDD-109],pedido,TRUE,cadenas_dijes/cadena_dije_29.jpg,Collar en plata ley 925 doble corazones.
+Cadena con van cleef,cadenas_dijes,35,[P-CDD-114],pedido,TRUE,cadenas_dijes/cadena_dije_30.jpg,Collar en plata ley 925 van cleef negro.

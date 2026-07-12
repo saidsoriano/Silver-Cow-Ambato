@@ -20,9 +20,11 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 - `catalogo.js` — fetch desde Google Sheets + caché en localStorage
 - `catalogo_motor.js` — renderizado del grid, paginación (5 por bloque), zoom, lazy loading
 - `estilos.css` — todos los estilos (~1314 líneas), colores de marca en variables CSS
-- `google_apps_script.js` — código que va pegado en Extensiones → Apps Script de Google Sheets
 - `extraer_proveedor.py` — script local para importar productos del proveedor (excluido de git)
-- `catalogo_importar.csv` — importación original (221 productos, 8 columnas)
+- `assets/` — logos (`logo.png`, `logo_ig_transparente.png`)
+- `csv/` — CSVs para importar a Google Sheets (`csv_pulseras.csv`, `csv_anillos.csv`, ...)
+- `scripts/` — `google_apps_script.js` (código que va pegado en Extensiones → Apps Script)
+- `backups/` — snapshots de seguridad (`.zip`)
 - `pulseras/`, `anillos/`, `aretes/`, `cadenas/`, `cadenas_dijes/`, `dijes/`, `juegos/` — imágenes por categoría
 - `AGENTS.md` — este archivo
 
@@ -41,7 +43,7 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 ## No hagas
 - No instalar dependencias npm ni frameworks — el sitio es vanilla JS
 - No tocar los archivos dentro de `.venv/` (entorno virtual de Python, solo local)
-- No cambiar nombres de columnas en Google Sheets sin actualizar TAMBIÉN `google_apps_script.js` y `catalogo_motor.js`
+- No cambiar nombres de columnas en Google Sheets sin actualizar TAMBIÉN `scripts/google_apps_script.js` y `catalogo_motor.js`
 - No subir `extraer_proveedor.py` ni `.venv/` a GitHub (están en `.gitignore`)
 - No forzar push con `--force` ni modificar el historial de git
 - No subir archivos `.env*` al repositorio
@@ -52,9 +54,9 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 - Si no estás seguro al 80%, pregunta antes de actuar.
 
 ## Documentación
-- Google Sheets integración: `google_apps_script.js` (contiene `doGet`, `setupSheets`, `colorByStatus`)
+- Google Sheets integración: `scripts/google_apps_script.js` (contiene `doGet`, `setupSheets`, `colorByStatus`)
 - Script de importación de proveedor: `extraer_proveedor.py` (usa `.venv/bin/python`)
 - Cache de datos: localStorage key `silvercow_catalogo`; cache-busting con `?v=N` en `SHEETS_URL`
 - Tiempo de carga: primer request al Apps Script tras inactividad = 5-10s (cold start)
 - GitHub Pages: auto-deploy en push a `main`, URL pública se actualiza en ~1-2 min
-- Favicon generado desde `logo_ig_transparente.png` (archivo `favicon.ico`)
+- Favicon generado desde `assets/logo_ig_transparente.png` (archivo `favicon.ico`)
