@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual del Conductor — Silver Cow Ambato</title>
+  <style>
+    :root {
+      --sapphire: #1a2a3a;
+      --silver: #c8d0dc;
+      --gold: #C9A84C;
+      --gold-light: #e8d88a;
+      --black-deep: #0d1117;
+      --bg: #f4f6f9;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #5a5a7a;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(135deg, var(--sapphire), #0f1a24);
+      color: #fff;
+      padding: 48px 24px 36px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    header h1 span { color: var(--gold); }
+    header p {
+      margin-top: 8px;
+      opacity: 0.85;
+      font-size: 1.05rem;
+    }
+    .subtitle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: var(--gold-light);
+    }
+    .container { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+    section {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--gold);
+    }
+    section h2 {
+      font-size: 1.3rem;
+      color: var(--sapphire);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    section h2 .icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    section h3 {
+      font-size: 1.05rem;
+      color: var(--gold);
+      margin: 18px 0 8px;
+    }
+    section p, section li { color: var(--text-muted); }
+    section ul, section ol { padding-left: 20px; margin: 8px 0 12px; }
+    section li { margin-bottom: 6px; }
+    code {
+      background: #eef1f5;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--sapphire);
+    }
+    .code-block {
+      background: var(--black-deep);
+      color: #c9d1d9;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+    .code-block .comment { color: #8b949e; }
+    .tag {
+      display: inline-block;
+      background: var(--gold);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .card-mini {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 0.9rem;
+    }
+    .card-mini strong { color: var(--sapphire); display: block; margin-bottom: 4px; }
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e0e0e0;
+      padding: 12px 20px;
+      z-index: 10;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-right: 16px;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold); }
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    @media (max-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      section { padding: 20px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#tablero">Tablero</a>
+  <a href="#encender">Encender</a>
+  <a href="#volante">Volante</a>
+  <a href="#acelerador">Acelerador</a>
+  <a href="#mantenimiento">Mantenimiento</a>
+  <a href="#hojas-ruta">GPS</a>
+  <a href="#herramientas">Herramientas</a>
+  <a href="#luces">Luces</a>
+  <a href="#gasolinera">Gasolinera</a>
+</nav>
+
+<header>
+  <h1><span>Silver Cow</span> Ambato</h1>
+  <p>Manual del Conductor</p>
+  <div class="subtitle">&#9881; Versión SDD · Julio 2026</div>
+</header>
+
+<div class="container">
+
+<section id="tablero">
+  <h2><span class="icon">&#128663;</span> 1. El tablero — qué es Silver Cow</h2>
+  <p>
+    Silver Cow Ambato es un <strong>catálogo web de joyería de plata 925</strong>.
+    Tú eres el conductor. La página es tu auto. Google Sheets es el motor.
+    GitHub Pages es la carretera. OpenCode es tu copiloto.
+  </p>
+  <div class="grid-2">
+    <div class="card-mini">
+      <strong>&#128196; Misión</strong>
+      Vender joyería de plata con estilo luxury. Clientes consultan el catálogo, arman pedido y lo envían por WhatsApp.
+    </div>
+    <div class="card-mini">
+      <strong>&#128736; Stack</strong>
+      HTML + CSS + JS vanilla &middot; GitHub Pages &middot; Google Sheets &middot; Apps Script
+    </div>
+    <div class="card-mini">
+      <strong>&#128200; Productos</strong>
+      221 &middot; 7 categorías &middot; datos en vivo desde Sheets
+    </div>
+    <div class="card-mini">
+      <strong>&#128274; Estado</strong>
+      <span class="tag">En producción</span>
+    </div>
+  </div>
+  <p>Las especificaciones completas del auto están en <code>spec/constitution/</code>.</p>
+</section>
+
+<section id="encender">
+  <h2><span class="icon">&#128161;</span> 2. Encender el motor — abrir el proyecto</h2>
+  <p>Para manejar Silver Cow, primero enciende el motor desde el lugar correcto:</p>
+  <div class="code-block">
+    cd ~/Documentos/Programacion/Paguina_joyas<br>
+    opencode
+  </div>
+  <p>Al abrir OpenCode desde esta carpeta, se cargan automáticamente:</p>
+  <ul>
+    <li>Los <strong>4 MCPs</strong> (Playwright, Firecrawl, GitHub, Sequential Thinking)</li>
+    <li>El <strong>skill de Omarchy</strong> (temas de escritorio Linux)</li>
+    <li>El <strong>AGENTS.md</strong> con las instrucciones del proyecto</li>
+  </ul>
+  <p>Si abres OpenCode desde otra carpeta, estos no se cargan. Cada proyecto tiene su propia configuración.</p>
+</section>
+
+<section id="volante">
+  <h2><span class="icon">&#128665;</span> 3. El volante — actualizar productos</h2>
+  <p>Los productos viven en <strong>Google Sheets</strong>. Tú los manejas desde allí, sin tocar código.</p>
+  <h3>Columnas de la hoja</h3>
+  <div class="code-block">
+    <span class="comment">| nombre | precio | codigo | estado | esPedido | img | desc |</span>
+  </div>
+  <ul>
+    <li><strong>nombre</strong> — nombre corto del producto</li>
+    <li><strong>precio</strong> — número (ej: 45.00)</li>
+    <li><strong>codigo</strong> — código interno (ej: <code>P-PL-296</code>)</li>
+    <li><strong>estado</strong> — <code>disponible</code> | <code>pedido</code> | <code>agotado</code></li>
+    <li><strong>esPedido</strong> — <code>FALSE</code> (stock directo) | <code>TRUE</code> (bajo pedido)</li>
+    <li><strong>img</strong> — ruta de imagen (ej: <code>pulseras/P-PL-296.jpg</code>)</li>
+    <li><strong>desc</strong> — descripción larga (opcional)</li>
+  </ul>
+  <h3>Subir cambios a la página</h3>
+  <p>Después de editar Sheets, los cambios se ven en la página <strong>al instante</strong>. Si no se ven, incrementa el número en <code>?v=N</code> en <code>catalogo.js</code> para forzar recarga.</p>
+  <div class="code-block">
+    <span class="comment">// En catalogo.js, cambia este número cuando actualices productos:</span><br>
+    const API_URL = '...&amp;v=<strong>2</strong>';
+  </div>
+</section>
+
+<section id="acelerador">
+  <h2><span class="icon">&#9889;</span> 4. Acelerador — publicar cambios (git push)</h2>
+  <p>Cada vez que cambies código (HTML, CSS, JS), debes pisar el acelerador para que se vea en internet:</p>
+  <div class="code-block">
+    git add .<br>
+    git commit -m "Descripcion del cambio"<br>
+    git push
+  </div>
+  <p>GitHub Pages despliega automáticamente. Espera <strong>1-2 minutos</strong> y los cambios estarán en:</p>
+  <p><a href="https://saidsoriano.github.io/Silver-Cow-Ambato/" target="_blank">https://saidsoriano.github.io/Silver-Cow-Ambato/</a></p>
+  <h3>Reglas de oro</h3>
+  <ul>
+    <li>No hagas <code>git push --force</code> (pierdes historial)</li>
+    <li>Revisa los cambios antes de commitear</li>
+    <li>No subas tokens, claves ni datos sensibles</li>
+  </ul>
+</section>
+
+<section id="mantenimiento">
+  <h2><span class="icon">&#128295;</span> 5. Mantenimiento — importar del proveedor</h2>
+  <p>Cuando el proveedor (ItalSteel Odoo) agregue nuevos productos, usa el script de importación para traerlos:</p>
+  <div class="code-block">
+    .venv/bin/python extraer_proveedor.py pulseras<br>
+    .venv/bin/python extraer_proveedor.py todas
+  </div>
+  <ul>
+    <li>El script <strong>scrapea</strong> el catálogo del proveedor</li>
+    <li>Genera un <strong>CSV</strong> listo para copiar a Google Sheets</li>
+    <li><strong>Descarga las imágenes</strong> a las carpetas de cada categoría</li>
+    <li>Si una imagen ya existe, <strong>la salta</strong> (no descarga duplicados)</li>
+  </ul>
+  <p>Este script solo corre en tu compu (está en <code>.gitignore</code>, no se sube a GitHub).</p>
+</section>
+
+<section id="hojas-ruta">
+  <h2><span class="icon">&#128506;</span> 6. GPS — Spec-Driven Development</h2>
+  <p>Silver Cow usa <strong>SDD (Spec-Driven Development)</strong> para planificar cada mejora. Piensa en esto como el <strong>GPS del proyecto</strong>: antes de manejar, defines la ruta.</p>
+
+  <h3>¿Qué es SDD en simple?</h3>
+  <p>Antes de pedirle a la IA que agregue algo nuevo, primero escribes <strong>qué quieres</strong> (spec), <strong>cómo hacerlo</strong> (plan) y <strong>qué pasos seguir</strong> (tasks). Luego el agente implementa. Así evitas pérdidas de tiempo y cambios de rumbo.</p>
+
+  <h3>Estructura del GPS</h3>
+  <div class="code-block">
+    <span class="comment">spec/</span><br>
+    ├── constitution/              <span class="comment">&larr; Documentos fijos del proyecto</span><br>
+    │   ├── mission.md             <span class="comment">Identidad, audiencia, tono</span><br>
+    │   ├── tech-stack.md          <span class="comment">Stack, MCPs, proveedores</span><br>
+    │   └── roadmap.md             <span class="comment">Features actuales y planeadas</span><br>
+    └── features/                  <span class="comment">&larr; Una carpeta por feature</span><br>
+        └── NNN-nombre/<br>
+            ├── spec.md            <span class="comment">Qu&eacute; hace y criterios de &eacute;xito</span><br>
+            ├── plan.md            <span class="comment">C&oacute;mo se implementa</span><br>
+            └── tasks.md           <span class="comment">Checklist de tareas</span>
+  </div>
+
+  <h3>Cómo agregar una feature nueva</h3>
+  <ol>
+    <li><strong>Actualiza el roadmap</strong> en <code>spec/constitution/roadmap.md</code> con la nueva feature</li>
+    <li><strong>Crea la carpeta</strong> <code>spec/features/006-mi-feature/</code></li>
+    <li><strong>Escribe la spec</strong> (<code>spec.md</code>): historia de usuario + criterios de aceptación</li>
+    <li><strong>Escribe el plan</strong> (<code>plan.md</code>): archivos a tocar, enfoque técnico</li>
+    <li><strong>Crea las tareas</strong> (<code>tasks.md</code>): checklist verificable</li>
+    <li><strong>Implementa</strong> con la IA según lo que dice la spec</li>
+    <li><strong>Verifica</strong> contra los criterios de aceptación</li>
+    <li><strong>Registra</strong> en <code>sesiones/sesion-NNN.md</code></li>
+  </ol>
+
+  <h3>Registrar sesiones</h3>
+  <p>Cada vez que trabajes en el proyecto, crea una nota en <code>sesiones/</code>:</p>
+  <div class="code-block">
+    <span class="comment"># Sesi&oacute;n 004 — 2026-07-12</span><br>
+    <span class="comment">## Resumen</span><br>
+    <span class="comment">[qu&eacute; se hizo]</span><br>
+    <span class="comment">## Decisiones</span><br>
+    <span class="comment">| Decisi&oacute;n | Opci&oacute;n | Alternativa |</span><br>
+    <span class="comment">## Archivos tocados</span><br>
+    <span class="comment">## Pendientes</span>
+  </div>
+
+  <h3>Features actuales documentadas</h3>
+  <ul>
+    <li><code>spec/features/001-catalogo-sheets/</code> — Catálogo desde Google Sheets</li>
+    <li><code>spec/features/002-diseno-luxury/</code> — Diseño gold accent</li>
+    <li><code>spec/features/003-carrito-whatsapp/</code> — Carrito + WhatsApp</li>
+    <li><code>spec/features/004-importador-proveedor/</code> — Scraper ItalSteel</li>
+    <li><code>spec/features/005-mcps-opencode/</code> — MCPs del proyecto</li>
+  </ul>
+</section>
+
+<section id="herramientas">
+  <h2><span class="icon">&#128588;</span> 7. Caja de herramientas — MCPs</h2>
+  <p>Los MCPs son como herramientas especializadas en tu maletero. Las usas cuando las necesitas:</p>
+  <div class="grid-2">
+    <div class="card-mini">
+      <strong>&#128247; Playwright</strong>
+      Saca fotos del auto (screenshots del catálogo en móvil y escritorio). Prueba que todo se vea bien sin abrir el navegador.
+    </div>
+    <div class="card-mini">
+      <strong>&#128269; Firecrawl</strong>
+      Busca repuestos (scrapea proveedores, encuentra información en la web).
+    </div>
+    <div class="card-mini">
+      <strong>&#129504; Sequential Thinking</strong>
+      Tu asistente de ruta: divide problemas complejos en pasos lógicos antes de actuar.
+    </div>
+    <div class="card-mini">
+      <strong>&#128190; GitHub</strong>
+      El taller mecánico: issues, PRs, Actions, releases. Gestiona el repositorio sin salir de OpenCode.
+    </div>
+  </div>
+  <p>Los MCPs se configuran en <code>opencode.json</code>. Si agregas uno nuevo, documéntalo allí.</p>
+</section>
+
+<section id="luces">
+  <h2><span class="icon">&#9888;</span> 8. Luces testigo — solución de problemas</h2>
+
+  <h3>&#128680; La página no muestra los productos nuevos</h3>
+  <p>Incrementa <code>?v=N</code> en <code>catalogo.js</code> (línea de la URL del script). Por ejemplo, de <code>?v=1</code> a <code>?v=2</code>.</p>
+
+  <h3>&#128680; El deploy no se ve después de git push</h3>
+  <p>Espera 1-2 minutos. Si sigue sin verse, revisa que el push fue exitoso y que estás en la rama <code>main</code>.</p>
+
+  <h3>&#128680; OpenCode no carga los MCPs</h3>
+  <p>Asegúrate de abrir OpenCode <strong>dentro de</strong> la carpeta del proyecto (<code>cd ~/Documentos/Programacion/Paguina_joyas</code>). Revisa que <code>opencode.json</code> tenga los mcpServers.</p>
+
+  <h3>&#128680; Error al ejecutar extraer_proveedor.py</h3>
+  <p>Verifica que el entorno virtual está activado o usa la ruta directa: <code>.venv/bin/python extraer_proveedor.py</code>. Si el proveedor cambió su sitio web, el script puede necesitar actualización.</p>
+
+  <h3>&#128680; Google Apps Script no responde</h3>
+  <p>El script tiene un <strong>cold start</strong>: la primera petición después de inactividad tarda 5-10 segundos. Las siguientes son rápidas. Si deja de responder del todo, revisa el script en <code>scripts/google_apps_script.js</code> y vuelve a desplegarlo.</p>
+</section>
+
+<section id="gasolinera">
+  <h2><span class="icon">&#9981;</span> 9. Gasolinera — recursos útiles</h2>
+  <div class="grid-2">
+    <div class="card-mini">
+      <strong>&#127760; Sitio en vivo</strong>
+      <a href="https://saidsoriano.github.io/Silver-Cow-Ambato/" target="_blank">saidsoriano.github.io/Silver-Cow-Ambato</a>
+    </div>
+    <div class="card-mini">
+      <strong>&#128187; Repositorio</strong>
+      <a href="https://github.com/saidsoriano/Silver-Cow-Ambato" target="_blank">github.com/saidsoriano/Silver-Cow-Ambato</a>
+    </div>
+    <div class="card-mini">
+      <strong>&#128222; WhatsApp</strong>
+      +593 990 688 287
+    </div>
+    <div class="card-mini">
+      <strong>&#128247; Instagram</strong>
+      @Silver_Cow_Ambato
+    </div>
+    <div class="card-mini">
+      <strong>&#128196; Google Sheets</strong>
+      El motor de datos del catálogo
+    </div>
+    <div class="card-mini">
+      <strong>&#128421; OpenCode</strong>
+      <a href="https://opencode.ai" target="_blank">opencode.ai</a> &mdash; tu copiloto
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  Silver Cow Ambato &mdash; Hecho con &#9829; por Sa&iacute;d Soriano &mdash; <a href="https://github.com/saidsoriano/Silver-Cow-Ambato">GitHub</a>
+</footer>
+
+</body>
+</html>

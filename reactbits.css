@@ -1,0 +1,300 @@
+/* ══════════════════════════════════════════════════
+   REACTBITS PORTS — Feature 006
+   PixelCard · MagicBento
+   Adaptado a la paleta Silver Cow (zafiro/plata/oro)
+   ══════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════
+   PIXEL CARD (006) — píxeles que brillan en hover
+   Envuelve el CTA principal del hero
+══════════════════════════════════════════════════ */
+.pixel-card-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  border-radius: 999px;
+}
+
+.pixel-card-wrap .btn-primary {
+  position: relative;
+  z-index: 2;
+}
+
+.pixel-card-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════════════════
+   MAGIC BENTO (006) — grid con partículas, spotlight,
+   border-glow, tilt, magnetismo y ripple al clic.
+   #filosofia (3 pilares) y #catalogo (7 categorías)
+══════════════════════════════════════════════════ */
+
+/* ── GRID BENTO ── */
+.magic-bento {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  --mb-r: 18px;
+}
+
+/* Filosofía: 3 columnas, la destacada ocupa 2×2 */
+.filosofia-bento {
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(200px, auto);
+}
+.filosofia-bento .mb-featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Catálogo: 4 columnas, la primera ocupa 2 */
+.catalogo-bento {
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  margin-bottom: 72px;
+}
+.catalogo-bento .mb-tile:first-child {
+  grid-column: span 2;
+}
+
+/* ── BASE DE TARJETA ── */
+.mb-card,
+.mb-tile {
+  position: relative;
+  border-radius: var(--mb-r);
+  border: 1px solid rgba(200,208,220,.12);
+  background: linear-gradient(160deg, rgba(15,37,87,.35), rgba(6,12,26,.9) 60%);
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+  --mx: 50%;
+  --my: 50%;
+}
+
+/* Spotlight — halo que sigue al mouse */
+.mb-card::before,
+.mb-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(600px circle at var(--mx) var(--my), rgba(201,168,76,.10), transparent 40%);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.mb-card:hover::before,
+.mb-tile:hover::before { opacity: 1; }
+
+/* Border-glow — borde que se ilumina según el mouse */
+.mb-card::after,
+.mb-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(400px circle at var(--mx) var(--my), rgba(201,168,76,.65), rgba(200,208,220,.15) 40%, transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.mb-card:hover::after,
+.mb-tile:hover::after { opacity: 1; }
+
+/* Ripple — onda al hacer clic */
+.mb-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,.35), transparent 65%);
+  transform: scale(0);
+  animation: mb-ripple .8s ease-out forwards;
+  pointer-events: none;
+  z-index: 6;
+}
+@keyframes mb-ripple {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ── TARJETAS DE FILOSOFÍA ── */
+.mb-card-content {
+  position: relative;
+  z-index: 4;
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100%;
+}
+.mb-card-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 300;
+  color: rgba(201,168,76,.35);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.mb-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--white-pure);
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.mb-card-text {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+/* Partículas — canvas sobre la tarjeta destacada */
+.mb-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── TILES DE CATÁLOGO ── */
+.mb-tile {
+  display: flex;
+  align-items: flex-end;
+}
+.mb-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .35;
+  transform: scale(1.02);
+  transition: transform .6s, opacity .4s, filter .4s;
+}
+/* Inactivas: desaturadas y oscuras — contraste máximo con la activa */
+.mb-tile:not(.active) img {
+  filter: grayscale(.8) brightness(.8);
+}
+.mb-tile:not(.active):hover img { transform: scale(1.08); opacity: .55; filter: grayscale(.4) brightness(.95); }
+.mb-tile-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(6,12,26,.12), rgba(6,12,26,.9) 75%);
+}
+.mb-tile-info {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+.mb-tile-num {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--gold-accent);
+}
+.mb-tile-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--white-pure);
+  letter-spacing: .02em;
+  line-height: 1.15;
+}
+
+/* Categoría activa — contrato con catalogo_motor.js (.cat-btn + .active) */
+.mb-tile.active {
+  border-color: rgba(201,168,76,.6);
+  box-shadow: 0 0 0 1px rgba(201,168,76,.35), 0 14px 40px rgba(6,12,26,.6);
+}
+.mb-tile.active img { opacity: 1; transform: scale(1.05); filter: none; }
+.mb-tile.active .mb-tile-overlay { background: linear-gradient(180deg, rgba(6,12,26,.05), rgba(6,12,26,.7) 70%); }
+.mb-tile.active::after { opacity: 1; }
+.mb-tile.active .mb-tile-name { color: var(--gold-accent); }
+
+/* ── MÓVIL (<768px) — sin efectos, solo layout ── */
+@media (max-width: 767px) {
+  .filosofia-bento {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .filosofia-bento .mb-featured {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .catalogo-bento {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(140px, auto);
+    gap: 10px;
+    margin-bottom: 56px;
+  }
+  .catalogo-bento .mb-tile:first-child {
+    grid-column: span 2;
+  }
+  .mb-card-content { padding: 34px 28px; }
+  .mb-card-number { font-size: 46px; }
+  .mb-card-title { font-size: 24px; }
+  .mb-card-text { font-size: 13px; }
+  .mb-tile-name { font-size: 20px; }
+  .mb-tile-info { padding: 18px; }
+}
+
+/* ══════════════════════════════════════════════════
+   COLOR BENDS (ReactBits 006) — fondo animado del hero
+   WebGL puro (js/color-bends.js). Si no hay WebGL el
+   div queda vacío y se ve el hero-bg original.
+   ══════════════════════════════════════════════════ */
+.color-bends-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none; /* no bloquea los clics del hero */
+}
+.color-bends-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Scrim de contraste sobre el ColorBends: oscurece el centro (eyebrow + subtítulo),
+   el borde superior (navbar) y el inferior ("Explorar") sin tapar las ondas laterales */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(8,24,64,.58) 0%, transparent 72%),
+    linear-gradient(180deg, rgba(6,12,26,.6) 0%, transparent 28%),
+    linear-gradient(0deg, rgba(6,12,26,.55) 0%, transparent 22%);
+}
+
+/* ── MOVIMIENTO REDUCIDO ── */
+@media (prefers-reduced-motion: reduce) {
+  .mb-card img,
+  .mb-tile img { transition: none; transform: none; }
+}

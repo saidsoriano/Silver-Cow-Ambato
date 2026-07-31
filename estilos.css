@@ -126,6 +126,7 @@
   .nav-links a {
     text-decoration: none;
     color: var(--silver);
+    text-shadow: 0 1px 2px rgba(6,12,26,.75), 0 0 8px rgba(6,12,26,.45); /* Halo oscuro sutil para legibilidad sobre el ColorBends */
     font-size: clamp(10px, 1vw, 13px); /* Tamaño de fuente adaptable */
     font-weight: 300;
     letter-spacing: .15em;
@@ -553,7 +554,8 @@
     font-size: 13px;
     font-weight: 400;
     letter-spacing: .4em;
-    color: var(--text-muted);
+    color: #C8D4E8;
+    text-shadow: 0 1px 2px rgba(6,12,26,.75), 0 0 8px rgba(6,12,26,.45); /* Halo oscuro sutil para legibilidad sobre el ColorBends */
     text-transform: uppercase;
     margin-bottom: 40px;
     opacity: 0;                              /* Inicia invisible */
@@ -568,8 +570,28 @@
     line-height: 1.0;
     color: var(--white-pure);
     margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 1.1s ease .5s forwards; /* Aparece tras 0.5s */
+  }
+
+  /* Anti-flash: el título queda oculto hasta que blur-text.js lo inicializa (.blur-ready) */
+  .hero-title[data-blur-text]:not(.blur-ready) { opacity: 0; }
+
+  /* Unidad de texto animada por BlurText (palabra, o <em> entero como unidad) */
+  .blur-text-element {
+    display: inline-block;
+    will-change: opacity, filter, transform;
+  }
+
+  /* Animación de entrada: borrosa → seminitida → nítida (fiel al componente ReactBits) */
+  @keyframes blur-text-in {
+    0%   { opacity: 0; filter: blur(10px); transform: translate3d(0, -50px, 0); }
+    50%  { opacity: .5; filter: blur(5px); transform: translate3d(0, 5px, 0); }
+    100% { opacity: 1; filter: blur(0); transform: translate3d(0, 0, 0); }
+  }
+
+  /* Movimiento reducido: título visible sin animación */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title[data-blur-text] { opacity: 1; }
+    .blur-text-element { opacity: 1 !important; filter: blur(0) !important; transform: none !important; animation: none !important; }
   }
 
   /* Texto en cursiva dentro del título (con efecto degradado plateado) */
@@ -586,7 +608,8 @@
     font-size: 16px;
     font-weight: 300;
     letter-spacing: .08em;
-    color: var(--text-muted);
+    color: #C8D4E8;
+    text-shadow: 0 1px 2px rgba(6,12,26,.75), 0 0 8px rgba(6,12,26,.4); /* Halo oscuro sutil para legibilidad sobre el ColorBends */
     line-height: 2;
     max-width: 520px;
     margin: 0 auto 56px;
@@ -631,6 +654,7 @@
     gap: 10px;
     background: transparent;
     color: var(--silver);
+    text-shadow: 0 1px 2px rgba(6,12,26,.95), 0 0 14px rgba(6,12,26,.7); /* Halo oscuro reforzado para legibilidad sobre el ColorBends */
     padding: 16px 32px;
     font-size: 13px;
     font-weight: 300;
@@ -655,7 +679,7 @@
     opacity: 0;
     animation: fadeIn 1s ease 1.5s forwards; /* Aparece al final, tras 1.5s */
   }
-  .hero-scroll span { font-size: 12px; letter-spacing: .35em; color: var(--text-muted); text-transform: uppercase; }
+  .hero-scroll span { font-size: 12px; letter-spacing: .35em; color: #C8D4E8; text-shadow: 0 1px 2px rgba(6,12,26,.75), 0 0 8px rgba(6,12,26,.45); text-transform: uppercase; }
 
   /* Línea vertical pulsante del indicador de scroll */
   .scroll-line {
@@ -808,47 +832,7 @@
   .filosofia-inner { max-width: 1100px; margin: 0 auto; }
   .filosofia-header { text-align: center; margin-bottom: 100px; }
 
-  /* Cuadrícula de 3 columnas para los pilares */
-  .pilares-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
-    gap: 2px;                               /* Separación mínima entre pilares */
-    background: rgba(200,208,220,.05);      /* Color del "gap" (efecto separador) */
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  /* Cada pilar individual */
-  .pilar {
-    background: rgba(6,12,26,.9);
-    padding: 56px 44px;
-    position: relative;
-    transition: background .4s;
-  }
-  .pilar:hover { background: rgba(15,37,87,.4); } /* Ilumina en azul al pasar mouse */
-
-  /* Línea azul que aparece en la parte superior del pilar al hacer hover */
-  .pilar::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--sapphire), var(--sapphire-light));
-    transform: scaleX(0);          /* Inicia sin ancho */
-    transition: transform .4s ease;
-  }
-  .pilar:hover::before { transform: scaleX(1); } /* Se despliega al hacer hover */
-
-  /* Número grande decorativo (01, 02, 03) */
-  .pilar-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 72px; font-weight: 300;
-    color: rgba(15,37,87,.4); /* Muy sutil, casi invisible */
-    line-height: 1; margin-bottom: 32px;
-    transition: color .4s;
-  }
-  .pilar:hover .pilar-number { color: rgba(26,58,122,.6); } /* Se ilumina al hacer hover */
-
-  .pilar-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--white-pure); margin-bottom: 16px; line-height: 1.2; }
-  .pilar-text  { font-size: 14px; font-weight: 300; line-height: 2; color: var(--text-muted); text-align: justify; }
+  /* Cuadrícula de pilares — reemplazada por MagicBento (reactbits.css) */
 
 
   /* ══════════════════════════════════════════════════
@@ -907,31 +891,10 @@
   .catalogo-header .section-title { margin-bottom: 16px; }
   .catalogo-header p { font-size: 15px; font-weight: 300; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
 
-  /* ── BOTONES DE FILTRO POR CATEGORÍA ── */
-  .cat-filters {
-    display: flex;
-    flex-wrap: wrap;        /* Si no caben en una línea, bajan a la siguiente */
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 72px;
-  }
-
-  /* Botón de filtro individual (Pulseras, Anillos, etc.) */
-  .cat-btn {
-    background: transparent;
-    border: 1px solid rgba(200,208,220,.15);
-    color: var(--text-muted);
-    padding: 10px 24px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px; font-weight: 300;
-    letter-spacing: .25em;
-    text-transform: uppercase;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all .3s;
-  }
-  .cat-btn:hover { border-color: rgba(200,208,220,.4); color: var(--silver-bright); }
-  .cat-btn.active { background: var(--sapphire); border-color: var(--sapphire); color: var(--white-pure); box-shadow: 0 0 20px rgba(15,37,87,.5); }
+  /* ── FILTRO POR CATEGORÍA ──
+     Reemplazado por tiles MagicBento (reactbits.css).
+     La clase .cat-btn se conserva en los tiles por contrato
+     con catalogo_motor.js (toggle de 'active'). */
 
   /* ── SECCIÓN DE UNA CATEGORÍA (ej: "Pulseras") ── */
   .cat-section { margin-bottom: 80px; }
@@ -1310,8 +1273,7 @@
     /* Nosotros */
     .nosotros-grid { grid-template-columns: 1fr; gap: 36px; }
 
-    /* Filosofía */
-    .pilares-grid { grid-template-columns: 1fr; }
+    /* Filosofía — el bento (reactbits.css) ya es 1 columna en móvil */
 
     /* Proceso */
     .proceso-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -1319,8 +1281,6 @@
 
     /* Catálogo */
     #catalogo { padding: 80px 20px; }
-    .cat-filters { gap: 6px; }
-    .cat-btn { padding: 8px 14px; font-size: 11px; letter-spacing: .15em; }
     .joyas-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 2 columnas en móvil */
     .joya-nombre { font-size: 16px; }
     .joya-precio { font-size: 18px; }
@@ -1337,7 +1297,4 @@
   /* Pantallas muy pequeñas — celulares menores a 420px */
   @media(max-width: 420px) {
     .joyas-grid { grid-template-columns: 1fr; } /* 1 columna en pantallas muy chicas */
-    /* Filtros con scroll horizontal para que no se rompan */
-    .cat-filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
-    .cat-btn { white-space: nowrap; flex-shrink: 0; }
   }

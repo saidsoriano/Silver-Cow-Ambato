@@ -14,7 +14,8 @@ let productosMostrados = 0;        // Cuántos productos están en el DOM ahora
 // ── CARGAR CATEGORÍA ──
 // Se llama al hacer clic en un botón de filtro
 // cat: nombre de la categoría | btnEl: el botón que se hizo clic
-function cargarCategoria(cat, btnEl) {
+// desplazar: true si el click debe hacer scroll hasta las fotos (click del usuario)
+function cargarCategoria(cat, btnEl, desplazar) {
   console.log('catalogo_motor.js: cargarCategoria llamada con:', cat);
   
   // Actualiza botón activo
@@ -73,6 +74,27 @@ function cargarCategoria(cat, btnEl) {
 
   // Renderiza los primeros LIMITE productos
   renderizarMas(cat, productos);
+
+  // Scroll suave hasta las fotos de la categoría (solo en click del usuario)
+  if (desplazar) {
+    desplazarAGrid(cat);
+  }
+}
+
+
+// ── DESPLAZAR HASTA LAS FOTOS ──
+// Hace scroll suave hasta la cuadrícula de fotos de la categoría,
+// compensando la altura de la navbar fija
+function desplazarAGrid(cat) {
+  const grid = document.getElementById(`grid-${cat}`);
+  if (!grid) return;
+
+  const navbar = document.getElementById('navbar');
+  const offset = (navbar ? navbar.offsetHeight : 0) + 20;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const top = grid.getBoundingClientRect().top + window.scrollY - offset;
+
+  window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
 }
 
 

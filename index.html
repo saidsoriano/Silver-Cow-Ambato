@@ -17,6 +17,9 @@
   <!-- Estilos separados en archivo externo para mejor rendimiento -->
   <link rel="stylesheet" href="estilos.css">
 
+  <!-- Componentes portados de ReactBits (006) -->
+  <link rel="stylesheet" href="reactbits.css">
+
 </head>
 
 <body>
@@ -83,6 +86,8 @@
 </div>
 
 
+
+
 <!-- ══════════════════════════════════════════════════
      HERO — PANTALLA DE BIENVENIDA
      Primera sección que ve el usuario al entrar
@@ -90,8 +95,10 @@
 <section id="hero">
 
   <div class="hero-bg"></div>    <!-- Capas de gradiente azul decorativas -->
+  <div id="colorBends" class="color-bends-container" aria-hidden="true"></div> <!-- ColorBends: fondo WebGL animado (006) -->
   <div class="hero-grain"></div> <!-- Textura de grano sutil -->
   <div class="hero-orb"></div>   <!-- Esfera de luz azul flotante -->
+  <div class="hero-scrim" aria-hidden="true"></div> <!-- Contraste para eyebrow/subtítulo/navbar/Explorar sobre el ColorBends (006) -->
 
   <!-- Contenido central del Hero -->
   <div class="hero-content">
@@ -99,8 +106,8 @@
     <!-- Texto pequeño sobre el título -->
     <p class="hero-eyebrow">Silver Cow Ambato — Plata Ley 925</p>
 
-    <!-- Título principal — PUEDES EDITAR ESTE TEXTO -->
-    <h1 class="hero-title">
+    <!-- Título principal — PUEDES EDITAR ESTE TEXTO (BlurText anima cada palabra; el <em> entra como unidad) -->
+    <h1 class="hero-title" data-blur-text>
       No es una joya.<br>
       <em>Es tu distinción</em><br> <!-- <em> aplica cursiva con efecto plateado degradado -->
       hecha plata.
@@ -114,14 +121,22 @@
 
     <!-- Botones de acción -->
     <div class="hero-actions">
-      <!-- Botón principal: abre WhatsApp directamente -->
-      <a href="https://wa.me/593990688287?text=✨%20Hola%2C%20quiero%20más%20información%20para%20agendar%20un%20pedido.%20🐄🪙" target="_blank" class="btn-primary">
-        Iniciar una adquisición
-        <!-- Ícono de flecha diagonal (SVG dibujado en código) -->
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M7 17L17 7M17 7H7M17 7v10"/>
-        </svg>
-      </a>
+      <!-- Botón principal: abre WhatsApp directamente — envuelto en PixelCard (006) -->
+      <div
+        class="pixel-card-wrap"
+        data-pixel-card
+        data-colors="#C9A84C,#C8D0DC,#2A4FA0"
+        data-gap="12"
+        data-speed="0.15"
+      >
+        <a href="https://wa.me/593990688287?text=✨%20Hola%2C%20quiero%20más%20información%20para%20agendar%20un%20pedido.%20🐄🪙" target="_blank" class="btn-primary">
+          Iniciar una adquisición
+          <!-- Ícono de flecha diagonal (SVG dibujado en código) -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </a>
+      </div>
       <!-- Botón secundario: baja a la sección Nosotros -->
       <a href="#nosotros" class="btn-ghost">Conocer la marca</a>
     </div>
@@ -146,15 +161,64 @@
     <p>Todas las piezas son elaboradas en Plata Ley 925. Precios en USD.</p>
   </div>
 
-  <!-- Botones de filtro por categoría — SIN "Todas" -->
-  <div class="cat-filters reveal" id="catFiltros">
-    <button class="cat-btn active" onclick="cargarCategoria('pulseras', this)">Pulseras</button>
-    <button class="cat-btn" onclick="cargarCategoria('anillos', this)">Anillos</button>
-    <button class="cat-btn" onclick="cargarCategoria('aretes', this)">Aretes</button>
-    <button class="cat-btn" onclick="cargarCategoria('juegos', this)">Juegos</button>
-    <button class="cat-btn" onclick="cargarCategoria('dijes', this)">Dijes</button>
-    <button class="cat-btn" onclick="cargarCategoria('cadenas', this)">Cadenas</button>
-    <button class="cat-btn" onclick="cargarCategoria('cadenas_dijes', this)">Cadenas con Dijes</button>
+  <!-- Tiles de categoría estilo bento — reemplazan los botones de filtro -->
+  <div class="magic-bento catalogo-bento reveal">
+    <div class="mb-tile cat-btn active" onclick="cargarCategoria('pulseras', this, true)">
+      <img src="pulseras/P-PL-104.jpg" alt="Pulseras de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">01</span>
+        <h3 class="mb-tile-name">Pulseras</h3>
+      </div>
+    </div>
+    <div class="mb-tile cat-btn" onclick="cargarCategoria('anillos', this, true)">
+      <img src="anillos/anillo_10.jpg" alt="Anillos de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">02</span>
+        <h3 class="mb-tile-name">Anillos</h3>
+      </div>
+    </div>
+    <div class="mb-tile cat-btn" onclick="cargarCategoria('aretes', this, true)">
+      <img src="aretes/arete_10.jpg" alt="Aretes de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">03</span>
+        <h3 class="mb-tile-name">Aretes</h3>
+      </div>
+    </div>
+    <div class="mb-tile cat-btn" onclick="cargarCategoria('juegos', this, true)">
+      <img src="juegos/juego_10.jpg" alt="Juegos de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">04</span>
+        <h3 class="mb-tile-name">Juegos</h3>
+      </div>
+    </div>
+    <div class="mb-tile cat-btn" onclick="cargarCategoria('dijes', this, true)">
+      <img src="dijes/dije_10.jpg" alt="Dijes de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">05</span>
+        <h3 class="mb-tile-name">Dijes</h3>
+      </div>
+    </div>
+    <div class="mb-tile cat-btn" onclick="cargarCategoria('cadenas', this, true)">
+      <img src="cadenas/cadena_10.jpg" alt="Cadenas de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">06</span>
+        <h3 class="mb-tile-name">Cadenas</h3>
+      </div>
+    </div>
+    <div class="mb-tile cat-btn" onclick="cargarCategoria('cadenas_dijes', this, true)">
+      <img src="cadenas_dijes/cadena_dije_10.jpg" alt="Cadenas con dijes de plata 925" loading="lazy">
+      <div class="mb-tile-overlay"></div>
+      <div class="mb-tile-info">
+        <span class="mb-tile-num">07</span>
+        <h3 class="mb-tile-name">Cadenas con Dijes</h3>
+      </div>
+    </div>
   </div>
 
   <!-- Contenedor donde se inyectan los productos dinámicamente -->
@@ -232,32 +296,39 @@
       <h2 class="section-title" style="text-align:center">La filosofía<br><em>Silver Cow</em></h2>
     </div>
 
-    <!-- Los 3 pilares en cuadrícula -->
-    <div class="pilares-grid">
+    <!-- Los 3 pilares en grid bento (1 destacada con partículas + 2 normales) -->
+    <div class="magic-bento filosofia-bento">
 
-      <!-- PILAR 1 -->
-      <div class="pilar reveal">
-        <div class="pilar-number">01</div> <!-- Número decorativo grande -->
-        <h3 class="pilar-title">Pureza<br>Absoluta</h3>
-        <!-- TEXTO DEL PILAR: puedes editarlo -->
-        <p class="pilar-text">Cada pieza es elaborada en Plata Ley 925 — el estándar más alto de pureza reconocido internacionalmente. No hay excepciones, no hay compromisos. Usted recibe exactamente lo que merece.</p>
+      <!-- PILAR 1 — destacado -->
+      <div class="mb-card mb-featured">
+        <canvas class="mb-particles"></canvas>
+        <div class="mb-card-content">
+          <div class="mb-card-number">01</div>
+          <h3 class="mb-card-title">Pureza<br>Absoluta</h3>
+          <!-- TEXTO DEL PILAR: puedes editarlo -->
+          <p class="mb-card-text">Cada pieza es elaborada en Plata Ley 925 — el estándar más alto de pureza reconocido internacionalmente. No hay excepciones, no hay compromisos. Usted recibe exactamente lo que merece.</p>
+        </div>
       </div>
 
       <!-- PILAR 2 -->
-      <div class="pilar reveal" style="transition-delay:.15s"> <!-- Aparece 0.15s después -->
-        <div class="pilar-number">02</div>
-        <h3 class="pilar-title">Control de<br>Calidad Verificado</h3>
-        <p class="pilar-text">Antes de llegar a sus manos, cada adquisición pasa por un proceso de verificación técnica y estética minucioso. Su pieza no sale hasta que es impecable en cada detalle visible e invisible.</p>
+      <div class="mb-card">
+        <div class="mb-card-content">
+          <div class="mb-card-number">02</div>
+          <h3 class="mb-card-title">Control de<br>Calidad Verificado</h3>
+          <p class="mb-card-text">Antes de llegar a sus manos, cada adquisición pasa por un proceso de verificación técnica y estética minucioso. Su pieza no sale hasta que es impecable en cada detalle visible e invisible.</p>
+        </div>
       </div>
 
       <!-- PILAR 3 -->
-      <div class="pilar reveal" style="transition-delay:.3s"> <!-- Aparece 0.30s después -->
-        <div class="pilar-number">03</div>
-        <h3 class="pilar-title">Exclusividad<br>Bajo Pedido</h3>
-        <p class="pilar-text">Silver Cow elimina el mercado masivo de raíz. Cada pieza existe porque alguien la eligió. Su joya no está en ninguna vitrina — no la tiene nadie más. Es suya antes de existir.</p>
+      <div class="mb-card">
+        <div class="mb-card-content">
+          <div class="mb-card-number">03</div>
+          <h3 class="mb-card-title">Exclusividad<br>Bajo Pedido</h3>
+          <p class="mb-card-text">Silver Cow elimina el mercado masivo de raíz. Cada pieza existe porque alguien la eligió. Su joya no está en ninguna vitrina — no la tiene nadie más. Es suya antes de existir.</p>
+        </div>
       </div>
 
-    </div><!-- fin pilares-grid -->
+    </div><!-- fin filosofia-bento -->
   </div>
 </section>
 
@@ -915,5 +986,10 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
 
 
 </script>
+
+<script src="js/pixel-card.js" defer></script>
+<script src="js/magic-bento.js" defer></script>
+<script src="js/color-bends.js" defer></script>
+<script src="js/blur-text.js" defer></script>
 </body>
 </html>

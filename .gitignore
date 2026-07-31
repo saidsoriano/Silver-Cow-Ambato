@@ -3,3 +3,4 @@
 .env
 .venv
 extraer_proveedor.py
+opencode.json
