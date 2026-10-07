@@ -1,0 +1,5 @@
+# Dependencias de extraer_proveedor.py (scraper del proveedor)
+# Instaladas en .venv — versiones fijadas desde la sesión 010 (2026-10-07).
+# Reinstalar: .venv/bin/pip install -r requirements.txt
+requests==2.34.2
+beautifulsoup4==4.15.0

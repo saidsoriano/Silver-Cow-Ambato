@@ -204,7 +204,7 @@
     </div>
     <div class="card-mini">
       <strong>&#128200; Productos</strong>
-      221 &middot; 7 categorías &middot; datos en vivo desde Sheets
+      357 &middot; 7 categorías &middot; datos en vivo desde Sheets
     </div>
     <div class="card-mini">
       <strong>&#128274; Estado</strong>
@@ -218,16 +218,17 @@
   <h2><span class="icon">&#128161;</span> 2. Encender el motor — abrir el proyecto</h2>
   <p>Para manejar Silver Cow, primero enciende el motor desde el lugar correcto:</p>
   <div class="code-block">
-    cd ~/Documentos/Programacion/Paguina_joyas<br>
+    cd "$HOME/Silver Cow Ambato/Paguina_joyas"<br>
     opencode
   </div>
   <p>Al abrir OpenCode desde esta carpeta, se cargan automáticamente:</p>
   <ul>
-    <li>Los <strong>4 MCPs</strong> (Playwright, Firecrawl, GitHub, Sequential Thinking)</li>
+    <li>Los <strong>MCPs</strong> del proyecto: Playwright, Firecrawl y Sequential Thinking. El de <strong>GitHub está deshabilitado</strong> hasta que exportes un token válido (ver sección 7)</li>
     <li>El <strong>skill de Omarchy</strong> (temas de escritorio Linux)</li>
     <li>El <strong>AGENTS.md</strong> con las instrucciones del proyecto</li>
   </ul>
   <p>Si abres OpenCode desde otra carpeta, estos no se cargan. Cada proyecto tiene su propia configuración.</p>
+  <p>Las claves de los MCPs no viven en <code>opencode.json</code>: están en el archivo <code>.env</code> (gitignorado), que tu shell carga al arrancar y que OpenCode lee con <code>{env:VARIABLE}</code>.</p>
 </section>
 
 <section id="volante">
@@ -247,10 +248,10 @@
     <li><strong>desc</strong> — descripción larga (opcional)</li>
   </ul>
   <h3>Subir cambios a la página</h3>
-  <p>Después de editar Sheets, los cambios se ven en la página <strong>al instante</strong>. Si no se ven, incrementa el número en <code>?v=N</code> en <code>catalogo.js</code> para forzar recarga.</p>
+  <p>Después de editar Sheets, recarga la página: los productos nuevos aparecen <strong>solos</strong>, sin tocar código. Si aún así no cambian, incrementa el número en <code>?v=N</code> en <code>catalogo.js</code> para forzar la recarga.</p>
   <div class="code-block">
-    <span class="comment">// En catalogo.js, cambia este número cuando actualices productos:</span><br>
-    const API_URL = '...&amp;v=<strong>2</strong>';
+    <span class="comment">// En catalogo.js, línea 6 — cambia este número cuando actualices productos:</span><br>
+    const SHEETS_URL = '.../exec?v=<strong>2</strong>';
   </div>
 </section>
 
@@ -312,7 +313,7 @@
   <h3>Cómo agregar una feature nueva</h3>
   <ol>
     <li><strong>Actualiza el roadmap</strong> en <code>spec/constitution/roadmap.md</code> con la nueva feature</li>
-    <li><strong>Crea la carpeta</strong> <code>spec/features/006-mi-feature/</code></li>
+    <li><strong>Crea la carpeta</strong> <code>spec/features/NNN-mi-feature/</code></li>
     <li><strong>Escribe la spec</strong> (<code>spec.md</code>): historia de usuario + criterios de aceptación</li>
     <li><strong>Escribe el plan</strong> (<code>plan.md</code>): archivos a tocar, enfoque técnico</li>
     <li><strong>Crea las tareas</strong> (<code>tasks.md</code>): checklist verificable</li>
@@ -340,6 +341,8 @@
     <li><code>spec/features/003-carrito-whatsapp/</code> — Carrito + WhatsApp</li>
     <li><code>spec/features/004-importador-proveedor/</code> — Scraper ItalSteel</li>
     <li><code>spec/features/005-mcps-opencode/</code> — MCPs del proyecto</li>
+    <li><code>spec/features/006-reactbits-ports/</code> — Componentes animados del hero</li>
+    <li><code>spec/features/007-correccion-bugs/</code> — Corrección de bugs y deuda documental</li>
   </ul>
 </section>
 
@@ -361,10 +364,10 @@
     </div>
     <div class="card-mini">
       <strong>&#128190; GitHub</strong>
-      El taller mecánico: issues, PRs, Actions, releases. Gestiona el repositorio sin salir de OpenCode.
+      El taller mecánico: issues, PRs, Actions, releases. <strong>Desactivado</strong> hasta que exportes un token en <code>GITHUB_PERSONAL_ACCESS_TOKEN</code> y pongas <code>"enabled": true</code> en <code>opencode.json</code>. Mientras tanto usá la terminal: <code>gh</code> ya está autenticado.
     </div>
   </div>
-  <p>Los MCPs se configuran en <code>opencode.json</code>. Si agregas uno nuevo, documéntalo allí.</p>
+  <p>Los MCPs se configuran en <code>opencode.json</code> (la clave es <code>mcp</code>, no <code>mcpServers</code>). Las claves van en <code>.env</code>, y cada MCP nuevo se documenta en <code>AGENTS.md</code>.</p>
 </section>
 
 <section id="luces">
@@ -377,7 +380,7 @@
   <p>Espera 1-2 minutos. Si sigue sin verse, revisa que el push fue exitoso y que estás en la rama <code>main</code>.</p>
 
   <h3>&#128680; OpenCode no carga los MCPs</h3>
-  <p>Asegúrate de abrir OpenCode <strong>dentro de</strong> la carpeta del proyecto (<code>cd ~/Documentos/Programacion/Paguina_joyas</code>). Revisa que <code>opencode.json</code> tenga los mcpServers.</p>
+  <p>Asegúrate de abrir OpenCode <strong>dentro de</strong> la carpeta del proyecto (<code>cd "$HOME/Silver Cow Ambato/Paguina_joyas"</code>). Revisa que <code>opencode.json</code> tenga la clave <code>mcp</code> y que las variables de <code>.env</code> estén cargadas en tu shell.</p>
 
   <h3>&#128680; Error al ejecutar extraer_proveedor.py</h3>
   <p>Verifica que el entorno virtual está activado o usa la ruta directa: <code>.venv/bin/python extraer_proveedor.py</code>. Si el proveedor cambió su sitio web, el script puede necesitar actualización.</p>

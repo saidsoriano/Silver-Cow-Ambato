@@ -1,10 +1,10 @@
 # Tasks — 006-reactbits-ports
 
 - [x] Backup → `backups/backup_reactbits_2026-07-31.zip`
-- [x] GSAP CDN en `index.html` + link `reactbits.css`
+- [~] GSAP CDN en `index.html` + link `reactbits.css` — `reactbits.css` sigue linkeado; **el CDN de GSAP se quitó** en la sesión 004 al revertir CardNav/StaggeredMenu (los 4 componentes portados no lo usan)
 - [x] PixelCard: `js/pixel-card.js` + marcado en hero
-- [~] CardNav: **ABORTADO — revertido a `#navbar` original** (decisión del dueño)
-- [~] StaggeredMenu: **ABORTADO — revertido a `#mobileMenu` original** (decisión del dueño)
+- [~] CardNav: **ABORTADO — revertido a `#navbar` original** (decisión del dueño). El archivo `js/card-nav.js` se eliminó en la sesión 010
+- [~] StaggeredMenu: **ABORTADO — revertido a `#mobileMenu` original** (decisión del dueño). El archivo `js/staggered-menu.js` se eliminó en la sesión 010
 - [x] MagicBento: `js/magic-bento.js` + `#filosofia` (3 pilares actuales en bento, decisión del dueño) + `#catalogo` (7 tiles con foto)
 - [x] ColorBends: `js/color-bends.js` (WebGL puro, sin THREE) + `#colorBends` en hero (fondo animado, paleta de la marca, decisión del dueño)
 - [x] BlurText: `js/blur-text.js` + `data-blur-text` en el título del hero (palabras con blur, `<em>` como unidad, decisión del dueño)
