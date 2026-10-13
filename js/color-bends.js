@@ -23,7 +23,7 @@
     parallax: 0.5,
     noise: 0.15,
     iterations: 1,
-    intensity: 1.5,
+    intensity: 1.0,
     bandWidth: 6,
     transparent: true,
     autoRotate: 0,

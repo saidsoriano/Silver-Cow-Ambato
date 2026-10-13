@@ -94,59 +94,157 @@
 ══════════════════════════════════════════════════ -->
 <section id="hero">
 
-  <div class="hero-bg"></div>    <!-- Capas de gradiente azul decorativas -->
-  <div id="colorBends" class="color-bends-container" aria-hidden="true"></div> <!-- ColorBends: fondo WebGL animado (006) -->
-  <div class="hero-grain"></div> <!-- Textura de grano sutil -->
-  <div class="hero-orb"></div>   <!-- Esfera de luz azul flotante -->
-  <div class="hero-scrim" aria-hidden="true"></div> <!-- Contraste para eyebrow/subtítulo/navbar/Explorar sobre el ColorBends (006) -->
+  <!-- Canvas WebGL: anillo 3D animado (Three.js) — fallback si no hay WebGL -->
+  <canvas id="gl" aria-hidden="true"></canvas>
 
-  <!-- Contenido central del Hero -->
-  <div class="hero-content">
+  <!-- Video del anillo (fondo del hero) — si reproduce, se oculta el 3D -->
+  <video id="ringVideo" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" src="assets/hero-anillo.mp4"></video>
 
-    <!-- Texto pequeño sobre el título -->
-    <p class="hero-eyebrow">Silver Cow Ambato — Plata Ley 925</p>
+  <!-- Piso de rejilla en perspectiva -->
+  <div class="grid-floor" aria-hidden="true"></div>
 
-    <!-- Título principal — PUEDES EDITAR ESTE TEXTO (BlurText anima cada palabra; el <em> entra como unidad) -->
-    <h1 class="hero-title" data-blur-text>
-      No es una joya.<br>
-      <em>Es tu distinción</em><br> <!-- <em> aplica cursiva con efecto plateado degradado -->
-      hecha plata.
+  <!-- Contenido central -->
+  <div class="hero-copy">
+    <div class="tag"><b></b>PLATA LEY 925 · BAJO PEDIDO</div>
+
+    <!-- Título principal — PUEDES EDITAR ESTE TEXTO -->
+    <h1>
+      <span class="ln"><span style="--i:0">No es una joya.</span></span>
+      <span class="ln"><span class="sil" style="--i:1">Es tu distinción</span></span>
+      <span class="ln"><span style="--i:2">hecha plata.</span></span>
     </h1>
 
     <!-- Subtítulo descriptivo — PUEDES EDITAR ESTE TEXTO -->
-    <p class="hero-subtitle">
-      Piezas únicas creadas bajo pedido, verificadas con precisión absoluta.
-      Para quienes comprenden que la verdadera exclusividad no se encuentra — se encarga.
-    </p>
+    <p class="sub">Piezas únicas creadas bajo pedido, verificadas con precisión absoluta. Para quienes saben que la exclusividad no se encuentra: se encarga.</p>
 
     <!-- Botones de acción -->
-    <div class="hero-actions">
-      <!-- Botón principal: abre WhatsApp directamente — envuelto en PixelCard (006) -->
-      <div
-        class="pixel-card-wrap"
-        data-pixel-card
-        data-colors="#C9A84C,#C8D0DC,#2A4FA0"
-        data-gap="12"
-        data-speed="0.15"
-      >
-        <a href="https://wa.me/593990688287?text=✨%20Hola%2C%20quiero%20más%20información%20para%20agendar%20un%20pedido.%20🐄🪙" target="_blank" class="btn-primary">
-          Iniciar una adquisición
-          <!-- Ícono de flecha diagonal (SVG dibujado en código) -->
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M7 17L17 7M17 7H7M17 7v10"/>
-          </svg>
-        </a>
-      </div>
-      <!-- Botón secundario: baja a la sección Nosotros -->
-      <a href="#nosotros" class="btn-ghost">Conocer la marca</a>
+    <div class="cta-row">
+      <!-- Botón principal: abre WhatsApp directamente -->
+      <a class="btn fill" href="https://wa.me/593990688287?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20para%20agendar%20un%20pedido." target="_blank" rel="noopener">Iniciar una adquisición
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <!-- Botón secundario: baja al catálogo -->
+      <a class="btn ghost" href="#catalogo">Ver catálogo</a>
     </div>
-
   </div>
 
-  <!-- Indicador de scroll en la parte inferior -->
-  <div class="hero-scroll">
-    <span>Explorar</span>
-    <div class="scroll-line"></div> <!-- Línea vertical pulsante -->
+  <!-- Vistas del anillo -->
+  <div class="views" role="group" aria-label="Vista de la joya">
+    <p>ANILLO SOLITARIO ENTRELAZADO · PLATA DE LEY 925</p>
+    <div class="chips">
+      <button class="chip on" data-v="giro">Giro 360°</button>
+      <button class="chip" data-v="frontal">Frontal</button>
+      <button class="chip" data-v="tres">3/4</button>
+      <button class="chip" data-v="lateral">Lateral</button>
+      <button class="chip" data-v="posterior">Posterior</button>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="scroll-hint" aria-hidden="true">EXPLORAR<i></i></div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     008 · FILA DE CONFIANZA — señales de valor bajo el hero
+══════════════════════════════════════════════════ -->
+<section id="confianza" class="trust-row">
+  <div class="trust-item">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3l7 3v5.5c0 4.2-3 7.7-7 9.5-4-1.8-7-5.3-7-9.5V6z"/>
+      <path d="M9 12l2 2 4-4"/>
+    </svg>
+    <span class="trust-title">Plata Ley 925</span>
+    <span class="trust-sub">Certificada</span>
+  </div>
+  <div class="trust-item">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 7h11v9H3z"/>
+      <path d="M14 10h4l3 3v3h-7z"/>
+      <circle cx="7.5" cy="17.5" r="1.6"/>
+      <circle cx="17.5" cy="17.5" r="1.6"/>
+    </svg>
+    <span class="trust-title">Envío seguro</span>
+    <span class="trust-sub">Todo Ecuador</span>
+  </div>
+  <div class="trust-item">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/>
+    </svg>
+    <span class="trust-title">Atención directa</span>
+    <span class="trust-sub">Vía WhatsApp</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     008 · MARQUEE DE MATERIALES — cinta infinita decorativa
+══════════════════════════════════════════════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+    </div>
+    <div class="marquee-group">
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+      <span>Plata Ley 925</span><i>·</i>
+<span>Baño de oro</span><i>·</i>
+<span>Circonias</span><i>·</i>
+<span>Perlas naturales</span><i>·</i>
+<span>Diseño exclusivo</span><i>·</i>
+    </div>
+  </div>
+</div>
+
+
+<!-- Carrusel de destacados — vitrina curada. El contenido lo inyecta
+     js/carousel.js reutilizando crearTarjeta() del motor. Arranca oculto
+     (hidden) para no mostrar una sección vacía mientras cargan los datos. -->
+<section id="destacados" class="destacados-section" hidden>
+
+  <div class="catalogo-header reveal">
+    <p class="section-label shiny-text">Selección Silver Cow</p>
+    <h2 class="section-title">Piezas <em>destacadas</em></h2>
+    <p>Una vitrina curada de nuestra colección en Plata Ley 925.</p>
+  </div>
+
+  <div class="carousel reveal" id="destacadosCarousel">
+    <button class="carousel-arrow carousel-prev" type="button" aria-label="Ver piezas anteriores">&#8592;</button>
+    <div class="carousel-track" id="destacadosTrack" role="list" aria-label="Piezas destacadas"></div>
+    <button class="carousel-arrow carousel-next" type="button" aria-label="Ver más piezas">&#8594;</button>
   </div>
 
 </section>
@@ -156,7 +254,7 @@
 
   <!-- Encabezado del catálogo -->
   <div class="catalogo-header reveal">
-    <p class="section-label">Colección Silver Cow</p>
+    <p class="section-label shiny-text">Colección Silver Cow</p>
     <h2 class="section-title">Catálogo de<br><em>adquisiciones</em></h2>
     <p>Todas las piezas son elaboradas en Plata Ley 925. Precios en USD.</p>
   </div>
@@ -239,10 +337,10 @@
         <!-- LOGO: misma carpeta que el HTML -->
         <img src="assets/logo.png" alt="Silver Cow Ambato" class="nosotros-logo-large">
 
-        <!-- Estadística principal: número 925 -->
+        <!-- Estadística principal: número 925 (estilo prototipo) -->
         <div class="nosotros-stat">
-          <div class="nosotros-stat-num count-up" data-target="925">0</div>
-          <div class="nosotros-stat-label">Ley de pureza garantizada</div>
+          <div class="nosotros-stat-num big count-up" data-target="925">0</div>
+          <div class="nosotros-stat-label big-l">Ley de pureza garantizada</div>
         </div>
 
         <!-- Dos estadísticas secundarias lado a lado -->
@@ -264,8 +362,8 @@
 
     <!-- COLUMNA DERECHA: texto de la historia -->
     <div class="reveal" style="transition-delay:.15s"> <!-- Aparece 0.15s después que la columna izquierda -->
-      <p class="section-label">Nuestra historia</p>
-      <h2 class="section-title">Ambato,<br>Nuestra Historia<br></h2>
+      <p class="section-label shiny-text">Nuestra historia</p>
+      <h2 class="section-title">Ambato,<br><em>nuestra historia</em></h2>
 
       <!-- HISTORIA: puedes editar este texto libremente -->
       <p class="section-body">
@@ -292,7 +390,7 @@
 
     <!-- Encabezado centrado -->
     <div class="filosofia-header reveal">
-      <p class="section-label">Nuestros pilares</p>
+      <p class="section-label shiny-text">Nuestros pilares</p>
       <h2 class="section-title" style="text-align:center">La filosofía<br><em>Silver Cow</em></h2>
     </div>
 
@@ -338,7 +436,7 @@
 
     <!-- Encabezado centrado -->
     <div class="proceso-header reveal">
-      <p class="section-label">Cómo funciona</p>
+      <p class="section-label shiny-text">Cómo funciona</p>
       <h2 class="section-title" style="text-align:center">El proceso de<br><em>adquisición</em></h2>
       <p class="section-body" style="max-width:460px;margin:0 auto;text-align:center">
         Desde el primer contacto hasta la entrega en su puerta, cada etapa está diseñada
@@ -346,40 +444,41 @@
       </p>
     </div>
 
-    <!-- 5 pasos en fila — la línea conectora es un elemento CSS (::before) -->
-    <div class="proceso-steps">
+    <!-- 5 pasos en timeline vertical — la línea dorada se dibuja con el scroll -->
+    <div class="proceso-steps" id="procesoSteps">
+      <div class="fill" id="fill"></div>
 
       <!-- PASO 1 -->
       <div class="step reveal">
-        <div class="step-circle"><span class="step-num">I</span></div>
+        <span class="dot">I</span>
         <h4 class="step-title">Contacto</h4>
         <p class="step-text">Nos escribe por WhatsApp o Instagram. Su consulta es atendida con discreción y dedicación total.</p>
       </div>
 
       <!-- PASO 2 -->
       <div class="step reveal" style="transition-delay:.1s">
-        <div class="step-circle"><span class="step-num">II</span></div>
+        <span class="dot">II</span>
         <h4 class="step-title">Selección</h4>
         <p class="step-text">Accede a nuestro catálogo privado y elige la pieza que representa su distinción.</p>
       </div>
 
       <!-- PASO 3 -->
       <div class="step reveal" style="transition-delay:.2s">
-        <div class="step-circle"><span class="step-num">III</span></div>
+        <span class="dot">III</span>
         <h4 class="step-title">Cotización</h4>
         <p class="step-text">Recibe una cotización personalizada, transparente y sin compromisos ocultos.</p>
       </div>
 
       <!-- PASO 4 -->
       <div class="step reveal" style="transition-delay:.3s">
-        <div class="step-circle"><span class="step-num">IV</span></div>
+        <span class="dot">IV</span>
         <h4 class="step-title">Elaboración</h4>
         <p class="step-text">Con el 50% de adelanto, su pieza comienza a ser creada y verificada bajo control absoluto.</p>
       </div>
 
       <!-- PASO 5 -->
       <div class="step reveal" style="transition-delay:.4s">
-        <div class="step-circle"><span class="step-num">V</span></div>
+        <span class="dot">V</span>
         <h4 class="step-title">Entrega</h4>
         <p class="step-text">Llegamos hasta usted. Servicio a domicilio en Ambato, sin que mueva un solo paso.</p>
       </div>
@@ -963,6 +1062,32 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
 
 
   // ══════════════════════════════════════════════════
+  // PROCESO — LA LÍNEA SE DIBUJA CON EL SCROLL
+  // Escala la línea dorada (--p) y enciende cada paso (.on)
+  // cuando su borde superior cruza el 60% de la pantalla.
+  // ══════════════════════════════════════════════════
+  const procesoSteps = document.getElementById('procesoSteps');
+  const procesoFill  = document.getElementById('fill');
+  if (procesoSteps && procesoFill) {
+    const pasos = procesoSteps.querySelectorAll('.step');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const actualizarProceso = () => {
+      const r = procesoSteps.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const linea = vh * 0.6;
+      const p = Math.min(Math.max((linea - r.top) / r.height, 0), 1);
+      procesoFill.style.setProperty('--p', reduceMotion ? 1 : p.toFixed(3));
+      pasos.forEach(s => {
+        s.classList.toggle('on', reduceMotion || s.getBoundingClientRect().top < linea);
+      });
+    };
+    window.addEventListener('scroll', actualizarProceso, { passive: true });
+    window.addEventListener('resize', actualizarProceso);
+    actualizarProceso();
+  }
+
+
+  // ══════════════════════════════════════════════════
   // ACTUALIZAR ENLACES Y TEXTOS DESDE CONFIG
   // ══════════════════════════════════════════════════
   document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
@@ -986,10 +1111,17 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
 
 
 </script>
+<!-- Three.js (r128) — motor del anillo 3D del hero -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
+<!-- Lógica del hero — anillo 3D + video + vistas -->
+<script src="js/hero-ring.js" defer></script>
 
 <script src="js/pixel-card.js" defer></script>
 <script src="js/magic-bento.js" defer></script>
 <script src="js/color-bends.js" defer></script>
 <script src="js/blur-text.js" defer></script>
+<script src="js/spotlight-card.js" defer></script>
+<script src="js/carousel.js" defer></script>
 </body>
 </html>

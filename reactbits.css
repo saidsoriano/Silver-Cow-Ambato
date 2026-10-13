@@ -278,6 +278,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  opacity: .6; /* Calma las bandas de color para no competir con el texto del hero */
 }
 
 /* Scrim de contraste sobre el ColorBends: oscurece el centro (eyebrow + subtítulo),
@@ -288,13 +289,138 @@
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(8,24,64,.58) 0%, transparent 72%),
-    linear-gradient(180deg, rgba(6,12,26,.6) 0%, transparent 28%),
-    linear-gradient(0deg, rgba(6,12,26,.55) 0%, transparent 22%);
+    radial-gradient(ellipse 76% 60% at 50% 44%, rgba(7,18,44,.8) 0%, rgba(7,18,44,.34) 58%, transparent 82%),
+    linear-gradient(180deg, rgba(6,12,26,.72) 0%, transparent 34%),
+    linear-gradient(0deg, rgba(6,12,26,.68) 0%, transparent 28%),
+    linear-gradient(180deg, rgba(6,12,26,.4), rgba(8,20,48,.46));
+}
+
+/* ══════════════════════════════════════════════════
+   SPOTLIGHT + TILT (ReactBits 008) — tarjetas de producto
+   El brillo sigue al cursor (--mx/--my) y la tarjeta
+   se inclina levemente. Lo controla js/spotlight-card.js.
+   Solo desktop con puntero fino y sin movimiento reducido.
+   ══════════════════════════════════════════════════ */
+.joya-card { transform-style: preserve-3d; }
+.joya-card:hover { will-change: transform; }
+
+/* Brillo dorado que sigue al cursor (capa independiente del ::after existente) */
+.joya-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+  z-index: 2;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(201,168,76,.18), rgba(201,168,76,.06) 40%, transparent 62%);
+}
+.joya-card:hover::before { opacity: 1; }
+
+/* ══════════════════════════════════════════════════
+   CARRUSEL DE DESTACADOS (ReactBits 008) — vitrina
+   horizontal curada. El shell estático vive en
+   index.html; las tarjetas las pinta js/carousel.js
+   reutilizando crearTarjeta() del motor.
+   ══════════════════════════════════════════════════ */
+.destacados-section {
+  background: var(--black-deep);
+  padding: clamp(56px, 6vw, 90px) var(--sp-gutter);
+  position: relative;
+}
+.destacados-section[hidden] { display: none; }
+.destacados-section .catalogo-header { margin-bottom: 36px; }
+
+.carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carousel-track {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 6px 4px 20px;   /* aire para sombras/tilt y la barra de scroll */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,168,76,.35) transparent;
+}
+.carousel-track::-webkit-scrollbar { height: 6px; }
+.carousel-track::-webkit-scrollbar-track { background: transparent; }
+.carousel-track::-webkit-scrollbar-thumb {
+  background: rgba(201,168,76,.35);
+  border-radius: 999px;
+}
+
+/* Cada tarjeta del carrusel: ancho fijo, pequeño */
+.carousel-track .joya-card {
+  flex: 0 0 auto;
+  width: clamp(148px, 15vw, 176px);
+}
+.carousel-track .joya-card:hover { transform: translateY(-4px); }
+
+/* Contenido compacto: la tarjeta es más pequeña, así que
+   se reducen paddings y tipografías y se omite la descripción
+   larga (en la vitrina manda la foto, el nombre y el precio). */
+.carousel-track .joya-info      { padding: 12px 13px 14px; }
+.carousel-track .joya-nombre    { font-size: 15px; margin-bottom: 4px; }
+.carousel-track .joya-material  { font-size: 9px; margin-bottom: 5px; }
+.carousel-track .joya-codigo    { font-size: 9px; margin-bottom: 10px; }
+.carousel-track .joya-desc      { display: none; }
+.carousel-track .joya-footer    { flex-direction: column; align-items: stretch; gap: 9px; }
+.carousel-track .joya-precio    { font-size: 17px; }
+.carousel-track .joya-btn       { justify-content: center; padding: 8px 10px; font-size: 9px; }
+.carousel-track .joya-badge     { top: 9px; left: 9px; padding: 3px 8px; font-size: 8px; }
+
+/* Flechas prev / next */
+.carousel-arrow {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--silver-bright);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color .3s, color .3s, background .3s, transform .3s, opacity .3s;
+}
+.carousel-arrow:hover:not(:disabled) {
+  border-color: var(--line-gold);
+  color: var(--gold-soft);
+  transform: scale(1.06);
+}
+.carousel-arrow:disabled { opacity: .28; cursor: default; }
+.carousel-arrow:focus-visible { outline: 2px solid var(--gold-accent); outline-offset: 3px; }
+
+/* Estado vacío (no debería mostrarse: la sección se oculta sin piezas) */
+.carousel-empty {
+  flex: 1 1 auto;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  letter-spacing: .04em;
+  padding: 60px 0;
+}
+
+@media (max-width: 900px) {
+  .carousel { gap: 8px; }
+  .carousel-arrow { display: none; }        /* en táctil se desliza con el dedo */
+  .carousel-track { gap: 12px; padding-left: 0; padding-right: 0; }
+  .carousel-track .joya-card { width: clamp(128px, 38vw, 152px); }
 }
 
 /* ── MOVIMIENTO REDUCIDO ── */
 @media (prefers-reduced-motion: reduce) {
   .mb-card img,
   .mb-tile img { transition: none; transform: none; }
+  .joya-card::before { display: none; }
+  .carousel-track { scroll-behavior: auto; }
 }
