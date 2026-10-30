@@ -9,15 +9,17 @@
 | 004-importador-proveedor | ✅ Completa | sesion-001 |
 | 005-mcps-opencode | ✅ Completa | sesion-002 |
 | 006-reactbits-ports | ✅ Parcial (PixelCard + MagicBento + ColorBends + BlurText; CardNav y StaggeredMenu abortados por decisión del dueño) | sesion-004, sesion-005, sesion-006, sesion-007 |
-| 007-correccion-bugs | 🔄 En curso | sesion-010 |
+| 007-correccion-bugs | ✅ Completa | sesion-010 |
+| 008-rediseno-premium | 🔄 En curso (local, sin visto bueno final; Fases 0-2 parciales + fusión de prototipo) | sesion-011, sesion-012 |
 
 ## Features planeadas (priorizadas)
-- [ ] **[Alta] 008-cambio-proveedor** — migrar importación de ItalSteel Odoo a posible nuevo proveedor con catálogo en Google Drive
-- [ ] **[Media] 009-vista-admin** — panel simple para que el dueño vea pedidos o gestione inventario sin tocar Sheets directamente
+- [ ] **[Alta] 009-cambio-proveedor** — migrar importación de ItalSteel Odoo a posible nuevo proveedor con catálogo en Google Drive
+- [ ] **[Media] 010-vista-admin** — panel simple para que el dueño vea pedidos o gestione inventario sin tocar Sheets directamente
 
-> Renumeradas en la sesión 010: hasta la 006 estaban ocupadas por
-> `006-reactbits-ports`, con lo que "006-cambio-proveedor" chocaba con una
-> feature ya implementada.
+> Renumeradas en la sesión 010 (006→007 por choque con `006-reactbits-ports`) y en
+> la sesión 013 (008→009, 009→010): el número `008` lo tomó `008-rediseno-premium`,
+> abierta en la sesión 011 sin que el roadmap se actualizara en su momento.
+> `cambio-proveedor` sigue vigente, solo corrida un número.
 
 ## Descartadas
 | Feature | Motivo |

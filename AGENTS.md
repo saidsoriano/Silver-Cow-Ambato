@@ -15,13 +15,14 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 - `spec/features/005-mcps-opencode/`
 - `spec/features/006-reactbits-ports/` — parcial: CardNav y StaggeredMenu abortados
 - `spec/features/007-correccion-bugs/`
+- `spec/features/008-rediseno-premium/` — en curso, local, sin visto bueno final
 
 ## MCPs (proyecto)
 Se configuran en `opencode.json` bajo la clave `mcp` (no `mcpServers`).
 
 | MCP | Estado |
 |---|---|
-| `playwright` | activo — QA visual, screenshots, smoke test |
+| `playwright` | **no disponible en el toolset actual** (confirmado sesiones 011-012). QA visual es manual: el dueño abre el navegador, no hay smoke test automatizado |
 | `firecrawl` | activo — scraping de proveedores |
 | `sequential-thinking` | activo |
 | `github` | **`enabled: false`** — el PAT estaba revocado (401). Para activarlo: token nuevo en `.env` → `GITHUB_PERSONAL_ACCESS_TOKEN` y `"enabled": true`. Mientras tanto, `gh` CLI en la terminal |
