@@ -1,7 +1,15 @@
 # Sesión 011 — 008-rediseno-premium: rediseño premium (en curso)
 
 **Fecha:** 2026-10-12
-**Estado:** Abierta — trabajo local, **sin commit/push** (falta visto bueno del propietario)
+**Estado:** Cerrada — publicada el 2026-10-13 en el commit `2ddbbb4`.
+
+> **Corrección (sesión 014, 2026-10-30):** el cuerpo de esta nota se escribió
+> mientras el trabajo todavía era local, y por eso dice en varios sitios que nada
+> estaba commiteado. Quedó desactualizada: el propietario dio el visto bueno y todo
+> se publicó en `2ddbbb4`, commit que incluye también este mismo archivo. Se deja el
+> texto original como registro de cómo estaban las cosas ese día; lo que vale hoy es
+> esta corrección.
+
 **Objetivo:** Ejecutar el rediseño premium del sitio Silver Cow Ambato por fases, en
 vanilla (sin build), iterando con el propietario y **mostrando cada cambio en localhost**
 antes de aprobar. Preservar el motor de datos/render y la operación "solo Google Sheets".
@@ -177,7 +185,7 @@ antes de aprobar. Preservar el motor de datos/render y la operación "solo Googl
 
 ---
 
-## Archivos tocados (sin commitear)
+## Archivos tocados (publicados en `2ddbbb4`)
 
 ```
 Paguina_joyas/  (git status: M = modificado, ?? = nuevo sin trackear)
@@ -193,7 +201,7 @@ backups/backup_pre_rediseno_2026-10-12.zip   (gitignored)
 sesiones/sesion-011.md                        (este archivo)
 ```
 
-- Último commit: `49045b2` (Sesión 010). **Nada de esta sesión está commiteado ni pusheado.**
+- Último commit: `49045b2` (Sesión 010). Publicado después en `2ddbbb4` (sesión 012).
 - Nota: `spec/features/008-rediseno-premium/tasks.md` sigue con las casillas `[ ]`; no se
   marcaron porque el trabajo aún no tiene visto bueno.
 
@@ -223,6 +231,7 @@ sesiones/sesion-011.md                        (este archivo)
 
 ## Nota de deploy
 
-**No hubo deploy.** Esta sesión (y toda la 008 hasta ahora) es **100 % local**. La página
-pública sigue tal cual el último deploy de la sesión 010. Cuando el propietario dé el visto
-bueno: commit → push a `main` → GitHub Actions publica. **Hasta entonces, nada se sube.**
+**Publicado.** En el momento de escribir esta nota el trabajo era 100 % local, y así
+se dejó constancia. El propietario dio el visto bueno y se subió el 2026-10-13 en el
+commit `2ddbbb4`, que GitHub Actions desplegó a GitHub Pages. Lo de las Fases 0-2
+está hoy en la página pública.

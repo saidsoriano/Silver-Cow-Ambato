@@ -1,7 +1,15 @@
 # Sesión 012 — 008-rediseno-premium: fusión del prototipo (Ajustes 1–6)
 
 **Fecha:** 2026-10-13
-**Estado:** Abierta — trabajo local, **sin commit/push** (falta visto bueno del propietario)
+**Estado:** Cerrada — publicada el 2026-10-13 en el commit `2ddbbb4`.
+
+> **Corrección (sesión 014, 2026-10-30):** el cuerpo de esta nota se escribió
+> mientras el trabajo todavía era local, y por eso dice en varios sitios que nada
+> estaba commiteado. Quedó desactualizada: el propietario dio el visto bueno y todo
+> se publicó en `2ddbbb4`, commit que incluye también este mismo archivo. Se deja el
+> texto original como registro de cómo estaban las cosas ese día; lo que vale hoy es
+> esta corrección.
+
 **Objetivo:** Portar el rediseño del prototipo
 `/home/said/Silver Cow Ambato/Silver Cow Ambato — Prototipo de rediseño.html` al sitio real
 (`Paguina_joyas/`), fusionándolo con la feature `008-rediseno-premium`, **sin romper el motor
@@ -107,7 +115,7 @@ El propietario abre el navegador a mano.
 
 ---
 
-## Archivos tocados (sin commitear)
+## Archivos tocados (publicados en `2ddbbb4`)
 
 ```
 Paguina_joyas/  (git status: M = modificado, ?? = nuevo sin trackear)
@@ -127,7 +135,7 @@ backups/backup_estado_008_2026-10-13.zip   (gitignored)
 sesiones/sesion-012.md                      (este archivo)
 ```
 
-- Último commit: `49045b2` (Sesión 010). **Nada de las sesiones 011–012 está commiteado.**
+- Último commit: `49045b2` (Sesión 010). Publicado después en `2ddbbb4` (sesión 012).
 
 ---
 
@@ -156,6 +164,7 @@ sesiones/sesion-012.md                      (este archivo)
 
 ## Nota de deploy
 
-**No hubo deploy.** Todo (sesiones 011–012 de la 008) es **100 % local**. La página pública
-sigue igual que el último deploy de la sesión 010. Cuando el propietario dé el visto bueno:
-commit → push a `main` → GitHub Actions publica. **Hasta entonces, nada se sube.**
+**Publicado.** En el momento de escribir esta nota el trabajo era 100 % local, y así
+se dejó constancia. El propietario dio el visto bueno y se subió el 2026-10-13 en el
+commit `2ddbbb4`, que GitHub Actions desplegó a GitHub Pages. Lo de las Fases 0-2
+está hoy en la página pública.
