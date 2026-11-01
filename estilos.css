@@ -403,7 +403,7 @@
     text-align: center;
   }
   .envio-opt.activo {
-    border-color: var(--sapphire-light);
+    border-color: var(--gold-accent);
     background: rgba(15,37,87,.3);
     color: var(--silver-bright);
   }
