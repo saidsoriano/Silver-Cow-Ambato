@@ -69,6 +69,22 @@
     overflow-x: hidden;                    /* Evita scroll horizontal no deseado */
   }
 
+  /* ── FOCO DE TECLADO ──
+     Marca dónde está parado quien navega con la tecla Tab.
+     Usa :focus-visible, así que NO aparece al hacer clic con el mouse.
+     Mismo trazo dorado que ya usaban las flechas del carrusel
+     (reactbits.css: .carousel-arrow:focus-visible). */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--gold-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
   /* ── BARRA DE SCROLL PERSONALIZADA ──
      Solo visible en navegadores basados en Chrome/Safari */
   ::-webkit-scrollbar { width: 3px; }                                          /* Barra muy delgada (3px) */
@@ -368,7 +384,7 @@
     display: block;
     font-size: 11px;
     letter-spacing: .3em;
-    color: var(--sapphire-light);
+    color: var(--text-muted);
     text-transform: uppercase;
     margin-bottom: 10px;
   }
@@ -398,7 +414,7 @@
     display: block;
     font-size: 11px;
     letter-spacing: .3em;
-    color: var(--sapphire-light);
+    color: var(--text-muted);
     text-transform: uppercase;
     margin-bottom: 10px;
   }
@@ -994,7 +1010,7 @@
     border-radius: 4px;
     border: 1px solid rgba(200,208,220,.06);
   }
-  .founders-label { font-size: 12px; letter-spacing: .35em; color: var(--sapphire-light); text-transform: uppercase; margin-bottom: 12px; }
+  .founders-label { font-size: 12px; letter-spacing: .35em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; }
   .founders-names { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--silver-bright); letter-spacing: .08em; }
 
 
@@ -1221,7 +1237,7 @@
   .joya-info { padding: 20px 22px 22px; }
 
   .joya-nombre   { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--white-pure); margin-bottom: 6px; line-height: 1.2; }
-  .joya-material { font-size: 10px; letter-spacing: .3em; color: var(--sapphire-light); text-transform: uppercase; margin-bottom: 10px; } /* "Plata Ley 925" */
+  .joya-material { font-size: 10px; letter-spacing: .3em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; } /* "Plata Ley 925" */
   /* Código de referencia del producto — ej: [P-AN-252] */
   .joya-codigo   { font-size: 10px; font-weight: 300; letter-spacing: .15em; color: rgba(136,153,187,.6); margin-bottom: 8px; font-family: 'Montserrat', sans-serif; }
   .joya-desc     { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
@@ -1296,7 +1312,7 @@
   }
   .contacto-card:hover { background: rgba(15,37,87,.35); border-color: rgba(200,208,220,.2); transform: translateY(-4px); box-shadow: 0 30px 80px rgba(15,37,87,.4); }
 
-  .contacto-card-label { font-size: 12px; letter-spacing: .35em; color: var(--sapphire-light); text-transform: uppercase; }
+  .contacto-card-label { font-size: 12px; letter-spacing: .35em; color: var(--text-muted); text-transform: uppercase; }
   .contacto-card-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--silver-bright); }
 
   /* Badge pequeño con el sello de calidad */

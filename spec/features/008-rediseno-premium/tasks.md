@@ -3,7 +3,7 @@
 > **Verificado el 2026-10-30 (sesión 014) contra el código publicado** (commit
 > `2ddbbb4`). Se tachó solo lo que se pudo comprobar en `index.html`, `estilos.css`,
 > `reactbits.css`, `catalogo_motor.js` y `js/`. Lo que sigue sin tachar es **lo que
-> falta hacer**, no un olvido. Hecho: 14 de 26.
+> falta hacer**, no un olvido. Hecho: 15 de 26.
 
 ## Fase 0 — Fundación (tokens + tipografía)
 - [x] `:root` ampliado: `--fs-*`, `--sp-*`, `--radius*`, `--line`, `--line-gold`, `--gold-soft`, `--surface*`
@@ -36,7 +36,7 @@
 
 ## Fase 5 — Responsive, a11y, performance
 - [ ] Breakpoints 360/768/1024/1440 — **no son los pactados**: hoy hay 420/500/560/640/820/860/900/1100
-- [ ] Foco visible + `aria-*` — **a medias**: 12 atributos `aria-*` puestos, pero **0 reglas `:focus-visible`**, así que no hay foco visible para teclado
+- [x] Foco visible + `aria-*` — 12 atributos `aria-*` + regla global `:focus-visible` (trazo dorado 2px) añadida en la sesión 015
 - [ ] Poda de efectos / medición Lighthouse — **sin evidencia de que se haya medido**
 - [ ] Smoke test final (desktop + móvil) — pendiente; sigue siendo **manual** (no hay Playwright, ver `AGENTS.md`)
 
