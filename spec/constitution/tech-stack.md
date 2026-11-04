@@ -9,9 +9,16 @@
 - Sin frameworks JavaScript ni CSS
 
 ## Base de datos
-- Google Sheets (multi-sheet: una hoja por categoría, 7 en total)
-- Google Apps Script para servir datos como JSON via HTTP GET
-- localStorage en el navegador para caché del catálogo
+- **Firestore** (Firebase, proyecto `silver-cow-admin`, plan Spark) — fuente de
+  verdad del catálogo desde la feature `010-vista-admin` (sesiones 017-023).
+  Colección `productos/`, doc ID = código de la pieza
+- **Supabase Storage** (proyecto `silver-cow-storage`, plan Free, bucket
+  `fotos-productos`) — fotos subidas desde el panel. Las fotos de los 357
+  productos originales siguen sirviéndose desde el repo (GitHub Pages), no se
+  migraron
+- localStorage en el navegador para caché del catálogo (sin cambios)
+- Google Sheets (multi-sheet, 7 hojas) + Apps Script: **histórico**, congelado,
+  ya no se lee ni se escribe desde ningún lado
 
 ## Hosting y despliegue
 - GitHub Pages, orquestado por **GitHub Actions** (`.github/workflows/pages.yml`)
@@ -43,6 +50,7 @@
 
 ## Proveedores externos
 - ItalSteel Odoo — proveedor **anterior** del catálogo (scrapeado via Python).
-  Pendiente la migración: feature `008-cambio-proveedor` en el roadmap.
+  Pendiente la migración: feature `009-cambio-proveedor` en el roadmap
+  (renumerada en la sesión 013, esta nota nunca se actualizó hasta ahora).
 - WhatsApp API — envío de pedidos (enlace directo `wa.me`)
 - Instagram — perfil de marca (`@Silver_Cow_Ambato`)

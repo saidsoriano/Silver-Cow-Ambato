@@ -1,0 +1,329 @@
+/* ══════════════════════════════════════════════════
+   PANEL DE ADMINISTRACIÓN — estilos propios
+   Reutiliza los tokens de color/tipografía de ../estilos.css (ya
+   enlazado en admin.html) para que se sienta la misma marca, pero el
+   layout es propio: esto es una herramienta de trabajo (Operate), no
+   una pieza de marketing — prioriza orden y legibilidad sobre efectos.
+   Mobile-first: se usa tanto desde el celular como desde la compu.
+   ══════════════════════════════════════════════════ */
+
+* { box-sizing: border-box; }
+
+body.admin-body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--black-deep);
+  color: var(--silver-bright);
+  font-family: var(--sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.admin-pantalla {
+  width: 100%;
+  max-width: 420px;
+}
+
+.admin-marca {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.admin-marca img { width: 48px; height: 48px; margin-bottom: 12px; }
+.admin-marca h1 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 28px;
+  margin: 0 0 4px;
+  color: var(--white-pure);
+}
+.admin-marca p {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.admin-card {
+  background: var(--surface, #0a1628);
+  border: 1px solid rgba(200, 208, 220, .1);
+  border-radius: 8px;
+  padding: 32px 28px;
+  text-align: center;
+}
+.admin-card p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 6px;
+  border: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.admin-btn:disabled { opacity: .5; cursor: default; }
+.admin-btn:not(:disabled):hover { transform: translateY(-1px); }
+
+.admin-btn-google {
+  background: var(--white-pure);
+  color: #1a1a1a;
+}
+
+.admin-btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid rgba(200, 208, 220, .2);
+  margin-top: 16px;
+}
+
+.admin-rechazo-correo {
+  display: block;
+  margin-top: 8px;
+  font-family: monospace;
+  color: var(--gold-accent);
+  font-size: 13px;
+  word-break: break-all;
+}
+
+/* ── Panel (una vez logueado con el correo correcto) ── */
+.admin-panel-shell {
+  max-width: 1100px;
+}
+.admin-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.admin-panel-header h1 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 24px;
+  margin: 0;
+}
+.admin-panel-placeholder {
+  background: var(--surface, #0a1628);
+  border: 1px solid rgba(200, 208, 220, .1);
+  border-radius: 8px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ── Tabs de categoría ── */
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-buscador {
+  display: block;
+  width: 100%;
+  margin-bottom: 24px;
+}
+.admin-tab {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(200, 208, 220, .15);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.admin-tab.activa {
+  background: var(--gold-accent);
+  border-color: var(--gold-accent);
+  color: #1a1405;
+}
+
+.admin-lista-estado {
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+/* ── Fila de producto ── */
+.admin-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  background: var(--surface, #0a1628);
+  border: 1px solid rgba(200, 208, 220, .08);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.admin-fila.archivada { opacity: .5; }
+
+.admin-fila-foto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.admin-fila-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .04);
+}
+.admin-cambiar-foto {
+  display: block;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(200, 208, 220, .15);
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.admin-cambiar-foto:hover { border-color: var(--gold-accent); color: var(--gold-accent); }
+.admin-cambiar-foto.subiendo { opacity: .6; cursor: wait; pointer-events: none; }
+
+.admin-fila-campos {
+  flex: 1 1 220px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.admin-fila-codigo {
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--gold-accent);
+  font-family: monospace;
+}
+.admin-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  margin: 10px 0 4px;
+}
+.admin-fila-linea2 {
+  display: flex;
+  gap: 16px;
+}
+.admin-campo { display: flex; flex-direction: column; }
+.admin-campo-flex { flex: 1; }
+
+.admin-input, .admin-select {
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(200, 208, 220, .15);
+  border-radius: 4px;
+  color: var(--silver-bright);
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 6px 8px;
+}
+.admin-input-nombre { width: 100%; }
+.admin-input-precio { width: 90px; }
+.admin-select {
+  width: 100%;
+  /* Sin esto, el navegador pinta la lista desplegada con sus colores
+     nativos (fondo blanco) e ignora el "color" de arriba — letras
+     claras sobre blanco, invisibles. color-scheme avisa que es oscuro;
+     el color explícito en <option> fuerza el resultado en todos los
+     navegadores, no solo los que respetan color-scheme. */
+  color-scheme: dark;
+}
+.admin-select option {
+  background: var(--black-deep);
+  color: var(--silver-bright);
+}
+.admin-input-desc {
+  width: 100%;
+  resize: vertical;
+  font-family: var(--sans);
+  line-height: 1.4;
+}
+
+.admin-fila-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.admin-btn-mini {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(200, 208, 220, .15);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.admin-btn-mini:disabled { opacity: .5; cursor: default; }
+.admin-btn-guardar { border-color: var(--gold-accent); color: var(--gold-accent); }
+.admin-fila-ok { color: #6ec87a; font-size: 14px; }
+
+.admin-herramientas {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(200, 208, 220, .08);
+}
+.admin-herramientas summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ── Formulario de alta (Fase 5) ── */
+.admin-form-alta {
+  background: var(--surface, #0a1628);
+  border: 1px solid rgba(200, 208, 220, .1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.admin-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.admin-form-header h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 20px;
+  margin: 0;
+}
+.admin-codigo-preview {
+  margin: 6px 0 0;
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--gold-accent);
+}
+.admin-alta-ok { color: #6ec87a; }
+.admin-alta-error { color: #e08080; }
+
+[hidden] { display: none !important; }

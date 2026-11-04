@@ -714,6 +714,11 @@ const CONFIG = {
 };
 </script>
 
+<!-- Fuente de datos del catálogo: Firestore (antes Google Sheets, congelado
+     desde la sesión 017). Es un módulo, se carga diferido — catalogo.js
+     espera a que esté listo, no asume el orden. -->
+<script type="module" src="js/firestore-catalogo.js"></script>
+
 <!-- Datos del catálogo — todos los productos -->
 <script src="catalogo.js"></script>
 

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel — Silver Cow Ambato</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Reutiliza los tokens de color/tipografía del sitio público -->
+  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ══════════════════════════════════════════════════
+       PANTALLA 1 — LOGIN
+       Visible cuando nadie inició sesión todavía.
+  ══════════════════════════════════════════════════ -->
+  <div class="admin-pantalla" id="pantallaLogin">
+    <div class="admin-marca">
+      <img src="assets/logo.png" alt="Silver Cow Ambato">
+      <h1>Panel de administración</h1>
+      <p>Silver Cow Ambato</p>
+    </div>
+    <div class="admin-card">
+      <p>Iniciá sesión con la cuenta de Google del negocio para entrar.</p>
+      <button class="admin-btn admin-btn-google" id="btnLogin">
+        Entrar con Google
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PANTALLA 2 — RECHAZADO
+       Alguien inició sesión con Google pero no es el correo autorizado.
+       Esto es solo informativo: aunque esta pantalla no existiera, esa
+       cuenta no podría escribir nada — lo bloquean las reglas de
+       Firestore, no esta pantalla.
+  ══════════════════════════════════════════════════ -->
+  <div class="admin-pantalla" id="pantallaRechazo" hidden>
+    <div class="admin-marca">
+      <img src="assets/logo.png" alt="Silver Cow Ambato">
+      <h1>Acceso restringido</h1>
+    </div>
+    <div class="admin-card">
+      <p>
+        Esta cuenta no tiene permiso para usar el panel:
+        <span class="admin-rechazo-correo" id="correoRechazo"></span>
+      </p>
+      <button class="admin-btn admin-btn-ghost" id="btnLogoutRechazo">
+        Probar con otra cuenta
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PANTALLA 3 — PANEL
+       Visible solo si el correo coincide con CORREO_ADMIN.
+       Fase 1: solo confirma el login. El catálogo (listar, editar,
+       archivar, subir fotos, agregar piezas) llega en las Fases 2-5 —
+       ver spec/features/010-vista-admin/tasks.md.
+  ══════════════════════════════════════════════════ -->
+  <div class="admin-pantalla admin-panel-shell" id="pantallaPanel" hidden>
+    <div class="admin-panel-header">
+      <h1>Catálogo</h1>
+      <button class="admin-btn admin-btn-ghost" id="btnLogout" style="width:auto;margin-top:0;">
+        Cerrar sesión
+      </button>
+    </div>
+    <!-- Alta de pieza nueva (Fase 5) -->
+    <button class="admin-btn admin-btn-google" id="btnAbrirAlta" style="max-width:220px;margin-bottom:24px;">
+      + Agregar pieza
+    </button>
+
+    <form id="formAlta" class="admin-form-alta" hidden>
+      <div class="admin-form-header">
+        <h2>Pieza nueva</h2>
+        <button type="button" class="admin-btn-mini" id="btnCerrarAlta">Cancelar</button>
+      </div>
+
+      <label class="admin-label">Categoría</label>
+      <select class="admin-select" id="altaCategoria" required>
+        <option value="">Elegí una categoría</option>
+        <option value="aretes">Aretes</option>
+        <option value="anillos">Anillos</option>
+        <option value="dijes">Dijes</option>
+        <option value="pulseras">Pulseras</option>
+        <option value="cadenas">Cadenas</option>
+        <option value="juegos">Juegos</option>
+        <option value="cadenas_dijes">Cadenas con Dijes</option>
+      </select>
+      <p class="admin-codigo-preview" id="altaCodigoPreview"></p>
+
+      <label class="admin-label">Nombre</label>
+      <input class="admin-input" type="text" id="altaNombre" required>
+
+      <div class="admin-fila-linea2">
+        <div class="admin-campo">
+          <label class="admin-label">Precio (USD)</label>
+          <input class="admin-input" type="number" step="0.01" min="0.01" id="altaPrecio" required>
+        </div>
+        <div class="admin-campo admin-campo-flex">
+          <label class="admin-label">Estado</label>
+          <select class="admin-select" id="altaEstado">
+            <option value="pedido" selected>Bajo pedido</option>
+            <option value="disponible">Disponible</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="admin-label">Descripción</label>
+      <textarea class="admin-input" id="altaDescripcion" rows="2"></textarea>
+
+      <label class="admin-label">Foto</label>
+      <input class="admin-input" type="file" id="altaFoto" accept="image/jpeg,image/png,image/webp" required>
+
+      <button type="submit" class="admin-btn admin-btn-google" id="btnGuardarAlta" style="margin-top:20px;">
+        Agregar al catálogo
+      </button>
+      <p id="estadoAlta" hidden style="margin-top:12px;font-size:13px;"></p>
+    </form>
+
+    <!-- Pestañas de categoría + buscador + lista de productos (Fase 3) -->
+    <div class="admin-tabs" id="catTabs"></div>
+    <input class="admin-input admin-buscador" type="search"
+           id="buscador" placeholder="Buscar por nombre o código...">
+    <p class="admin-lista-estado" id="estadoLista" hidden></p>
+    <div id="listaProductos"></div>
+
+    <!-- Herramientas secundarias: la migración ya se corrió (357/357,
+         sesión 019); queda disponible por si hiciera falta repetirla. -->
+    <details class="admin-herramientas">
+      <summary>Herramientas</summary>
+      <button class="admin-btn admin-btn-ghost" id="btnMigrar" style="max-width:280px;margin-top:12px;">
+        Importar desde Sheets
+      </button>
+      <p id="estadoMigracion" hidden style="margin-top:12px;font-size:13px;color:var(--text-muted);"></p>
+    </details>
+  </div>
+
+  <script type="module" src="js/admin/auth.js"></script>
+  <script type="module" src="js/admin/migracion.js"></script>
+  <script type="module" src="js/admin/alta.js"></script>
+  <script type="module" src="js/admin/productos.js"></script>
+  <!-- fotos.js y codigo-automatico.js los importan alta.js/productos.js -->
+
+</body>
+</html>

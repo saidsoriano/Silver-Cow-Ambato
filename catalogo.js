@@ -1,9 +1,10 @@
 // ══════════════════════════════════════════════════
 // CATÁLOGO DE PRODUCTOS — Silver Cow Ambato
-// Los datos se cargan desde Google Sheets con caché local
+// Los datos se cargan desde Firestore (antes: Google Sheets), con la
+// misma caché local de siempre. Google Sheets quedó congelado desde la
+// sesión 017 — ver spec/features/010-vista-admin/spec.md.
 // ══════════════════════════════════════════════════
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwN-2Ee7YTiKae_PIr2SjMETDqL6y-u-Hi135y0xc9v1i2gk1SUNijUUR7OUJi4u48d/exec?v=1';
 const CACHE_KEY = 'silvercow_catalogo';
 
 let CATALOGO = {};
@@ -108,26 +109,39 @@ if (hayCache) {
   mostrarCargando();
 }
 
-// Siempre actualizar en segundo plano
-console.log('Iniciando fetch a Google Sheets...');
-
-fetch(SHEETS_URL)
-  .then(r => {
-    if (!r.ok) throw new Error('Error HTTP: ' + r.status);
-    return r.json();
-  })
-  .then(datos => {
-    console.log('Datos frescos recibidos:', Object.keys(datos).length, 'categorías');
-    actualizarCatalogo(datos);
-  })
-  .catch(err => {
-    console.error('Error actualizando catálogo:', err);
-    ocultarActualizando();
-    
-    if (!hayCache) {
-      const contenedor = document.getElementById('catalogoContenedor');
-      if (contenedor) {
-        contenedor.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#ff6b6b;font-size:18px;">Error al cargar el catálogo. Por favor recarga la página.</div>';
-      }
+// Siempre actualizar en segundo plano, desde Firestore.
+// js/firestore-catalogo.js es un módulo ES (carga diferida por naturaleza);
+// este script es clásico y corre de inmediato, así que puede llegar a este
+// punto antes de que el módulo haya terminado de cargar. Se espera a que
+// aparezca `window.obtenerCatalogoFirestore`, mismo patrón que ya usa
+// iniciarCatalogo() más arriba en este archivo.
+function cargarDesdeFirestore(intentos) {
+  if (typeof window.obtenerCatalogoFirestore !== 'function') {
+    if (intentos > 100) { // ~10s de margen — de sobra para un módulo chico
+      console.error('catalogo.js: firestore-catalogo.js no cargó a tiempo');
+      ocultarActualizando();
+      return;
     }
-  });
+    setTimeout(() => cargarDesdeFirestore((intentos || 0) + 1), 100);
+    return;
+  }
+
+  console.log('Iniciando consulta a Firestore...');
+  window.obtenerCatalogoFirestore()
+    .then(datos => {
+      console.log('Datos frescos recibidos:', Object.keys(datos).length, 'categorías');
+      actualizarCatalogo(datos);
+    })
+    .catch(err => {
+      console.error('Error actualizando catálogo:', err);
+      ocultarActualizando();
+
+      if (!hayCache) {
+        const contenedor = document.getElementById('catalogoContenedor');
+        if (contenedor) {
+          contenedor.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#ff6b6b;font-size:18px;">Error al cargar el catálogo. Por favor recarga la página.</div>';
+        }
+      }
+    });
+}
+cargarDesdeFirestore(0);

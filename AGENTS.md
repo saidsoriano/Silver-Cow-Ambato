@@ -1,6 +1,6 @@
 # Silver Cow Ambato
 
-Catálogo web de joyería de plata 925. Página estática para clientes, administrada por el dueño mediante Google Sheets + GitHub.
+Catálogo web de joyería de plata 925. Página estática para clientes, administrada por el dueño desde un panel propio (`admin.html`, feature `010-vista-admin`). Google Sheets fue la fuente de verdad hasta esa feature; queda congelado como referencia histórica.
 
 ## Constitution
 - mission → `spec/constitution/mission.md`
@@ -15,7 +15,8 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 - `spec/features/005-mcps-opencode/`
 - `spec/features/006-reactbits-ports/` — parcial: CardNav y StaggeredMenu abortados
 - `spec/features/007-correccion-bugs/`
-- `spec/features/008-rediseno-premium/` — en curso, local, sin visto bueno final
+- `spec/features/008-rediseno-premium/` — en curso, Fases 0-2 publicadas, falta Fase 3+
+- `spec/features/010-vista-admin/` — completa. Panel en `admin.html` (Firebase Firestore+Auth + Supabase Storage). Google Sheets queda congelado, ya no es la fuente de verdad
 
 ## MCPs (proyecto)
 Se configuran en `opencode.json` bajo la clave `mcp` (no `mcpServers`).
@@ -39,9 +40,9 @@ Comprobación: `opencode mcp list`.
 - QA local: `python3 -m http.server 8123` + smoke test con Playwright
 
 ## Convenciones rápidas
-- Imágenes: `{codigo}.jpg` en su carpeta de categoría
-- Códigos: `[P-XX-NNN]`
-- Sheets columnas: nombre, precio, codigo, estado, esPedido, img, desc
+- Imágenes: `{codigo}.jpg` en su carpeta de categoría (fotos nuevas: Supabase Storage, bucket `fotos-productos`)
+- Códigos: `P-XX-NNN`, generados automático por categoría desde el panel
+- Firestore (`productos/`, doc ID = código): nombre, categoria, precio, estado, esPedido, desc, img, archivado
 - Variables CSS: --sapphire, --silver, --gold-accent (#C9A84C), --black-deep
 - Tono luxury: evitar "oferta", "descuento barato", "buy now"
 

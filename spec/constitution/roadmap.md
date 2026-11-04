@@ -10,11 +10,11 @@
 | 005-mcps-opencode | ✅ Completa | sesion-002 |
 | 006-reactbits-ports | ✅ Parcial (PixelCard + MagicBento + ColorBends + BlurText; CardNav y StaggeredMenu abortados por decisión del dueño) | sesion-004, sesion-005, sesion-006, sesion-007 |
 | 007-correccion-bugs | ✅ Completa | sesion-010 |
-| 008-rediseno-premium | 🔄 En curso (local, sin visto bueno final; Fases 0-2 parciales + fusión de prototipo) | sesion-011, sesion-012 |
+| 008-rediseno-premium | 🔄 En curso (Fases 0-2 publicadas en `2ddbbb4`; 15/26 tareas hechas — ver tasks.md) | sesion-011, sesion-012, sesion-013 a 016 |
+| 010-vista-admin | ✅ Completa (Firebase Firestore+Auth + Supabase Storage; Google Sheets congelado desde esta feature) | sesion-017 a 023 |
 
 ## Features planeadas (priorizadas)
 - [ ] **[Alta] 009-cambio-proveedor** — migrar importación de ItalSteel Odoo a posible nuevo proveedor con catálogo en Google Drive
-- [ ] **[Media] 010-vista-admin** — panel simple para que el dueño vea pedidos o gestione inventario sin tocar Sheets directamente
 
 > Renumeradas en la sesión 010 (006→007 por choque con `006-reactbits-ports`) y en
 > la sesión 013 (008→009, 009→010): el número `008` lo tomó `008-rediseno-premium`,
