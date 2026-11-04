@@ -27,6 +27,15 @@ if (btnMigrar) {
 }
 
 async function migrar() {
+  const confirmado = confirm(
+    "Esto vuelve a importar TODO el catálogo desde Google Sheets.\n\n" +
+    "No borra piezas, pero si un producto ya existe en Firestore, " +
+    "se actualizan sus datos de Sheets (nombre, precio, estado, foto, " +
+    "descripción) sin tocar \"Destacada\" ni \"Archivado\" — eso se " +
+    "respeta tal como está.\n\n¿Continuar?"
+  );
+  if (!confirmado) return;
+
   btnMigrar.disabled = true;
   estadoMigracion.hidden = false;
   estadoMigracion.textContent = "Descargando catálogo de Sheets...";
@@ -60,6 +69,11 @@ async function migrar() {
         const codigo = (p.codigo || "").replace(/[\[\]]/g, "").trim();
         if (!codigo) continue; // sin código no hay forma de usarlo como ID
         const ref = doc(collection(db, "productos"), codigo);
+        // merge:true + sin "archivado"/"destacada" acá: si el producto ya
+        // existe, lo curado a mano desde el panel (destacar una pieza,
+        // archivarla) no se pisa con los datos de Sheets. Si es nuevo,
+        // ambos quedan sin definir — se tratan como "no" en todo el sitio
+        // (filtros con !p.archivado / if (p.destacada)).
         batch.set(ref, {
           nombre: p.nombre || "",
           categoria: p.categoria,
@@ -68,9 +82,8 @@ async function migrar() {
           esPedido: !!p.esPedido,
           desc: p.desc || "",
           img: p.img || "",
-          archivado: false,
           actualizado: serverTimestamp()
-        });
+        }, { merge: true });
         total++;
       }
       await batch.commit();

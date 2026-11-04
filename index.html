@@ -105,8 +105,6 @@
 
   <!-- Contenido central -->
   <div class="hero-copy">
-    <div class="tag"><b></b>PLATA LEY 925 · BAJO PEDIDO</div>
-
     <!-- Título principal — PUEDES EDITAR ESTE TEXTO -->
     <h1>
       <span class="ln"><span style="--i:0">No es una joya.</span></span>
@@ -130,7 +128,6 @@
 
   <!-- Vistas del anillo -->
   <div class="views" role="group" aria-label="Vista de la joya">
-    <p>ANILLO SOLITARIO ENTRELAZADO · PLATA DE LEY 925</p>
     <div class="chips">
       <button class="chip on" data-v="giro">Giro 360°</button>
       <button class="chip" data-v="frontal">Frontal</button>
@@ -318,6 +315,9 @@
       </div>
     </div>
   </div>
+
+  <input class="catalogo-buscador" type="search" id="buscadorCatalogo"
+         placeholder="Buscar por nombre o código...">
 
   <!-- Contenedor donde se inyectan los productos dinámicamente -->
   <!-- JavaScript limpia y rellena este div cada vez que cambias de categoría -->
@@ -711,6 +711,7 @@ const CONFIG = {
   PLATA_LEY: 'Plata Ley 925',
   ENVIO_AMBATO: 0,
   ENVIO_OTRA: 5,
+  LIMITE_UNIDADES: 3,  // tope de unidades de una misma pieza antes de pedir por WhatsApp — mismo número en "Agregar" y en los +/- del carrito
 };
 </script>
 
@@ -755,10 +756,16 @@ const CONFIG = {
   // esPedido: true si es bajo pedido, false/undefined si es disponible
   // ══════════════════════════════════════════════════
 function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
-  const existente = carrito.find(p => p.nombre === nombre);
+  // Identidad del ítem: el código (único por pieza) si existe, si no el
+  // nombre. Dos piezas distintas pueden compartir nombre en el catálogo
+  // real (ej. "Topo ortopédico rosca de seguridad circón cuadrado" existe
+  // 2 veces con códigos distintos) — identificar solo por nombre las
+  // fusionaba en una sola línea del carrito.
+  const clave = codigo || nombre;
+  const existente = carrito.find(p => (p.codigo || p.nombre) === clave);
   if (existente) {
-    if (existente.cantidad >= 3) {
-      alert('Más de 3 unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp.');
+    if (existente.cantidad >= CONFIG.LIMITE_UNIDADES) {
+      alert(`Más de ${CONFIG.LIMITE_UNIDADES} unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp.`);
       return;
     }
     existente.cantidad++;
@@ -791,21 +798,21 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
   // CAMBIAR CANTIDAD DE UN PRODUCTO
   // delta = +1 para aumentar, -1 para disminuir
   // ══════════════════════════════════════════════════
-  function cambiarCantidad(nombre, delta) {
-    const item = carrito.find(p => p.nombre === nombre);
+  // clave: el código de la pieza, o el nombre si no tiene (ver agregarAlCarrito)
+  function cambiarCantidad(clave, delta) {
+    const item = carrito.find(p => (p.codigo || p.nombre) === clave);
     if (!item) return;
 
     const nuevaCantidad = item.cantidad + delta;
 
-    if (nuevaCantidad > 5) {
-      // Alerta si intenta superar 5 unidades
-      alert('Más de 5 unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp para coordinar tu pedido especial.');
+    if (nuevaCantidad > CONFIG.LIMITE_UNIDADES) {
+      alert(`Más de ${CONFIG.LIMITE_UNIDADES} unidades de la misma pieza se realiza bajo pedido.\nContáctanos por WhatsApp para coordinar tu pedido especial.`);
       return;
     }
 
     if (nuevaCantidad <= 0) {
       // Si llega a 0, elimina el producto del carrito
-      eliminarDelCarrito(nombre);
+      eliminarDelCarrito(clave);
       return;
     }
 
@@ -816,8 +823,8 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
   // ══════════════════════════════════════════════════
   // ELIMINAR UN PRODUCTO DEL CARRITO
   // ══════════════════════════════════════════════════
-  function eliminarDelCarrito(nombre) {
-    carrito = carrito.filter(p => p.nombre !== nombre); // Quita el producto del array
+  function eliminarDelCarrito(clave) {
+    carrito = carrito.filter(p => (p.codigo || p.nombre) !== clave); // Quita el producto del array
     actualizarCarrito();
   }
 
@@ -894,6 +901,7 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
       // Muestra el precio siempre — tanto disponibles como bajo pedido
       const subtotalItem = `$${(item.precio * item.cantidad).toFixed(2)}`;
       const precioUnit   = `$${item.precio.toFixed(2)} c/u · ${CONFIG.PLATA_LEY}${item.esPedido ? ' · Bajo Pedido' : ''}`;
+      const clave        = (item.codigo || item.nombre).replace(/'/g, "\\'");
       const div = document.createElement('div');
       div.className = 'carrito-item';
       div.innerHTML = `
@@ -902,12 +910,12 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
           <div class="carrito-item-precio-unit">${precioUnit}</div>
         </div>
         <div class="carrito-item-qty">
-          <button class="qty-btn" onclick="cambiarCantidad('${item.nombre}', -1)">−</button>
+          <button class="qty-btn" onclick="cambiarCantidad('${clave}', -1)">−</button>
           <span class="qty-num">${item.cantidad}</span>
-          <button class="qty-btn" onclick="cambiarCantidad('${item.nombre}', +1)">+</button>
+          <button class="qty-btn" onclick="cambiarCantidad('${clave}', +1)">+</button>
         </div>
         <div class="carrito-item-subtotal">${subtotalItem}</div>
-        <button class="carrito-item-del" onclick="eliminarDelCarrito('${item.nombre}')" title="Eliminar">✕</button>
+        <button class="carrito-item-del" onclick="eliminarDelCarrito('${clave}')" title="Eliminar">✕</button>
       `;
       body.appendChild(div);
     });
@@ -1128,5 +1136,6 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
 <script src="js/blur-text.js" defer></script>
 <script src="js/spotlight-card.js" defer></script>
 <script src="js/carousel.js" defer></script>
+<script src="js/buscador-catalogo.js" defer></script>
 </body>
 </html>

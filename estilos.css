@@ -808,6 +808,10 @@
     transform: translateY(-50%);
     z-index: -1;
     mix-blend-mode: screen;
+    /* El "negro" del video comprimido no es negro puro (ronda rgb(10-20)):
+       con screen eso lava el fondo estrellado detrás. El contraste empuja
+       esos grises casi a 0 sin tocar los brillos reales de la joya. */
+    filter: contrast(1.6);
     -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
     mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
     opacity: 0;
@@ -1103,6 +1107,24 @@
   .catalogo-header { text-align: center; margin-bottom: 80px; }
   .catalogo-header .section-title { margin-bottom: 16px; }
   .catalogo-header p { font-size: 15px; font-weight: 300; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
+
+  .catalogo-buscador {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 0 28px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(200, 208, 220, .15);
+    background: rgba(255, 255, 255, .03);
+    color: var(--silver-bright);
+    font-family: var(--sans);
+    font-size: 14px;
+    text-align: left;
+    transition: border-color .3s, background .3s;
+  }
+  .catalogo-buscador::placeholder { color: var(--text-muted); }
+  .catalogo-buscador:focus { border-color: var(--gold-accent); background: rgba(255, 255, 255, .05); }
 
   /* ── FILTRO POR CATEGORÍA ──
      Reemplazado por tiles MagicBento (reactbits.css).
@@ -1607,8 +1629,8 @@
   }
 
   @media(max-width: 900px) {
-    .trust-row { grid-template-columns: repeat(2, 1fr); }
-    .trust-item { padding: 26px 18px; }
+    .trust-row { grid-template-columns: 1fr; }
+    .trust-item { padding: 22px 18px; }
   }
   /* ══════════════════════════════════════════════════
      008 · FASE 2 — ShinyText (port reactbits, solo CSS)

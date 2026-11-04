@@ -41,6 +41,7 @@ window.obtenerCatalogoFirestore = async function obtenerCatalogoFirestore() {
           precio: p.precio,
           estado: p.estado,
           esPedido: p.esPedido,
+          destacada: p.destacada,
           desc: p.desc,
           img: p.img
         }));

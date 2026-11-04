@@ -16,9 +16,7 @@
   'use strict';
 
   var ORDEN = ['pulseras', 'anillos', 'aretes', 'juegos', 'dijes', 'cadenas', 'cadenas_dijes'];
-  var MAX = 8;      // máximo de piezas en la vitrina
-  var POR_CAT = 2;  // máximo de piezas por categoría (priorizando disponibles)
-  var MIN = 5;      // mínimo aceptable antes de rellenar con "bajo pedido"
+  var MAX = 8;      // tope de piezas en la vitrina (control manual desde el panel)
 
   var INTERVALO = 4000;  // ms entre cada paso automático (lento, "poco a poco")
 
@@ -88,39 +86,18 @@
     return Object.keys(datos).length + ':' + total + ':' + disp;
   }
 
-  function clave(p) { return (p.img || '') + '|' + (p.nombre || ''); }
-
+  // Selección manual: solo piezas marcadas "destacada" desde el panel
+  // admin (checkbox en js/admin/productos.js), en el orden de categorías
+  // de ORDEN. Sin eso marcado, la sección queda vacía y se oculta.
   function seleccionar() {
-    var sel = [], usados = {}, i, j, n, p, k, arr;
-
-    // Pasada 1 — disponibles, hasta POR_CAT por categoría
+    var sel = [], i, j, arr;
     for (i = 0; i < ORDEN.length && sel.length < MAX; i++) {
       arr = CATALOGO[ORDEN[i]] || [];
-      n = 0;
-      for (j = 0; j < arr.length && n < POR_CAT; j++) {
-        p = arr[j];
-        if (p.estado !== 'disponible') continue;
-        k = clave(p);
-        if (usados[k]) continue;
-        usados[k] = 1; sel.push(p); n++;
+      for (j = 0; j < arr.length && sel.length < MAX; j++) {
+        if (arr[j].destacada) sel.push(arr[j]);
       }
     }
-
-    // Pasada 2 — si quedaron pocas, completa con piezas bajo pedido
-    if (sel.length < MIN) {
-      for (i = 0; i < ORDEN.length && sel.length < MAX; i++) {
-        arr = CATALOGO[ORDEN[i]] || [];
-        for (j = 0; j < arr.length && sel.length < MAX; j++) {
-          p = arr[j];
-          if (p.estado === 'agotado') continue;
-          k = clave(p);
-          if (usados[k]) continue;
-          usados[k] = 1; sel.push(p);
-        }
-      }
-    }
-
-    return sel.slice(0, MAX);
+    return sel;
   }
 
   function pintar() {
@@ -160,10 +137,18 @@
     return card ? (card.getBoundingClientRect().width + 16) : track.clientWidth * 0.8;
   }
 
-  // Flechas prev / next: desplazan una tarjeta sin envolver (se
-  // deshabilitan en los extremos, ver limitarFlechas).
+  // Flecha "atrás": se detiene al llegar al inicio (no envuelve).
+  // Flecha "adelante": al llegar al final, el siguiente clic vuelve al
+  // inicio — pedido del propietario, mismo criterio que el auto-avance.
   function mover(dir) {
     var reduce = prefiereQuieto();
+    if (dir > 0) {
+      var max = track.scrollWidth - track.clientWidth;
+      if (max > 2 && track.scrollLeft >= max - 2) {
+        track.scrollTo({ left: 0, behavior: reduce ? 'auto' : 'smooth' });
+        return;
+      }
+    }
     track.scrollBy({ left: dir * anchoPaso(), behavior: reduce ? 'auto' : 'smooth' });
   }
 
@@ -180,12 +165,14 @@
     }
   }
 
-  // Habilita/deshabilita las flechas según la posición del scroll
+  // Habilita/deshabilita flechas según la posición del scroll.
+  // "Atrás" se deshabilita al inicio (no envuelve). "Adelante" nunca
+  // se deshabilita por llegar al final: ese clic vuelve al inicio (mover()).
   function limitarFlechas() {
     if (!track || !prev || !next) return;
-    var max = track.scrollWidth - track.clientWidth - 2;
+    var max = track.scrollWidth - track.clientWidth;
     prev.disabled = track.scrollLeft <= 1;
-    next.disabled = track.scrollLeft >= max;
+    next.disabled = max <= 2;  // sin nada para desplazar: ambas flechas sin uso
   }
 
   function prefiereQuieto() {

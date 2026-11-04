@@ -6,9 +6,14 @@
 // mismo nombre de archivo (el código), con "upsert" activado, así que
 // reemplazar una foto sobrescribe la anterior en vez de acumular
 // archivos sueltos en el bucket.
+//
+// supabase-config.js importa el SDK desde un CDN externo (cdn.jsdelivr.net).
+// Si ese import fuera estático acá arriba, una falla de red/CDN al cargar
+// la página rompería TODO productos.js (tabs, lista, buscador, filtros),
+// no solo la subida de fotos — se vio pasar en vivo. Por eso se importa
+// recién adentro de subirFoto(), solo cuando el dueño sube una foto de
+// verdad: el resto del panel queda sano aunque el CDN falle.
 // ══════════════════════════════════════════════════
-import { supabase, BUCKET } from "./supabase-config.js";
-
 const TIPOS_PERMITIDOS = ["image/jpeg", "image/png", "image/webp"];
 const PESO_MAXIMO = 8 * 1024 * 1024; // 8 MB, de sobra para una foto de producto
 
@@ -23,6 +28,8 @@ export async function subirFoto(codigo, archivo) {
   if (archivo.size > PESO_MAXIMO) {
     throw new Error("La foto pesa demasiado (máximo 8 MB).");
   }
+
+  const { supabase, BUCKET } = await import("./supabase-config.js");
 
   const extension = archivo.type.split("/")[1].replace("jpeg", "jpg");
   const ruta = `${codigo}.${extension}`;

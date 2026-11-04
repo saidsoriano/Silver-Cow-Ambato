@@ -137,10 +137,28 @@ body.admin-body {
   -webkit-overflow-scrolling: touch;
 }
 
-.admin-buscador {
-  display: block;
-  width: 100%;
-  margin-bottom: 24px;
+.admin-buscador { display: block; width: 100%; }
+
+.admin-filtros {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0 24px;
+}
+.admin-filtro {
+  flex: 0 0 auto;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(200, 208, 220, .15);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+.admin-filtro.activo {
+  background: var(--gold-accent);
+  border-color: var(--gold-accent);
+  color: #1a1405;
 }
 .admin-tab {
   flex: 0 0 auto;
@@ -257,6 +275,21 @@ body.admin-body {
 .admin-select option {
   background: var(--black-deep);
   color: var(--silver-bright);
+}
+.admin-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--silver-bright);
+  cursor: pointer;
+  padding: 6px 0;
+}
+.admin-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold-accent);
+  cursor: pointer;
 }
 .admin-input-desc {
   width: 100%;

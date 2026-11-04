@@ -128,6 +128,11 @@
     <div class="admin-tabs" id="catTabs"></div>
     <input class="admin-input admin-buscador" type="search"
            id="buscador" placeholder="Buscar por nombre o código...">
+    <div class="admin-filtros" id="filtrosEstado">
+      <button type="button" class="admin-filtro" data-estado="disponible" aria-pressed="false">Disponible</button>
+      <button type="button" class="admin-filtro" data-estado="pedido" aria-pressed="false">Bajo pedido</button>
+      <button type="button" class="admin-filtro" data-estado="agotado" aria-pressed="false">Agotado</button>
+    </div>
     <p class="admin-lista-estado" id="estadoLista" hidden></p>
     <div id="listaProductos"></div>
 

@@ -356,10 +356,10 @@
   border-radius: 999px;
 }
 
-/* Cada tarjeta del carrusel: ancho fijo, pequeño */
+/* Cada tarjeta del carrusel: ancho fijo */
 .carousel-track .joya-card {
   flex: 0 0 auto;
-  width: clamp(148px, 15vw, 176px);
+  width: clamp(190px, 19vw, 230px);
 }
 .carousel-track .joya-card:hover { transform: translateY(-4px); }
 
@@ -414,7 +414,7 @@
   .carousel { gap: 8px; }
   .carousel-arrow { display: none; }        /* en táctil se desliza con el dedo */
   .carousel-track { gap: 12px; padding-left: 0; padding-right: 0; }
-  .carousel-track .joya-card { width: clamp(128px, 38vw, 152px); }
+  .carousel-track .joya-card { width: clamp(155px, 44vw, 185px); }
 }
 
 /* ── MOVIMIENTO REDUCIDO ── */

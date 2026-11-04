@@ -31,16 +31,28 @@ const tabs = document.getElementById("catTabs");
 const lista = document.getElementById("listaProductos");
 const estadoLista = document.getElementById("estadoLista");
 const buscador = document.getElementById("buscador");
+const filtrosEstado = document.getElementById("filtrosEstado");
+
+// Pestaña especial, fuera de CATEGORIAS: junta piezas de todas las
+// categorías marcadas "destacada", para ver de un vistazo qué está
+// activo en el carrusel del sitio público sin recorrer pestaña por pestaña.
+const TAB_DESTACADAS = "destacadas";
 
 let categoriaActiva = "aretes";
 
 function armarTabs() {
   tabs.innerHTML = "";
-  Object.entries(CATEGORIAS).forEach(([cat, label]) => {
+  const entradas = [[TAB_DESTACADAS, "★ Destacadas"], ...Object.entries(CATEGORIAS)];
+  entradas.forEach(([cat, label]) => {
     const btn = document.createElement("button");
     btn.className = "admin-tab" + (cat === categoriaActiva ? " activa" : "");
+    btn.setAttribute("aria-selected", cat === categoriaActiva ? "true" : "false");
     btn.textContent = label;
     btn.addEventListener("click", () => {
+      if (cat === categoriaActiva) return;
+      if (hayCambiosSinGuardar() && !confirm(
+        "Tenés cambios sin guardar en esta pestaña. Si cambiás ahora se pierden. ¿Continuar?"
+      )) return;
       categoriaActiva = cat;
       armarTabs();
       cargarCategoria(cat);
@@ -55,15 +67,18 @@ async function cargarCategoria(cat) {
   estadoLista.textContent = "Cargando...";
 
   try {
-    const q = query(
-      collection(db, "productos"),
-      where("categoria", "==", cat),
-      orderBy("nombre")
-    );
+    // "Destacadas" no filtra por categoría: un solo filtro de igualdad
+    // (igual que cada pestaña normal), así no hace falta un índice
+    // compuesto nuevo — mismo criterio que firestore-catalogo.js.
+    const q = cat === TAB_DESTACADAS
+      ? query(collection(db, "productos"), where("destacada", "==", true))
+      : query(collection(db, "productos"), where("categoria", "==", cat), orderBy("nombre"));
     const snap = await getDocs(q);
 
     if (snap.empty) {
-      estadoLista.textContent = "No hay productos en esta categoría.";
+      estadoLista.textContent = cat === TAB_DESTACADAS
+        ? "No hay piezas destacadas todavía — marcá el casillero en cualquier categoría."
+        : "No hay productos en esta categoría.";
       return;
     }
 
@@ -74,6 +89,15 @@ async function cargarCategoria(cat) {
     console.error("admin/productos: cargarCategoria", err);
     estadoLista.textContent = "Error al cargar: " + err.message;
   }
+}
+
+// Antes de cambiar de pestaña (categoría o "★ Destacadas"): si alguna
+// fila visible tiene una edición sin guardar, avisa en vez de descartarla
+// en silencio (cargarCategoria() reconstruye toda la lista desde cero).
+function hayCambiosSinGuardar() {
+  return Array.from(lista.querySelectorAll(".admin-fila")).some(
+    (f) => typeof f.tieneCambiosSinGuardar === "function" && f.tieneCambiosSinGuardar()
+  );
 }
 
 function filaProducto(codigo, p) {
@@ -107,6 +131,13 @@ function filaProducto(codigo, p) {
             <option value="pedido" ${p.estado === "pedido" ? "selected" : ""}>Bajo pedido</option>
             <option value="agotado" ${p.estado === "agotado" ? "selected" : ""}>Agotado</option>
           </select>
+        </div>
+        <div class="admin-campo">
+          <label class="admin-label">Destacada</label>
+          <label class="admin-check">
+            <input type="checkbox" class="admin-input-destacada" ${p.destacada ? "checked" : ""}>
+            Mostrar en "Piezas destacadas"
+          </label>
         </div>
       </div>
 
@@ -154,10 +185,24 @@ function filaProducto(codigo, p) {
   const inputNombre = fila.querySelector(".admin-input-nombre");
   const inputPrecio = fila.querySelector(".admin-input-precio");
   const selectEstado = fila.querySelector(".admin-select");
+  const inputDestacada = fila.querySelector(".admin-input-destacada");
   const inputDesc = fila.querySelector(".admin-input-desc");
   const btnGuardar = fila.querySelector(".admin-btn-guardar");
   const btnArchivar = fila.querySelector(".admin-btn-archivar");
   const marcaOk = fila.querySelector(".admin-fila-ok");
+
+  // Compara contra `p` (los últimos valores guardados en Firestore) para
+  // saber si hay ediciones sin guardar — lo usa hayCambiosSinGuardar()
+  // antes de dejar cambiar de pestaña.
+  fila.tieneCambiosSinGuardar = function () {
+    return (
+      inputNombre.value.trim() !== (p.nombre || "") ||
+      (Number(inputPrecio.value) || 0) !== (p.precio || 0) ||
+      selectEstado.value !== p.estado ||
+      inputDestacada.checked !== !!p.destacada ||
+      inputDesc.value.trim() !== descSinCodigo(p.desc)
+    );
+  };
 
   btnGuardar.addEventListener("click", async () => {
     btnGuardar.disabled = true;
@@ -170,11 +215,33 @@ function filaProducto(codigo, p) {
         nombre: inputNombre.value.trim(),
         precio: Number(inputPrecio.value) || 0,
         estado: selectEstado.value,
+        destacada: inputDestacada.checked,
         desc: descConCodigo,
         actualizado: serverTimestamp()
       });
+      // Sincroniza `p` con lo recién guardado — si no, tieneCambiosSinGuardar()
+      // seguiría viendo esta fila como "sucia" después de guardar.
+      p.nombre = inputNombre.value.trim();
+      p.precio = Number(inputPrecio.value) || 0;
+      p.estado = selectEstado.value;
+      p.destacada = inputDestacada.checked;
+      p.desc = descConCodigo;
+
       marcaOk.hidden = false;
       setTimeout(() => (marcaOk.hidden = true), 1500);
+
+      // En "★ Destacadas" la fila deja de pertenecer a la vista si se
+      // desmarcó — se saca sola, para que la lista siempre refleje lo
+      // que está activo ahora mismo.
+      if (categoriaActiva === TAB_DESTACADAS && !inputDestacada.checked) {
+        setTimeout(() => {
+          fila.remove();
+          if (!lista.children.length) {
+            estadoLista.hidden = false;
+            estadoLista.textContent = "No hay piezas destacadas todavía — marcá el casillero en cualquier categoría.";
+          }
+        }, 900);
+      }
     } catch (err) {
       console.error("admin/productos: guardar", codigo, err);
       alert("No se pudo guardar: " + err.message);
@@ -226,15 +293,40 @@ function escaparAtributo(s) {
   return escaparTexto(s).replace(/"/g, "&quot;");
 }
 
+// Filtro por estado (botones "Disponible" / "Bajo pedido" / "Agotado",
+// combinables): ninguno activo = se muestran todos. Se guarda acá mismo,
+// sin tocar Firestore — es solo cómo se ve la lista ya cargada.
+const estadosActivos = new Set();
+
+function alternarFiltroEstado(btn) {
+  const estado = btn.dataset.estado;
+  if (estadosActivos.has(estado)) {
+    estadosActivos.delete(estado);
+    btn.classList.remove("activo");
+    btn.setAttribute("aria-pressed", "false");
+  } else {
+    estadosActivos.add(estado);
+    btn.classList.add("activo");
+    btn.setAttribute("aria-pressed", "true");
+  }
+  filtrarLista();
+}
+filtrosEstado.querySelectorAll(".admin-filtro").forEach((btn) => {
+  btn.addEventListener("click", () => alternarFiltroEstado(btn));
+});
+
 // Filtro client-side sobre lo ya cargado de la categoría actual — no
-// hace falta volver a consultar Firestore para esto.
+// hace falta volver a consultar Firestore para esto. Combina texto y
+// estado: una fila se muestra solo si pasa los dos filtros a la vez.
 function filtrarLista() {
   const texto = normalizar(buscador.value);
   lista.querySelectorAll(".admin-fila").forEach((fila) => {
     const nombre = normalizar(fila.querySelector(".admin-input-nombre").value);
     const codigo = normalizar(fila.querySelector(".admin-fila-codigo").textContent);
-    const coincide = !texto || nombre.includes(texto) || codigo.includes(texto);
-    fila.hidden = !coincide;
+    const estado = fila.querySelector(".admin-select").value;
+    const coincideTexto = !texto || nombre.includes(texto) || codigo.includes(texto);
+    const coincideEstado = estadosActivos.size === 0 || estadosActivos.has(estado);
+    fila.hidden = !(coincideTexto && coincideEstado);
   });
 }
 function normalizar(s) {

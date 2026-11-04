@@ -22,7 +22,19 @@ btnAbrir.addEventListener("click", () => {
 });
 btnCerrar.addEventListener("click", cerrarFormulario);
 
+function formularioTieneContenido() {
+  return (
+    document.getElementById("altaNombre").value.trim() !== "" ||
+    document.getElementById("altaPrecio").value !== "" ||
+    document.getElementById("altaDescripcion").value.trim() !== "" ||
+    document.getElementById("altaFoto").files.length > 0
+  );
+}
+
 function cerrarFormulario() {
+  if (formularioTieneContenido() && !confirm(
+    "Vas a perder lo que escribiste en esta pieza. ¿Cerrar igual?"
+  )) return;
   form.hidden = true;
   btnAbrir.hidden = false;
   form.reset();
