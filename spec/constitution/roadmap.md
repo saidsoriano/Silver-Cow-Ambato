@@ -12,7 +12,7 @@
 | 007-correccion-bugs | ✅ Completa | sesion-010 |
 | 008-rediseno-premium | 🔄 En curso (Fases 0-2 publicadas en `2ddbbb4`; 15/26 tareas hechas — ver tasks.md) | sesion-011, sesion-012, sesion-013 a 016 |
 | 010-vista-admin | ✅ Completa (Firebase Firestore+Auth + Supabase Storage; Google Sheets congelado desde esta feature) | sesion-017 a 023 |
-| 011-arreglos-pagina | 🔄 En curso — lista viva de arreglos chicos a la página pública, sin rediseño. Ítems 1-3 y 5 resueltos (hueco fila confianza, loop flecha carrusel, fotos carrusel, "destacada" manual desde el panel); ítem 4 (desalineación) esperando confirmación del dueño | sesion-025 a 027 |
+| 011-arreglos-pagina | ✅ Cerrada — lista viva de arreglos chicos al sitio público y al panel, sin rediseño. 16 de 17 ítems resueltos (carrusel curado a mano, buscador del catálogo, hotfix OAuth, bug real de Supabase en el panel, hero, auditoría de usabilidad Nielsen); ítem 4 (desalineación en el carrusel) cerrado sin resolver, el dueño nunca lo precisó | sesion-025 a 036 |
 
 ## Features planeadas (priorizadas)
 - [ ] **[Alta] 009-cambio-proveedor** — migrar importación de ItalSteel Odoo a posible nuevo proveedor con catálogo en Google Drive

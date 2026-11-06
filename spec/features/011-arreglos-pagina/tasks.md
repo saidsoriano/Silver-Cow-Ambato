@@ -1,7 +1,8 @@
 # Tareas: Arreglos de la página
 
-> Lista viva — se va sumando un ítem por cada pedido del propietario. No hay
-> un número total fijo de tareas, a diferencia de las otras features.
+> **Feature cerrada** en la sesión 036 (2026-11-04). Lista viva — se fue
+> sumando un ítem por cada pedido del propietario, sin un número total fijo
+> de tareas a diferencia de las otras features.
 
 > **Pendiente fuera de esta lista:** el dueño preguntó por portar el
 > "Circular Carousel" de reactbits.dev a "Piezas destacadas". Se le explicó
@@ -23,8 +24,11 @@
       Verificado con medición de ancho real en el DOM. Ver `plan.md` § Ítem 3.
 - [ ] **4. Posible desalineación en el carrusel** — medí las 8 tarjetas
       visibles y están perfectamente alineadas (mismo alto, mismo botón).
-      Esperando que el dueño precise qué parte ve descalzada antes de tocar
-      algo. Ver `plan.md` § Ítem 4.
+      El dueño nunca llegó a precisar qué veía descalzado, y el carrusel
+      cambió bastante desde entonces (ítems 3, 5, 10 de esta misma lista).
+      **Cerrado sin resolver al cerrar la feature** — si se nota algo
+      todavía, abrir de nuevo como ítem nuevo con una captura actual.
+      Ver `plan.md` § Ítem 4.
 - [x] **5. Control manual de "Piezas destacadas" desde el panel** —
       checkbox "Destacada" en el panel admin (independiente del estado);
       el carrusel ahora muestra solo lo marcado ahí, nada de selección

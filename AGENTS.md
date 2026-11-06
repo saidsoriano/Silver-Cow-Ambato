@@ -17,7 +17,7 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 - `spec/features/007-correccion-bugs/`
 - `spec/features/008-rediseno-premium/` — en curso, Fases 0-2 publicadas, falta Fase 3+
 - `spec/features/010-vista-admin/` — completa. Panel en `admin.html` (Firebase Firestore+Auth + Supabase Storage). Google Sheets queda congelado, ya no es la fuente de verdad
-- `spec/features/011-arreglos-pagina/` — en curso. Lista viva de arreglos chicos al sitio público (no un rediseño) — ver `tasks.md` de esa carpeta
+- `spec/features/011-arreglos-pagina/` — cerrada. Lista viva de arreglos chicos al sitio público y al panel (no un rediseño) — ver `tasks.md` de esa carpeta
 
 ## MCPs (proyecto)
 Se configuran en `opencode.json` bajo la clave `mcp` (no `mcpServers`).
