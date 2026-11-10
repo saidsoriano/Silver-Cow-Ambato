@@ -206,6 +206,22 @@ rehízo (mismo modelo de datos, `config/negocio` no cambia de forma):
   lado de GitHub; este deploy (`5eecc59`) salió bien. Para la próxima:
   revisar siempre `gh run list` después de cada push, aunque sea de docs.
 
+### N. Limpieza de datos de prueba en producción (2026-11-10)
+El dueño vio que Dome figuraba con ventas que eran de prueba. Con su
+aprobación se borraron (por la API de Firestore, permanente):
+`pedidos/SC-2MMFSS` y su espejo `pedidos_vendedor/SC-2MMFSS` (pedido de
+prueba de $6.65 con DOME), `ventas/XTAqSULQqY7Pmxg1eVIu` (venta en persona
+de prueba, P-PL-104, $57, pagada y luego cancelada), `resumenes/dome_2026-11`
+(comisión de noviembre calculada con esas pruebas) y `avisos/estado` (fecha
+de "visto"). `pagos`, `costos` y `config` ya estaban vacíos. No se tocaron
+`vendedores`, `codigos`, `roles` (siguen los 3) ni `productos`: la venta de
+prueba era de una pieza bajo pedido y no había agotado nada (`P-PL-104`
+sigue "pedido", `P-AR-238` sigue "disponible"). Verificado después: las 7
+colecciones de movimientos en 0, catálogo público con 364 piezas.
+Lección: al terminar de probar en producción, borrar los datos de prueba
+en el mismo momento (los pedidos de prueba de Claude sí se borraron; los
+que hizo el dueño al revisar cada fase quedaron).
+
 ## Archivos tocados
 ```
 Paguina_joyas/
