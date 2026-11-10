@@ -194,7 +194,17 @@ rehízo (mismo modelo de datos, `config/negocio` no cambia de forma):
 - **Cierre (con visto bueno del dueño):** reglas corregidas desplegadas;
   verificado en producción con un pedido real con DOME (guardado con
   `sellerId: dome`, $19) y **borrado** después; catálogo público OK
-  (364 piezas). Commit + push de toda la feature.
+  (364 piezas). Commit + push de toda la feature (`5eecc59`); deploy de
+  Pages terminado con éxito y verificado: `vendedor.html`,
+  `js/vendedor/panel.js`, `js/admin/comisiones.js` y `js/pedidos-web.js`
+  responden 200, y `index.html` publicado ya carga `pedidos-web.js`.
+- **Corrección de lo informado en la sesión 036:** ahí se dijo que el commit
+  de cierre de la 011 (`892817e`, solo documentos) "no necesitaba deploy".
+  En realidad el workflow corrió y **falló** (`Timeout reached, aborting!`
+  en el paso de publicar de GitHub Pages, después de 10 min). No afectó al
+  sitio: el código publicado era el mismo de `579f8ea`. Fue un timeout del
+  lado de GitHub; este deploy (`5eecc59`) salió bien. Para la próxima:
+  revisar siempre `gh run list` después de cada push, aunque sea de docs.
 
 ## Archivos tocados
 ```
