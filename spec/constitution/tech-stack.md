@@ -16,6 +16,18 @@
   `fotos-productos`) — fotos subidas desde el panel. Las fotos de los 357
   productos originales siguen sirviéndose desde el repo (GitHub Pages), no se
   migraron
+- **Feature `012-paneles-vendedores`:** sigue en plan gratis (Spark), sin
+  Cloud Functions. Roles por documento `roles/{uid}`, borrado de pedidos con
+  TTL de Firestore, cuentas de vendedor a mano en la consola. Reglas de
+  Firestore versionadas en el repo (`firestore.rules`), probadas con el
+  emulador (`scripts/test-reglas.mjs`). La política TTL se probó y **exige
+  facturación**: los pedidos vencidos los borra el panel admin al abrirse
+- **SheetJS 0.20.3** (`cdn.sheetjs.com`, oficial) para exportar a Excel desde
+  el panel admin. Se importa recién al exportar (si el CDN falla, solo falla
+  eso). No usar la 0.18.5 de npm: tiene fallas de seguridad conocidas
+- Herramientas de desarrollo (no se publican): `firebase-tools@13` vía `npx`
+  (deploy y emulador de reglas; la 14+ pide Java 21) y Node para
+  `scripts/test-reglas.mjs` / `scripts/test-comisiones.mjs`
 - localStorage en el navegador para caché del catálogo (sin cambios)
 - Google Sheets (multi-sheet, 7 hojas) + Apps Script: **histórico**, congelado,
   ya no se lee ni se escribe desde ningún lado

@@ -1,0 +1,127 @@
+rules_version = '2';
+// Reglas de Firestore — proyecto silver-cow-admin. Versionadas acá desde la
+// feature 012-paneles-vendedores (antes vivían solo en la consola).
+// Roles: admin = cuenta Google del dueño; vendedor = documento roles/{uid}
+// con role:'vendedor', sellerId:'<usuario>', activo:true. Plan gratis (sin
+// Cloud Functions): el admin crea ese documento desde el panel.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.get('email', '') == 'jhetro2005@gmail.com'
+        && request.auth.token.get('email_verified', false) == true;
+    }
+    function rol() { return get(/databases/$(database)/documents/roles/$(request.auth.uid)).data; }
+    function isVendedor() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/roles/$(request.auth.uid))
+        && rol().role == 'vendedor' && rol().activo == true;
+    }
+    function miSeller() { return rol().sellerId; }
+    function esSuId(id) { return isVendedor() && miSeller() == id; }
+
+    // Catálogo: público para leer, solo admin escribe (igual que antes).
+    match /productos/{codigo} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Costos de las piezas: SOLO admin (RNF-16).
+    match /costos/{codigo} {
+      allow read, write: if isAdmin();
+    }
+
+    // Códigos de descuento públicos: el carrito consulta uno por uno (get),
+    // pero nadie puede listarlos.
+    match /codigos/{codigo} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if isAdmin();
+    }
+
+    // Rol de cada usuario (uid de Firebase Auth). Solo admin escribe; cada uno lee el suyo.
+    match /roles/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow write: if isAdmin();
+    }
+
+    match /vendedores/{id} {
+      allow read: if isAdmin() || esSuId(id);
+      allow write: if isAdmin();
+    }
+
+    // Pedidos web: cualquiera crea (validado), solo admin lee/gestiona.
+    // Los "sin_confirmar" vencidos (campo `expira`, +24 h) los borra el panel
+    // admin al abrirse: la política TTL de Firestore exige facturación.
+    // Si trae vendedor, tiene que existir y estar activo (RNF-05, RS-20): si
+    // no, cualquiera podría atribuirle un pedido a un vendedor sin su código.
+    match /pedidos/{codigo} {
+      allow create: if request.resource.data.keys().hasOnly(
+            ['codigo','items','subtotal','descuento','total','sellerId','envio','estado','creado','expira','cliente'])
+        && request.resource.data.keys().hasAll(
+            ['codigo','items','subtotal','total','estado','creado'])
+        && request.resource.data.codigo == codigo
+        && request.resource.data.estado == 'sin_confirmar'
+        && request.resource.data.creado == request.time
+        && request.resource.data.items is list
+        && request.resource.data.items.size() > 0
+        && request.resource.data.items.size() <= 30
+        && request.resource.data.subtotal is number
+        && request.resource.data.total is number
+        && request.resource.data.total >= 0
+        && request.resource.data.total <= request.resource.data.subtotal + 10
+        && (request.resource.data.get('sellerId', null) == null
+            || (exists(/databases/$(database)/documents/vendedores/$(request.resource.data.sellerId))
+                && get(/databases/$(database)/documents/vendedores/$(request.resource.data.sellerId)).data.activo == true));
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Espejo del pedido para el vendedor: solo número y monto (RS-17).
+    // Lo escribe el admin al confirmar el pedido (sin Cloud Functions).
+    match /pedidos_vendedor/{codigo} {
+      allow read: if isAdmin() || (isVendedor() && resource.data.sellerId == miSeller());
+      allow write: if isAdmin();
+    }
+
+    match /ventas/{id} {
+      // Venta en persona (Fase 5): la crea el vendedor como "pendiente" con
+      // campos fijos; solo el admin la confirma, cancela o edita. El precio
+      // contra el catálogo lo revisa el admin al confirmar (las reglas no
+      // pueden recorrer la lista de piezas).
+      allow create: if isVendedor()
+        && request.resource.data.keys().hasOnly(['sellerId','fecha','piezas','subtotal','tipoDescuento',
+             'descuento','precioFinal','metodoPago','cliente','anticipo','saldo','estado','descripcion'])
+        && request.resource.data.keys().hasAll(['sellerId','fecha','piezas','subtotal','precioFinal','estado'])
+        && request.resource.data.sellerId == miSeller()
+        && request.resource.data.estado == 'pendiente'
+        && request.resource.data.fecha == request.time
+        && request.resource.data.piezas is list
+        && request.resource.data.piezas.size() > 0
+        && request.resource.data.piezas.size() <= 30
+        && request.resource.data.subtotal is number
+        && request.resource.data.precioFinal is number
+        && request.resource.data.precioFinal >= 0
+        && request.resource.data.precioFinal <= request.resource.data.subtotal;
+      allow read: if isAdmin() || (isVendedor() && resource.data.sellerId == miSeller());
+      allow update, delete: if isAdmin();
+    }
+
+    match /pagos/{id} { allow read, write: if isAdmin(); }
+    match /avisos/{id} { allow read, write: if isAdmin(); }
+
+    // Resumen mensual: lo guarda el panel admin al calcularlo; el vendedor lee el suyo.
+    match /resumenes/{id} {
+      allow read: if isAdmin() || (isVendedor() && resource.data.sellerId == miSeller());
+      allow write: if isAdmin();
+    }
+
+    // config/negocio: reglas de comisión que el vendedor necesita ver.
+    // config/privado: lo que le cuesta cada bono a la casa (solo admin, RNF-16).
+    match /config/{doc} {
+      allow read: if isAdmin() || (isVendedor() && doc != 'privado');
+      allow write: if isAdmin();
+    }
+  }
+}

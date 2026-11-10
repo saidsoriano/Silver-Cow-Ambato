@@ -14,7 +14,7 @@
 // catalogo_motor.js (lee `CATALOGO` como variable global; un script
 // módulo no la expondría así sin más cambios).
 // ══════════════════════════════════════════════════
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import { collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 import { db } from "./admin/firebase-config.js";
 
 // Mismo orden que ya usaba Sheets — no afecta el render (catalogo_motor.js
@@ -49,4 +49,22 @@ window.obtenerCatalogoFirestore = async function obtenerCatalogoFirestore() {
   );
 
   return resultado;
+};
+
+// ══════════════════════════════════════════════════
+// CÓDIGOS DE DESCUENTO DE VENDEDORES (feature 012)
+// El carrito ya no usa una lista escrita en index.html: consulta el código
+// en `codigos/{CODIGO}`, que el admin crea/activa/desactiva desde el panel
+// (sección Vendedores). Las reglas permiten leer UN código (get) pero no
+// listarlos, así nadie puede ver todos los códigos que existen.
+// Devuelve { pct, sellerId } si el código existe y está activo, o null.
+// ══════════════════════════════════════════════════
+window.consultarCodigoDescuento = async function consultarCodigoDescuento(codigo) {
+  const limpio = String(codigo || "").trim().toUpperCase();
+  if (!/^[A-Z0-9]{1,12}$/.test(limpio)) return null; // evita IDs inválidos
+  const snap = await getDoc(doc(db, "codigos", limpio));
+  if (!snap.exists()) return null;
+  const d = snap.data();
+  if (d.activo !== true || typeof d.pct !== "number") return null;
+  return { codigo: limpio, pct: d.pct, sellerId: d.sellerId || null };
 };

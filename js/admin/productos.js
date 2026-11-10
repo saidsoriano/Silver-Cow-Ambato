@@ -10,6 +10,7 @@ import {
   getDocs,
   doc,
   updateDoc,
+  writeBatch,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 import { db } from "./firebase-config.js";
@@ -61,6 +62,22 @@ function armarTabs() {
   });
 }
 
+// Costos de las piezas (`costos/{codigo}`, solo admin — RNF-16). Se usan
+// para el margen informativo de la pestaña Comisiones (RF-20). Se cargan
+// una vez; si fallan, el catálogo se sigue editando sin el costo.
+let costos = null;
+async function cargarCostos() {
+  if (costos) return;
+  try {
+    const snap = await getDocs(collection(db, "costos"));
+    costos = {};
+    snap.forEach((d) => (costos[d.id] = d.data().costo));
+  } catch (err) {
+    console.error("admin/productos: costos", err);
+    costos = {};
+  }
+}
+
 async function cargarCategoria(cat) {
   lista.innerHTML = "";
   estadoLista.hidden = false;
@@ -73,7 +90,7 @@ async function cargarCategoria(cat) {
     const q = cat === TAB_DESTACADAS
       ? query(collection(db, "productos"), where("destacada", "==", true))
       : query(collection(db, "productos"), where("categoria", "==", cat), orderBy("nombre"));
-    const snap = await getDocs(q);
+    const [snap] = await Promise.all([getDocs(q), cargarCostos()]);
 
     if (snap.empty) {
       estadoLista.textContent = cat === TAB_DESTACADAS
@@ -123,6 +140,11 @@ function filaProducto(codigo, p) {
         <div class="admin-campo">
           <label class="admin-label">Precio (USD)</label>
           <input class="admin-input admin-input-precio" type="number" step="0.01" min="0" value="${p.precio}">
+        </div>
+        <div class="admin-campo">
+          <label class="admin-label" title="Solo lo ves tú: sirve para estimar el margen">Costo (solo tú)</label>
+          <input class="admin-input admin-input-precio admin-input-costo" type="number" step="0.01" min="0"
+                 value="${costos && costos[codigo] != null ? costos[codigo] : ""}" placeholder="—">
         </div>
         <div class="admin-campo admin-campo-flex">
           <label class="admin-label">Estado</label>
@@ -183,7 +205,9 @@ function filaProducto(codigo, p) {
   });
 
   const inputNombre = fila.querySelector(".admin-input-nombre");
-  const inputPrecio = fila.querySelector(".admin-input-precio");
+  const inputPrecio = fila.querySelector(".admin-input-precio:not(.admin-input-costo)");
+  const inputCosto = fila.querySelector(".admin-input-costo");
+  let costoGuardado = costos && costos[codigo] != null ? String(costos[codigo]) : "";
   const selectEstado = fila.querySelector(".admin-select");
   const inputDestacada = fila.querySelector(".admin-input-destacada");
   const inputDesc = fila.querySelector(".admin-input-desc");
@@ -200,7 +224,8 @@ function filaProducto(codigo, p) {
       (Number(inputPrecio.value) || 0) !== (p.precio || 0) ||
       selectEstado.value !== p.estado ||
       inputDestacada.checked !== !!p.destacada ||
-      inputDesc.value.trim() !== descSinCodigo(p.desc)
+      inputDesc.value.trim() !== descSinCodigo(p.desc) ||
+      inputCosto.value.trim() !== costoGuardado
     );
   };
 
@@ -211,7 +236,10 @@ function filaProducto(codigo, p) {
       // (catalogo_motor.js) espera encontrarlo ahí para mostrarlo y
       // armar el mensaje de WhatsApp — ver plan.md § Modelo de datos.
       const descConCodigo = `[${codigo}] ${inputDesc.value.trim()}`;
-      await updateDoc(doc(db, "productos", codigo), {
+      const costoTxt = inputCosto.value.trim();
+      if (costoTxt !== "" && !(Number(costoTxt) >= 0)) throw new Error("El costo tiene que ser un número mayor o igual a 0.");
+      const batch = writeBatch(db);
+      batch.update(doc(db, "productos", codigo), {
         nombre: inputNombre.value.trim(),
         precio: Number(inputPrecio.value) || 0,
         estado: selectEstado.value,
@@ -219,6 +247,14 @@ function filaProducto(codigo, p) {
         desc: descConCodigo,
         actualizado: serverTimestamp()
       });
+      // El costo va en otra colección, que solo el admin puede leer.
+      if (costoTxt !== costoGuardado) {
+        if (costoTxt === "") batch.delete(doc(db, "costos", codigo));
+        else batch.set(doc(db, "costos", codigo), { costo: Math.round(Number(costoTxt) * 100) / 100, actualizado: serverTimestamp() });
+      }
+      await batch.commit();
+      costoGuardado = costoTxt;
+      if (costos) { if (costoTxt === "") delete costos[codigo]; else costos[codigo] = Number(costoTxt); }
       // Sincroniza `p` con lo recién guardado — si no, tieneCambiosSinGuardar()
       // seguiría viendo esta fila como "sucia" después de guardar.
       p.nombre = inputNombre.value.trim();

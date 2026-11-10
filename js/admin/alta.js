@@ -22,6 +22,7 @@ btnAbrir.addEventListener("click", () => {
 });
 btnCerrar.addEventListener("click", cerrarFormulario);
 
+// ¿Hay algo escrito en el formulario? (para preguntar antes de cerrarlo)
 function formularioTieneContenido() {
   return (
     document.getElementById("altaNombre").value.trim() !== "" ||
@@ -31,6 +32,7 @@ function formularioTieneContenido() {
   );
 }
 
+// Cierra el formulario de pieza nueva; si hay algo escrito, pregunta antes.
 function cerrarFormulario() {
   if (formularioTieneContenido() && !confirm(
     "Vas a perder lo que escribiste en esta pieza. ¿Cerrar igual?"
@@ -43,6 +45,7 @@ function cerrarFormulario() {
 
 selectCategoria.addEventListener("change", actualizarPreviewCodigo);
 
+// Muestra el próximo código libre de la categoría elegida (ej. P-AR-239).
 async function actualizarPreviewCodigo() {
   const cat = selectCategoria.value;
   if (!cat) {
@@ -59,6 +62,8 @@ async function actualizarPreviewCodigo() {
   }
 }
 
+// Guarda la pieza nueva: valida, genera el código, sube la foto a Supabase y crea
+// productos/{codigo}.
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
 
@@ -115,6 +120,7 @@ form.addEventListener("submit", async (ev) => {
   }
 });
 
+// Mensaje de error en rojo debajo del formulario.
 function mostrarError(msg) {
   estadoAlta.hidden = false;
   estadoAlta.textContent = msg;

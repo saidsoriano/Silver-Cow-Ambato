@@ -620,12 +620,9 @@
 
       <!-- ── CUPÓN DE DESCUENTO ── -->
       <!-- ════════════════════════════════════════════════
-           CUPONES VIP — CAMBIA LAS PALABRAS AQUÍ
-           Cada cupón tiene: código (palabra secreta) y descuento en %
-           CUPÓN 1: 1.5% de descuento
-           CUPÓN 2: 2.2% de descuento
-           CUPÓN 3: 3.0% de descuento
-           Los códigos se definen en el JavaScript más abajo
+           CÓDIGOS POR VENDEDOR — 5% cada uno
+           Se crean, desactivan y reactivan desde el panel admin → Vendedores
+           (Firestore `codigos/`). Ya no se escriben en este archivo.
       ════════════════════════════════════════════════ -->
       <div class="carrito-cupon">
         <label>Cupón exclusivo</label>
@@ -678,6 +675,11 @@
         Enviar pedido por WhatsApp
       </button>
 
+      <!-- Aviso del pedido guardado (feature 012, RF-03): el sitio no puede
+           saber si el cliente llegó a mandar el mensaje, así que le avisa
+           que el pedido se borra a las 24 h si no lo confirma por WhatsApp. -->
+      <p class="carrito-aviso-pedido" id="avisoPedido" role="status" hidden></p>
+
     </div><!-- fin carrito-footer -->
   </div><!-- fin carrito-modal -->
 </div><!-- fin carrito-overlay -->
@@ -719,6 +721,8 @@ const CONFIG = {
      desde la sesión 017). Es un módulo, se carga diferido — catalogo.js
      espera a que esté listo, no asume el orden. -->
 <script type="module" src="js/firestore-catalogo.js"></script>
+<!-- Guarda el pedido en Firestore antes de abrir WhatsApp (feature 012) -->
+<script type="module" src="js/pedidos-web.js"></script>
 
 <!-- Datos del catálogo — todos los productos -->
 <script src="catalogo.js"></script>
@@ -731,14 +735,12 @@ const CONFIG = {
 
 
   // ══════════════════════════════════════════════════
-  // CUPONES VIP — EDITA AQUÍ LAS PALABRAS SECRETAS
-  // Formato: 'PALABRA': porcentaje de descuento
+  // CÓDIGOS DE DESCUENTO POR VENDEDOR
+  // Ya no se escriben aquí: viven en Firestore (`codigos/`) y se manejan
+  // desde el panel admin → Vendedores. Agregar, desactivar o reactivar un
+  // vendedor activa o apaga su código en esta página al instante.
+  // La consulta la hace window.consultarCodigoDescuento (js/firestore-catalogo.js).
   // ══════════════════════════════════════════════════
-  const CUPONES = {
-    'SILVERVIPGT':  5.0,  // Cupón 1 → 5.0% de descuento — CAMBIA "SILVERVIP1" por tu palabra secreta
-    'SILVERVIPVF1':  7.0,  // Cupón 2 → 7.0% de descuento — CAMBIA "SILVERVIP2" por tu palabra secreta
-    'SILVERVIP':  10.0,  // Cupón 3 → 10.0% de descuento — CAMBIA "SILVERVIP3" por tu palabra secreta
-  };
 
   // ══════════════════════════════════════════════════
   // ESTADO GLOBAL DEL CARRITO
@@ -748,6 +750,7 @@ const CONFIG = {
   let envioTipo     = 'ambato';  // 'ambato' = gratis, 'otra' = $5.00
   let cuponActivo   = null;      // Cupón aplicado actualmente (null = ninguno)
   let cuponPct      = 0;         // Porcentaje de descuento activo
+  let cuponSeller   = null;      // Vendedor dueño del código (para comisiones, Fase 4)
 
   // ══════════════════════════════════════════════════
   // AGREGAR AL CARRITO
@@ -844,22 +847,45 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
   // APLICAR CUPÓN DE DESCUENTO
   // Valida el código y aplica el porcentaje correspondiente
   // ══════════════════════════════════════════════════
-  function aplicarCupon() {
+  async function aplicarCupon() {
     const codigo = document.getElementById('cuponInput').value.trim().toUpperCase();
     const msg    = document.getElementById('cuponMsg');
+    const btn    = document.querySelector('.cupon-btn');
 
-    if (CUPONES[codigo]) {
-      // Cupón válido
-      cuponActivo = codigo;
-      cuponPct    = CUPONES[codigo];
+    if (typeof window.consultarCodigoDescuento !== 'function') {
+      msg.className   = 'cupon-msg error';
+      msg.textContent = '✕ No se pudo verificar el código. Recarga la página e intenta de nuevo.';
+      return;
+    }
+
+    msg.className   = 'cupon-msg';
+    msg.textContent = 'Verificando código...';
+    if (btn) btn.disabled = true;
+    let res = null, fallo = false;
+    try {
+      res = await window.consultarCodigoDescuento(codigo);
+    } catch (err) {
+      console.error('aplicarCupon:', err);
+      fallo = true;
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+
+    if (res) {
+      // Código de vendedor válido y activo
+      cuponActivo = res.codigo;
+      cuponPct    = res.pct;
+      cuponSeller = res.sellerId;
       msg.className   = 'cupon-msg ok';
       msg.textContent = `✓ Cupón aplicado — ${cuponPct}% de descuento en tu pedido`;
     } else {
-      // Cupón inválido
       cuponActivo = null;
       cuponPct    = 0;
+      cuponSeller = null;
       msg.className   = 'cupon-msg error';
-      msg.textContent = '✕ Código no válido. Verifica e intenta de nuevo.';
+      msg.textContent = fallo
+        ? '✕ No se pudo verificar el código (revisa tu conexión) e intenta de nuevo.'
+        : '✕ Código no válido. Verifica e intenta de nuevo.';
     }
 
     actualizarTotales(); // Recalcula con o sin descuento
@@ -955,8 +981,15 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
   // ENVIAR PEDIDO POR WHATSAPP
   // Genera el resumen completo y abre WhatsApp con el mensaje
   // ══════════════════════════════════════════════════
-  function enviarPedidoWhatsApp() {
+  // Último pedido guardado: si el cliente vuelve a tocar "Enviar" sin cambiar
+  // nada (porque no le abrió WhatsApp, por ejemplo), se reusa el mismo código
+  // en vez de crear un pedido duplicado.
+  let ultimoPedido = null; // { firma, codigo }
+
+  async function enviarPedidoWhatsApp() {
     if (carrito.length === 0) return;
+    const btn = document.getElementById('btnWhatsapp');
+    const aviso = document.getElementById('avisoPedido');
 
     const disponibles = carrito.filter(p => !p.esPedido);
     const pedidos     = carrito.filter(p => p.esPedido);
@@ -965,7 +998,33 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
     const descuento   = cuponPct > 0 ? (subtotal * cuponPct / 100) : 0;
     const total       = subtotal - descuento + costoEnvio;
 
+    // Se abre la pestaña YA (dentro del clic) y se le pone la dirección
+    // después de guardar: si se abriera recién al terminar de guardar, el
+    // navegador la bloquearía como ventana emergente.
+    const pestana = window.open('', '_blank');
+
+    // 1) Guardar el pedido en Firestore (RF-01). Si falla, el pedido igual
+    //    se manda por WhatsApp sin código: no se pierde la venta.
+    const firma = JSON.stringify([carrito, envioTipo, cuponActivo]);
+    let codigoPedido = (ultimoPedido && ultimoPedido.firma === firma) ? ultimoPedido.codigo : null;
+    if (!codigoPedido && typeof window.guardarPedidoWeb === 'function') {
+      btn.disabled = true;
+      try {
+        codigoPedido = await window.guardarPedidoWeb({
+          items: carrito, subtotal, descuento, total,
+          sellerId: cuponSeller,
+          envio: { tipo: envioTipo, costo: costoEnvio }
+        });
+        ultimoPedido = { firma, codigo: codigoPedido };
+      } catch (err) {
+        console.error('enviarPedidoWhatsApp: no se pudo guardar el pedido', err);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
     let msg = '🐄 *PEDIDO SILVER COW AMBATO*\n';
+    if (codigoPedido) msg += `Pedido: *${codigoPedido}*\n`;
     msg    += '━━━━━━━━━━━━━━━━━━━━━━\n\n';
 
     // Piezas disponibles con precio
@@ -1003,7 +1062,13 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
     msg += `\n_${CONFIG.PLATA_LEY} — Silver Cow Ambato_`;
 
     const url = `https://wa.me/${CONFIG.WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
+    if (pestana) pestana.location.href = url;
+    else window.location.href = url; // ventanas bloqueadas: misma pestaña
+
+    if (codigoPedido) {
+      aviso.textContent = `Tu pedido ${codigoPedido} quedó registrado. Si no llegaste a enviar el mensaje por WhatsApp, vuelve a tocar el botón: si no lo recibimos, el pedido se elimina en 24 horas.`;
+      aviso.hidden = false;
+    }
   }
 
 

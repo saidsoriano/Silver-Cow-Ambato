@@ -360,3 +360,209 @@ body.admin-body {
 .admin-alta-error { color: #e08080; }
 
 [hidden] { display: none !important; }
+
+/* ── Sección Vendedores (feature 012-paneles-vendedores) ── */
+.admin-secciones { margin: 4px 0 24px; }
+.admin-ayuda {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 6px 0 0;
+}
+.admin-vend-nombre {
+  font-family: var(--serif, inherit);
+  font-size: 20px;
+  color: var(--silver-bright);
+  margin: 2px 0 4px;
+}
+.admin-vend-dato {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 2px 0;
+  overflow-wrap: anywhere;
+}
+.admin-vend-dato strong { color: var(--silver-bright); font-weight: 500; }
+.admin-vend-dato code { font-size: 11px; opacity: .8; }
+.admin-vend-ok { color: #6ec87a; }
+.admin-vend-pendiente { color: var(--gold-accent); }
+.admin-vend-vincular {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.admin-vend-vincular .admin-input-uid { flex: 1 1 220px; min-width: 0; }
+
+/* ── Sección Pedidos (feature 012, Fase 4) ── */
+.admin-pedidos-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.admin-pedidos-filtros .admin-campo { min-width: 150px; flex: 1 1 150px; }
+.admin-pedido-items { margin: 8px 0; padding-left: 18px; font-size: 13px; color: var(--silver-bright); }
+.admin-pedido-items code { font-size: 11px; color: var(--gold-accent); }
+.admin-pedido-avisos {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(224, 128, 128, .4);
+  border-radius: 6px;
+  font-size: 13px;
+  color: #e8a0a0;
+}
+.admin-pedido-avisos ul { margin: 6px 0 0; padding-left: 18px; }
+.admin-pedido-acciones { flex-direction: column; align-items: stretch; gap: 8px; min-width: 160px; }
+
+/* Con el panel abierto el contenido arranca arriba; el login sigue centrado.
+   (Antes, una sección con poco contenido quedaba flotando a media pantalla.) */
+body.admin-body:has(#pantallaPanel:not([hidden])) { align-items: flex-start; }
+
+/* ── Avisos (feature 012, RF-18) ── */
+.admin-avisos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid var(--gold-accent);
+  background: rgba(201, 168, 76, .08);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.admin-avisos p { margin: 0 0 6px; }
+.admin-avisos ul { margin: 0 0 8px; padding-left: 18px; font-size: 13px; }
+.admin-avisos-gris { color: var(--text-muted); font-size: 12px; }
+.admin-avisos-acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+.admin-toasts {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+  max-width: min(360px, calc(100vw - 32px));
+}
+.admin-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #0f1d35;
+  border: 1px solid var(--gold-accent);
+  border-radius: 8px;
+  padding: 12px 36px 12px 14px;
+  font-size: 13px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+}
+.admin-toast-cerrar {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: 0;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* ── Comisiones (feature 012, Fase 6) ── */
+.admin-com-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+}
+.admin-com-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px;
+  border: 1px solid rgba(200, 208, 220, .1);
+  border-radius: 6px;
+}
+.admin-com-grid span { font-size: 11px; color: var(--text-muted); }
+.admin-com-grid strong { font-size: 18px; color: var(--silver-bright); font-weight: 500; }
+.admin-com-grid small { font-size: 11px; color: var(--text-muted); }
+.admin-com-checks { display: flex; gap: 18px; flex-wrap: wrap; margin: 8px 0; }
+.admin-com-pago { margin-top: 6px; font-size: 13px; }
+.admin-com-pago summary { cursor: pointer; color: var(--gold-accent); }
+.admin-com-pago .admin-fila-linea2 { flex-wrap: wrap; gap: 10px; }
+.admin-reglas { margin-top: 24px; }
+.admin-cfg-fila { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; font-size: 13px; }
+.admin-cfg-fila .admin-input { width: 100px; }
+.admin-cfg-fila .admin-cfg-texto { flex: 1 1 220px; width: auto; }
+.admin-com-saldada { border-color: rgba(110, 200, 122, .5) !important; }
+.admin-com-saldada strong { color: #6ec87a !important; }
+
+/* ── Editor de reglas en lenguaje simple (Fase 7, ajuste de usabilidad) ── */
+.reg-bloque {
+  border: 1px solid rgba(200, 208, 220, .1);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 14px 0;
+}
+.reg-bloque h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 19px;
+  color: var(--silver-bright);
+}
+.reg-num {
+  display: inline-grid;
+  place-items: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--gold-accent);
+  color: #1a1405;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+}
+.reg-frase { font-size: 14px; line-height: 2.2; margin: 4px 0; color: var(--silver-bright); }
+.reg-gris { color: var(--text-muted); font-size: 13px; }
+.reg-in { width: 84px; display: inline-block; padding: 4px 8px; text-align: right; }
+.reg-tramos { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+.reg-tramo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .03);
+  font-size: 14px;
+}
+.reg-rango { min-width: 170px; }
+.reg-flecha { color: var(--gold-accent); }
+.reg-tipo { width: auto; }
+.reg-bonos { display: flex; flex-direction: column; gap: 12px; }
+.reg-bono { padding: 10px; border-radius: 6px; background: rgba(255, 255, 255, .03); }
+.reg-texto { width: 100%; margin: 4px 0; }
+.reg-simulador { border-color: rgba(201, 168, 76, .35); background: rgba(201, 168, 76, .04); }
+.reg-tabla-sim { min-width: 0; max-width: 320px; margin-top: 6px; }
+.reg-guardar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  background: var(--black-deep);
+}
+.reg-guardar .admin-btn { width: auto; margin-top: 0; padding-left: 24px; padding-right: 24px; }
+.reg-sin-guardar { color: var(--gold-accent); font-size: 13px; margin-right: auto; }
+.reg-tabla-sim { border-collapse: collapse; width: 100%; font-size: 13px; }
+.reg-tabla-sim th { text-align: left; font-weight: 500; color: var(--text-muted); padding: 6px; border-bottom: 1px solid rgba(200, 208, 220, .15); }
+.reg-tabla-sim td { padding: 6px; border-bottom: 1px solid rgba(200, 208, 220, .06); }

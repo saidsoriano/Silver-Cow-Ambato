@@ -66,11 +66,27 @@
   ══════════════════════════════════════════════════ -->
   <div class="admin-pantalla admin-panel-shell" id="pantallaPanel" hidden>
     <div class="admin-panel-header">
-      <h1>Catálogo</h1>
+      <h1 id="tituloSeccion">Catálogo</h1>
       <button class="admin-btn admin-btn-ghost" id="btnLogout" style="width:auto;margin-top:0;">
         Cerrar sesión
       </button>
     </div>
+
+    <!-- Selector de sección (feature 012): Catálogo | Vendedores -->
+    <div class="admin-tabs admin-secciones" role="tablist">
+      <button type="button" class="admin-tab activa" data-seccion="catalogo" aria-selected="true">Catálogo</button>
+      <button type="button" class="admin-tab" data-seccion="pedidos" aria-selected="false">Pedidos</button>
+      <button type="button" class="admin-tab" data-seccion="ventas" aria-selected="false">Ventas</button>
+      <button type="button" class="admin-tab" data-seccion="comisiones" aria-selected="false">Comisiones</button>
+      <button type="button" class="admin-tab" data-seccion="vendedores" aria-selected="false">Vendedores</button>
+    </div>
+
+    <!-- Avisos (feature 012, RF-18): pedidos nuevos desde la última visita
+         y en vivo mientras el panel está abierto. Ver js/admin/avisos.js. -->
+    <div class="admin-avisos" id="avisosBanner" role="status" hidden></div>
+    <div class="admin-toasts" id="avisosToasts" aria-live="polite"></div>
+
+    <div id="seccionCatalogo">
     <!-- Alta de pieza nueva (Fase 5) -->
     <button class="admin-btn admin-btn-google" id="btnAbrirAlta" style="max-width:220px;margin-bottom:24px;">
       + Agregar pieza
@@ -145,12 +161,214 @@
       </button>
       <p id="estadoMigracion" hidden style="margin-top:12px;font-size:13px;color:var(--text-muted);"></p>
     </details>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SECCIÓN PEDIDOS WEB — feature 012, Fase 4 (RF-12, RF-13)
+         Pedidos que los clientes guardan desde el carrito antes de abrir
+         WhatsApp. Acá se cambia su estado y se revisa que los precios
+         coincidan con el catálogo (la web no valida precios: lo hace el
+         admin al confirmar).
+    ══════════════════════════════════════════════════ -->
+    <div id="seccionPedidos" hidden>
+      <div class="admin-pedidos-filtros">
+        <div class="admin-campo">
+          <label class="admin-label" for="filtroEstadoPed">Estado</label>
+          <select class="admin-select" id="filtroEstadoPed">
+            <option value="">Todos</option>
+            <option value="sin_confirmar">Sin confirmar</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="pagado">Pagado</option>
+            <option value="en_camino">En camino</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div class="admin-campo">
+          <label class="admin-label" for="filtroVendedorPed">Vendedor</label>
+          <select class="admin-select" id="filtroVendedorPed"><option value="">Todos</option><option value="-">Sin código</option></select>
+        </div>
+        <div class="admin-campo">
+          <label class="admin-label" for="filtroMesPed">Mes</label>
+          <input class="admin-input" type="month" id="filtroMesPed">
+        </div>
+        <button type="button" class="admin-btn-mini" id="btnRecargarPed">Actualizar</button>
+      </div>
+      <p class="admin-lista-estado" id="estadoPedidos" hidden></p>
+      <div id="listaPedidos"></div>
+      <button type="button" class="admin-btn admin-btn-ghost" id="btnMasPedidos" hidden style="max-width:220px;">Cargar más</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SECCIÓN VENTAS EN PERSONA — feature 012, Fase 5 (RF-13, RS-15)
+         Las registran los vendedores como "pendiente". Al marcarlas
+         "pagada", las piezas en stock pasan a "agotado" en la página.
+    ══════════════════════════════════════════════════ -->
+    <div id="seccionVentas" hidden>
+      <div class="admin-pedidos-filtros">
+        <div class="admin-campo">
+          <label class="admin-label" for="filtroEstadoVen">Estado</label>
+          <select class="admin-select" id="filtroEstadoVen">
+            <option value="">Todos</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="pagada">Pagada</option>
+            <option value="cancelada">Cancelada</option>
+            <option value="devuelta">Devuelta</option>
+          </select>
+        </div>
+        <div class="admin-campo">
+          <label class="admin-label" for="filtroVendedorVen">Vendedor</label>
+          <select class="admin-select" id="filtroVendedorVen"><option value="">Todos</option></select>
+        </div>
+        <div class="admin-campo">
+          <label class="admin-label" for="filtroMesVen">Mes</label>
+          <input class="admin-input" type="month" id="filtroMesVen">
+        </div>
+        <button type="button" class="admin-btn-mini" id="btnRecargarVen">Actualizar</button>
+      </div>
+      <p class="admin-lista-estado" id="estadoVentasAdm" hidden></p>
+      <div id="listaVentas"></div>
+      <button type="button" class="admin-btn admin-btn-ghost" id="btnMasVentas" hidden style="max-width:220px;">Cargar más</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SECCIÓN COMISIONES — feature 012, Fase 6 (RF-14, RF-15, RF-16)
+         Resumen del mes por vendedor (ventas pagadas, meta, comisión,
+         devoluciones, bono), registro de pagos con fecha y comprobante
+         (solo el admin lo ve) y edición de tramos/meta/bonos sin tocar código.
+    ══════════════════════════════════════════════════ -->
+    <div id="seccionComisiones" hidden>
+      <div class="admin-pedidos-filtros">
+        <div class="admin-campo">
+          <label class="admin-label" for="mesComisiones">Mes</label>
+          <input class="admin-input" type="month" id="mesComisiones">
+        </div>
+        <button type="button" class="admin-btn-mini" id="btnCalcularCom">Calcular</button>
+      </div>
+      <p class="admin-lista-estado" id="estadoComisiones" hidden></p>
+      <div id="listaComisiones"></div>
+
+      <!-- Exportar a Excel (Fase 7, RF-19): trazabilidad completa por vendedor -->
+      <details class="admin-herramientas admin-reglas" id="bloqueExportar">
+        <summary>Exportar a Excel</summary>
+        <p class="admin-ayuda">Genera un archivo .xlsx con pedidos web, ventas en persona (con su historial de cambios de estado), comisiones por mes, pagos y vendedores. No se guarda nada: se descarga al momento.</p>
+        <div class="admin-pedidos-filtros">
+          <div class="admin-campo">
+            <label class="admin-label" for="expVendedor">Vendedor</label>
+            <select class="admin-select" id="expVendedor"><option value="">Todos</option></select>
+          </div>
+          <div class="admin-campo">
+            <label class="admin-label" for="expPeriodo">Período</label>
+            <select class="admin-select" id="expPeriodo">
+              <option value="todo">Todo el historial</option>
+              <option value="mes">Solo el mes elegido arriba</option>
+            </select>
+          </div>
+          <button type="button" class="admin-btn-mini" id="btnExportar">Descargar Excel</button>
+        </div>
+        <p id="expEstado" hidden style="font-size:13px;"></p>
+      </details>
+
+      <details class="admin-herramientas admin-reglas" id="reglasNegocio">
+        <summary>Reglas de comisión, meta y bonos</summary>
+        <p class="admin-ayuda">Cambia los números y mira abajo, en el simulador, cómo queda antes de guardar. Nada cambia hasta que toques <strong>Guardar cambios</strong>.</p>
+
+        <div class="reg-bloque">
+          <h3><span class="reg-num">1</span> Descuento del código de vendedor</h3>
+          <p class="reg-frase">Los clientes que usen el código de un vendedor reciben
+            <input class="admin-input reg-in" type="number" id="cfgPct" min="0" max="50" step="0.5" aria-label="Porcentaje de descuento"> % de descuento.</p>
+          <p class="admin-ayuda">Se aplica a todos los códigos (DOME, SALO, SEBAS…) al guardar.</p>
+        </div>
+
+        <div class="reg-bloque">
+          <h3><span class="reg-num">2</span> Comisión por cada venta</h3>
+          <p class="admin-ayuda">Se calcula sobre lo que pagó el cliente (después del descuento).</p>
+          <p class="reg-frase">Ventas de menos de $<input class="admin-input reg-in" type="number" id="cfgMinimo" min="0" step="0.5" aria-label="Monto mínimo con comisión">:
+            <strong>sin comisión</strong> (igual suman a la meta).</p>
+          <div id="cfgTramos" class="reg-tramos"></div>
+          <button type="button" class="admin-btn-mini" id="cfgAgregarTramo">+ Agregar un tramo</button>
+        </div>
+
+        <div class="reg-bloque">
+          <h3><span class="reg-num">3</span> Meta del mes</h3>
+          <p class="reg-frase">Cada vendedor tiene una meta de $<input class="admin-input reg-in" type="number" id="cfgMeta" min="1" step="1" aria-label="Meta mensual"> en ventas pagadas al mes.
+            Empieza en cero cada mes.</p>
+        </div>
+
+        <div class="reg-bloque">
+          <h3><span class="reg-num">4</span> Bonos por llegar a la meta</h3>
+          <div id="cfgBonos" class="reg-bonos"></div>
+          <button type="button" class="admin-btn-mini" id="cfgAgregarBono">+ Agregar un bono</button>
+          <p class="admin-ayuda">"Le cuesta a la casa" es solo para ti: se compara con el margen en cada tarjeta.</p>
+        </div>
+
+        <div class="reg-bloque reg-simulador">
+          <h3>Simulador — así quedaría</h3>
+          <p class="reg-frase">Si un vendedor hace una venta de $<input class="admin-input reg-in" type="number" id="simMonto" min="0" step="0.5" value="25" aria-label="Monto de prueba">
+            → gana <strong id="simResultado">—</strong>.</p>
+          <table class="vend-tabla reg-tabla-sim"><thead><tr><th>Venta</th><th>Comisión</th></tr></thead><tbody id="simTabla"></tbody></table>
+          <p class="admin-ayuda" id="simMeta"></p>
+        </div>
+
+        <div class="reg-guardar">
+          <span class="reg-sin-guardar" id="cfgSinGuardar" hidden>Tienes cambios sin guardar</span>
+          <button type="button" class="admin-btn-mini" id="cfgDescartar">Descartar</button>
+          <button type="button" class="admin-btn admin-btn-google" id="cfgGuardar">Guardar cambios</button>
+        </div>
+        <p id="cfgEstado" hidden style="margin-top:10px;font-size:13px;"></p>
+      </details>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SECCIÓN VENDEDORES — feature 012-paneles-vendedores, Fase 2
+         Plan gratis: la cuenta de cada vendedor (usuario@silvercow.app) se
+         crea a mano en Firebase → Authentication; acá se registra el
+         vendedor, su código de descuento y se le da acceso pegando su UID.
+    ══════════════════════════════════════════════════ -->
+    <div id="seccionVendedores" hidden>
+      <button class="admin-btn admin-btn-google" id="btnAbrirVendedor" style="max-width:220px;margin-bottom:24px;">
+        + Agregar vendedor
+      </button>
+
+      <form id="formVendedor" class="admin-form-alta" hidden>
+        <div class="admin-form-header">
+          <h2>Vendedor nuevo</h2>
+          <button type="button" class="admin-btn-mini" id="btnCerrarVendedor">Cancelar</button>
+        </div>
+
+        <label class="admin-label" for="vendNombre">Nombre</label>
+        <input class="admin-input" type="text" id="vendNombre" required maxlength="60" placeholder="Nombre completo, ej. Doménica Pico">
+
+        <label class="admin-label" for="vendCodigo">Código de descuento y usuario</label>
+        <input class="admin-input" type="text" id="vendCodigo" required maxlength="12" placeholder="Ej. DOME" autocomplete="off">
+        <p class="admin-codigo-preview" id="vendCodigoPreview"></p>
+
+        <label class="admin-label" for="vendUid">UID de la cuenta — opcional, no es el correo</label>
+        <input class="admin-input" type="text" id="vendUid" maxlength="128" placeholder="Ej. Xk3pQ9aBc7... (columna &quot;UID de usuario&quot; en Authentication)">
+        <p class="admin-ayuda" id="vendAyuda"></p>
+
+        <button type="submit" class="admin-btn admin-btn-google" id="btnGuardarVendedor" style="margin-top:20px;">
+          Guardar vendedor
+        </button>
+        <p id="estadoVendedor" hidden style="margin-top:12px;font-size:13px;"></p>
+      </form>
+
+      <p class="admin-lista-estado" id="estadoVendedores" hidden></p>
+      <div id="listaVendedores"></div>
+    </div>
   </div>
 
   <script type="module" src="js/admin/auth.js"></script>
   <script type="module" src="js/admin/migracion.js"></script>
   <script type="module" src="js/admin/alta.js"></script>
   <script type="module" src="js/admin/productos.js"></script>
+  <script type="module" src="js/admin/vendedores.js"></script>
+  <script type="module" src="js/admin/pedidos.js"></script>
+  <script type="module" src="js/admin/ventas.js"></script>
+  <script type="module" src="js/admin/comisiones.js"></script>
+  <script type="module" src="js/admin/exportar.js"></script>
+  <script type="module" src="js/admin/avisos.js"></script>
   <!-- fotos.js y codigo-automatico.js los importan alta.js/productos.js -->
 
 </body>

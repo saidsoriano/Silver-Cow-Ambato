@@ -34,7 +34,7 @@ jobs:
           # admin.html no está enlazado desde ningún lado del sitio público
           # (ver spec/features/010-vista-admin/spec.md) — solo se llega
           # escribiendo la URL directo, pero igual tiene que estar publicado.
-          cp index.html admin.html catalogo.js catalogo_motor.js estilos.css reactbits.css favicon.ico _site/
+          cp index.html admin.html vendedor.html catalogo.js catalogo_motor.js estilos.css reactbits.css favicon.ico _site/
           cp -r js anillos aretes cadenas cadenas_dijes dijes juegos pulseras _site/
           [ -d assets ] && cp -r assets _site/
           [ -d css ] && cp -r css _site/

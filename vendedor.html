@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vendedores — Silver Cow Ambato</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Mismos tokens y piezas que el panel admin -->
+  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/vendedor.css">
+</head>
+<body class="admin-body">
+
+  <!-- ══════════════════════════════════════════════════
+       PANEL DEL VENDEDOR — feature 012-paneles-vendedores, Fase 3
+       Entra con usuario (dome, salo, sebas...) + contraseña. Por dentro
+       es Firebase Auth con correo interno usuario@silvercow.app.
+       Lo que ve cada vendedor lo limitan las reglas de Firestore
+       (firestore.rules), no esta pantalla: solo sus propios datos.
+  ══════════════════════════════════════════════════ -->
+
+  <!-- PANTALLA 1 — LOGIN -->
+  <div class="admin-pantalla" id="pantallaLogin">
+    <div class="admin-marca">
+      <img src="assets/logo.png" alt="Silver Cow Ambato">
+      <h1>Panel de vendedores</h1>
+      <p>Silver Cow Ambato</p>
+    </div>
+    <form class="admin-card vend-login" id="formLogin" novalidate>
+      <label class="admin-label" for="loginUsuario">Usuario</label>
+      <input class="admin-input" type="text" id="loginUsuario" autocomplete="username"
+             autocapitalize="none" spellcheck="false" placeholder="Ej. dome" required>
+
+      <label class="admin-label" for="loginClave">Contraseña</label>
+      <input class="admin-input" type="password" id="loginClave" autocomplete="current-password" required>
+
+      <button type="submit" class="admin-btn admin-btn-google" id="btnLogin">Entrar</button>
+      <p class="vend-error" id="loginError" role="alert" hidden></p>
+      <p class="admin-ayuda">¿Olvidaste tu contraseña? Pídele al administrador que la cambie.</p>
+    </form>
+  </div>
+
+  <!-- PANTALLA 2 — SIN ACCESO (cuenta sin rol de vendedor o desactivada) -->
+  <div class="admin-pantalla" id="pantallaRechazo" hidden>
+    <div class="admin-marca">
+      <img src="assets/logo.png" alt="Silver Cow Ambato">
+      <h1>Acceso restringido</h1>
+    </div>
+    <div class="admin-card">
+      <p id="motivoRechazo">Esta cuenta no tiene acceso al panel de vendedores.</p>
+      <button class="admin-btn admin-btn-ghost" id="btnLogoutRechazo">Salir y probar con otra cuenta</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA 3 — PANEL -->
+  <div class="admin-pantalla admin-panel-shell vend-panel" id="pantallaPanel" hidden>
+    <div class="admin-panel-header">
+      <h1 id="saludo">Hola</h1>
+      <button class="admin-btn admin-btn-ghost" id="btnLogout" style="width:auto;margin-top:0;">Cerrar sesión</button>
+    </div>
+
+    <div class="vend-grid">
+      <!-- Código para compartir (RF-06) -->
+      <div class="vend-bloque">
+        <h2>Tu código</h2>
+        <div class="vend-codigo-fila">
+          <span class="vend-codigo" id="miCodigo">—</span>
+          <button type="button" class="admin-btn-mini" id="btnCopiar">Copiar</button>
+        </div>
+        <p class="admin-ayuda" id="textoCodigo">Tus clientes lo escriben en el carrito de la página.</p>
+      </div>
+
+      <!-- Meta del mes (RF-05) -->
+      <div class="vend-bloque">
+        <h2>Meta de <span id="nombreMes">este mes</span></h2>
+        <p class="vend-meta-num"><span id="metaTotal">$0.00</span> <span class="vend-meta-de">de <span id="metaObjetivo">$50.00</span></span></p>
+        <div class="vend-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="metaBarra">
+          <div class="vend-barra-relleno" id="metaRelleno"></div>
+        </div>
+        <p class="vend-meta-pct" id="metaPct">0%</p>
+        <p class="admin-ayuda" id="metaBono"></p>
+        <p class="vend-comision-mes" id="metaComision"></p>
+      </div>
+    </div>
+
+    <!-- Registrar venta en persona (Fase 5, RF-07, RF-08) -->
+    <div class="vend-bloque" id="bloqueVenta">
+      <h2>Registrar venta en persona</h2>
+      <button type="button" class="admin-btn admin-btn-google" id="btnAbrirVenta" style="max-width:240px;margin-top:0;">+ Nueva venta</button>
+
+      <form id="formVenta" hidden novalidate>
+        <label class="admin-label" for="ventaCodigo">Pieza (código del catálogo)</label>
+        <div class="vend-agregar">
+          <input class="admin-input" type="text" id="ventaCodigo" list="listaCodigos" placeholder="Ej. P-AR-238" autocomplete="off" autocapitalize="characters">
+          <input class="admin-input vend-cant" type="number" id="ventaCantidad" min="1" max="20" value="1" aria-label="Cantidad">
+          <button type="button" class="admin-btn-mini" id="btnAgregarPieza">Agregar</button>
+        </div>
+        <datalist id="listaCodigos"></datalist>
+        <p class="vend-error-inline" id="ventaErrorPieza" role="alert" hidden></p>
+
+        <div class="vend-tabla-wrap">
+          <table class="vend-tabla vend-tabla-venta">
+            <thead><tr><th>Pieza</th><th>Cant.</th><th>Precio</th><th>Subtotal</th><th></th></tr></thead>
+            <tbody id="ventaLineas"><tr><td colspan="5" class="vend-vacio">Agrega al menos una pieza.</td></tr></tbody>
+          </table>
+        </div>
+
+        <fieldset class="vend-descuento">
+          <legend class="admin-label">Descuento — uno solo</legend>
+          <label class="admin-check"><input type="checkbox" id="ventaDescCodigo"> <span id="ventaDescCodigoTxt">5% de mi código</span></label>
+          <label class="admin-label" for="ventaDescMonto">o descuento en dólares (aprobado antes por el admin)</label>
+          <input class="admin-input" type="number" id="ventaDescMonto" min="0" step="0.01" placeholder="0.00">
+        </fieldset>
+
+        <div class="vend-anticipo" id="ventaAnticipo" hidden>
+          <p class="admin-ayuda">Hay piezas bajo pedido: anticipo y saldo son opcionales.</p>
+          <div class="admin-fila-linea2">
+            <div class="admin-campo admin-campo-flex">
+              <label class="admin-label" for="ventaAnticipoMonto">Anticipo ($)</label>
+              <input class="admin-input" type="number" id="ventaAnticipoMonto" min="0" step="0.01">
+            </div>
+            <div class="admin-campo admin-campo-flex">
+              <label class="admin-label" for="ventaSaldo">Saldo ($)</label>
+              <input class="admin-input" type="number" id="ventaSaldo" min="0" step="0.01">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-fila-linea2">
+          <div class="admin-campo admin-campo-flex">
+            <label class="admin-label" for="ventaPago">Método de pago</label>
+            <select class="admin-select" id="ventaPago" required>
+              <option value="">Elige...</option>
+              <option value="efectivo">Efectivo</option>
+              <option value="transferencia">Transferencia</option>
+              <option value="tarjeta">Tarjeta</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="admin-campo admin-campo-flex">
+            <label class="admin-label" for="ventaCliente">Cliente (opcional)</label>
+            <input class="admin-input" type="text" id="ventaCliente" maxlength="60">
+          </div>
+        </div>
+
+        <div class="vend-resumen" id="ventaResumen"></div>
+
+        <div class="vend-botones">
+          <button type="submit" class="admin-btn admin-btn-google" id="btnGuardarVenta">Registrar venta</button>
+          <button type="button" class="admin-btn-mini" id="btnCancelarVenta">Cancelar</button>
+        </div>
+        <p class="vend-error-inline" id="ventaEstado" role="status" hidden></p>
+        <p class="admin-ayuda">La venta queda <strong>pendiente</strong> hasta que el administrador confirme que recibió el pago.</p>
+      </form>
+    </div>
+
+    <!-- Mis ventas (RF-06) -->
+    <div class="vend-bloque">
+      <h2>Mis ventas</h2>
+      <p class="admin-lista-estado" id="estadoVentas">Cargando...</p>
+      <div class="vend-tabla-wrap" id="ventasWrap" hidden>
+        <table class="vend-tabla">
+          <thead><tr><th>Fecha</th><th>Pedido / venta</th><th>Monto</th><th>Comisión</th><th>Estado</th></tr></thead>
+          <tbody id="ventasCuerpo"></tbody>
+        </table>
+      </div>
+      <p class="admin-ayuda">La comisión se gana cuando la venta queda pagada completa. Los pagos se hacen a inicio del mes siguiente.</p>
+    </div>
+
+    <!-- Catálogo y stock (RF-09) — solo lectura -->
+    <div class="vend-bloque">
+      <h2>Catálogo y stock</h2>
+      <input class="admin-input admin-buscador" type="search" id="buscadorCat" placeholder="Buscar por nombre o código...">
+      <div class="admin-filtros" id="filtrosCat">
+        <button type="button" class="admin-filtro" data-estado="disponible" aria-pressed="false">Disponible</button>
+        <button type="button" class="admin-filtro" data-estado="pedido" aria-pressed="false">Bajo pedido</button>
+        <button type="button" class="admin-filtro" data-estado="agotado" aria-pressed="false">Agotado</button>
+      </div>
+      <p class="admin-lista-estado" id="estadoCat">Cargando catálogo...</p>
+      <div id="listaCat" class="vend-cat"></div>
+      <button type="button" class="admin-btn admin-btn-ghost" id="btnMasCat" hidden style="max-width:220px;">Ver más</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/vendedor/panel.js"></script>
+</body>
+</html>

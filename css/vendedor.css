@@ -1,0 +1,116 @@
+/* ══════════════════════════════════════════════════
+   PANEL DEL VENDEDOR — feature 012. Se apoya en css/admin.css.
+   Mobile-first (RNF-11): los vendedores lo usan desde el celular.
+   ══════════════════════════════════════════════════ */
+
+/* Con el panel abierto, el contenido arranca arriba (el login sigue centrado) */
+body.admin-body.vend-en-panel { align-items: flex-start; }
+
+.vend-login { display: flex; flex-direction: column; text-align: left; }
+.vend-login .admin-btn { margin-top: 20px; }
+/* .admin-card p pinta todo en gris: hace falta más especificidad */
+.admin-card p.vend-error { color: #e08080; font-size: 13px; margin: 12px 0 0; text-align: center; }
+.vend-login .admin-ayuda { text-align: center; margin-top: 16px; }
+
+.vend-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (min-width: 760px) { .vend-grid { grid-template-columns: 1fr 1fr; } }
+
+.vend-bloque {
+  background: var(--surface, #0a1628);
+  border: 1px solid rgba(200, 208, 220, .1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.vend-grid .vend-bloque { margin-bottom: 0; }
+.vend-bloque h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 22px;
+  margin: 0 0 14px;
+  color: var(--silver-bright);
+}
+
+.vend-codigo-fila { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.vend-codigo {
+  font-family: var(--serif);
+  font-size: 40px;
+  letter-spacing: .12em;
+  color: var(--gold-accent);
+  line-height: 1;
+}
+
+.vend-meta-num { font-size: 26px; margin: 0 0 10px; color: var(--silver-bright); }
+.vend-meta-de { font-size: 14px; color: var(--text-muted); }
+.vend-barra {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+  overflow: hidden;
+}
+.vend-barra-relleno {
+  height: 100%;
+  width: 0;
+  background: var(--gold-accent);
+  border-radius: 999px;
+  transition: width .6s ease;
+}
+.vend-meta-pct { font-size: 13px; color: var(--text-muted); margin: 8px 0 6px; }
+
+.vend-tabla-wrap { overflow-x: auto; margin-bottom: 10px; }
+.vend-tabla { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 520px; }
+.vend-tabla th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(200, 208, 220, .15);
+}
+.vend-tabla td { padding: 9px 6px; border-bottom: 1px solid rgba(200, 208, 220, .06); }
+.vend-pend { color: var(--text-muted); }
+
+.vend-cat { display: flex; flex-direction: column; margin: 8px 0 14px; }
+.vend-pieza {
+  display: grid;
+  grid-template-columns: 82px 1fr auto;
+  grid-template-areas: "cod nom precio" "cod nom estado";
+  gap: 2px 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(200, 208, 220, .06);
+  align-items: center;
+}
+.vend-pieza-cod { grid-area: cod; font-family: monospace; font-size: 11px; color: var(--gold-accent); }
+.vend-pieza-nom { grid-area: nom; font-size: 14px; color: var(--silver-bright); }
+.vend-pieza-precio { grid-area: precio; text-align: right; font-size: 14px; }
+.vend-estado { grid-area: estado; text-align: right; font-size: 11px; color: var(--text-muted); }
+.vend-estado-disponible { color: #6ec87a; }
+.vend-estado-agotado { color: #e08080; }
+
+/* ── Venta en persona (Fase 5) ── */
+#formVenta { display: flex; flex-direction: column; margin-top: 4px; }
+.vend-agregar { display: flex; gap: 8px; flex-wrap: wrap; }
+.vend-agregar .admin-input:first-child { flex: 1 1 160px; min-width: 0; }
+.vend-cant { width: 72px; flex: 0 0 72px; }
+.vend-error-inline { color: #e08080; font-size: 13px; margin: 8px 0 0; }
+.vend-ok-inline { color: #6ec87a; font-size: 13px; margin: 8px 0 0; }
+.vend-tabla-venta { min-width: 460px; margin-top: 12px; }
+.vend-vacio { color: var(--text-muted); text-align: center; padding: 14px 6px; }
+.vend-descuento { border: 0; padding: 0; margin: 14px 0 0; }
+.vend-descuento .admin-input:disabled, .vend-descuento input:disabled + span { opacity: .45; }
+.vend-anticipo { margin-top: 10px; }
+.vend-resumen { margin: 16px 0 4px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.vend-resumen-total { font-size: 18px; color: var(--silver-bright); }
+.vend-botones { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.vend-botones .admin-btn { flex: 1 1 200px; margin-top: 0; }
+/* En celular las filas de dos campos se apilan y ocupan todo el ancho */
+#formVenta .admin-fila-linea2 { flex-wrap: wrap; gap: 12px; }
+#formVenta .admin-campo-flex { flex: 1 1 140px; min-width: 0; }
+#formVenta .admin-campo-flex .admin-input,
+#formVenta .admin-campo-flex .admin-select { width: 100%; }
+.vend-comision-mes { font-size: 13px; color: var(--silver-bright); margin: 10px 0 0; line-height: 1.6; }
+.vend-pagada { color: #6ec87a; }
