@@ -14,8 +14,8 @@
 | 010-vista-admin | ✅ Completa (Firebase Firestore+Auth + Supabase Storage; Google Sheets congelado desde esta feature) | sesion-017 a 023 |
 | 011-arreglos-pagina | ✅ Cerrada — lista viva de arreglos chicos al sitio público y al panel, sin rediseño. 16 de 17 ítems resueltos (carrusel curado a mano, buscador del catálogo, hotfix OAuth, bug real de Supabase en el panel, hero, auditoría de usabilidad Nielsen); ítem 4 (desalineación en el carrusel) cerrado sin resolver, el dueño nunca lo precisó | sesion-025 a 036 |
 | 012-paneles-vendedores | ✅ Completa — 3 vendedores (DOME, SALO, SEBAS) con panel propio, pedidos web en Firestore, ventas en persona, comisiones/metas/bonos/pagos, avisos, Excel con historial, margen (solo admin). Plan gratis, sin Cloud Functions. Reglas versionadas y probadas (80 casos) | sesion-037, sesion-038 |
-| 013-loader-marca | ✅ Publicado — falta solo QA del dueño en iPhone | sesion-039, sesion-040 |
-| 014-hero-video | ✅ Publicado — 3 columnas con clips de joyas (IMG_6475, IMG_7450, IMG_6474), clips livianos para celular. `hero-ring.js` y `hero-anillo.mp4` borrados. Falta solo QA del dueño en iPhone | sesion-040 |
+| 013-loader-marca | ✅ Completa — publicada y revisada por el dueño en iPhone | sesion-039, sesion-040 |
+| 014-hero-video | ✅ Completa — 3 columnas con clips de joyas (IMG_6475, IMG_7450, IMG_6474), clips livianos para celular. `hero-ring.js` y `hero-anillo.mp4` borrados. Revisada por el dueño en iPhone | sesion-040 |
 
 ## Features planeadas (priorizadas)
 - [ ] **[Alta] 009-cambio-proveedor** — migrar importación de ItalSteel Odoo a posible nuevo proveedor con catálogo en Google Drive

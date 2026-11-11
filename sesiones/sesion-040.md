@@ -130,4 +130,5 @@ errores de consola, catálogo con 364 piezas.
 - Se quitó `backups/hero-4columnas-2026-11-10/` del repo antes del commit (movida fuera
   del repo; nunca se commiteó). Los comandos de vuelta a 4 columnas de arriba ya no aplican.
 - Publicado en un solo commit: 013 (loader) + 014 (hero con video) + docs.
-- Pendiente: QA del dueño en iPhone real (autoplay, Modo de bajo consumo, `-webkit-mask`, `100svh`).
+- QA del dueño en iPhone real (autoplay, Modo de bajo consumo, `-webkit-mask`, `100svh`): OK.
+  Features 013 y 014 cerradas.

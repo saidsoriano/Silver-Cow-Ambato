@@ -18,8 +18,8 @@ Catálogo web de joyería de plata 925. Página estática para clientes, adminis
 - `spec/features/008-rediseno-premium/` — en curso, Fases 0-2 publicadas, falta Fase 3+
 - `spec/features/010-vista-admin/` — completa. Panel en `admin.html` (Firebase Firestore+Auth + Supabase Storage). Google Sheets queda congelado, ya no es la fuente de verdad
 - `spec/features/011-arreglos-pagina/` — cerrada. Lista viva de arreglos chicos al sitio público y al panel (no un rediseño) — ver `tasks.md` de esa carpeta
-- `spec/features/013-loader-marca/` — publicada (falta QA en iPhone). Intro de marca al cargar (`css/loader.css` antes de `estilos.css`, `js/loader.js`)
-- `spec/features/014-hero-video/` — publicada (falta QA en iPhone). Hero con video de fondo, 3 columnas (`js/hero-videos.js`, `assets/hero/`)
+- `spec/features/013-loader-marca/` — completa. Intro de marca al cargar (`css/loader.css` antes de `estilos.css`, `js/loader.js`)
+- `spec/features/014-hero-video/` — completa. Hero con video de fondo, 3 columnas (`js/hero-videos.js`, `assets/hero/`)
 - `spec/features/012-paneles-vendedores/` — completa. Panel del vendedor (`vendedor.html`), pedidos web en Firestore, ventas en persona, comisiones/metas/bonos, pagos, Excel, margen. Plan gratis, sin Cloud Functions. Requisitos y decisiones: `spec.md` de esa carpeta
 
 ## MCPs (proyecto)
