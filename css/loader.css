@@ -1,0 +1,152 @@
+/* ══════════════════════════════════════════════════
+   LOADER DE MARCA — "Plata que se pule" (feature 013)
+   Se carga ANTES de estilos.css para cubrir desde el primer pintado.
+   Secuencia: logo se revela como metal pulido → brillo barre →
+   línea con gema → telón en dos mitades que se abre sobre el hero.
+   La lógica de tiempos vive en js/loader.js (clases is-in / is-out / is-fast).
+══════════════════════════════════════════════════ */
+
+/* Mientras carga: sin scroll y con las animaciones del hero en pausa,
+   así el hero "arranca" justo cuando el telón se abre. */
+html.sc-loading,
+html.sc-loading body { overflow: hidden; }
+html.sc-loading #hero *,
+html.sc-loading .nav-logo * { animation-play-state: paused !important; }
+
+#sc-loader {
+  position: fixed; inset: 0;
+  z-index: 10000;
+  --sc-ease: cubic-bezier(.2,.7,.2,1);
+  --sc-split: cubic-bezier(.76,0,.24,1);
+  --sc-bg: var(--black-deep, #060C1A);
+  color: var(--silver, #C8D0DC);
+}
+
+/* Telón: dos mitades del mismo color que el fondo del sitio (sin salto al cargar) */
+.sc-ld-half {
+  position: absolute; left: 0; right: 0;
+  height: calc(50% + 1px);
+  background: var(--sc-bg);
+  will-change: transform;
+}
+.sc-ld-top { top: 0; }
+.sc-ld-bot { bottom: 0; }
+
+/* Hairline dorada en la costura: aparece al abrir */
+.sc-ld-seam {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-accent, #C9A84C) 30%, var(--gold-soft, #D8BE72) 50%, var(--gold-accent, #C9A84C) 70%, transparent);
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+/* Contenido central */
+.sc-ld-core {
+  position: absolute; inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(14px, 2.4vh, 22px);
+  text-align: center;
+}
+.sc-ld-core::before {                      /* halo zafiro detrás del logo */
+  content: "";
+  position: absolute; inset: -25%;
+  background: radial-gradient(circle at 50% 46%, rgba(42,79,160,.38), transparent 52%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Logo: la imagen es solo la forma (máscara); el relleno es plata metálica */
+.sc-ld-mark {
+  position: relative;
+  width: clamp(150px, 26vw, 240px);
+  aspect-ratio: 480 / 482;
+  -webkit-mask: url("../assets/loader-logo.png") center / contain no-repeat;
+          mask: url("../assets/loader-logo.png") center / contain no-repeat;
+  background:
+    linear-gradient(105deg, transparent 0 38%, rgba(255,255,255,.95) 50%, transparent 62% 100%) -150% 0 / 60% 100% no-repeat,
+    linear-gradient(180deg, var(--silver-bright, #E8EDF5), var(--silver, #C8D0DC) 55%, var(--text-muted, #8899BB));
+  clip-path: inset(0 0 100% 0);            /* oculto hasta que arranca la intro */
+}
+#sc-loader.no-mark .sc-ld-mark { display: none; }
+
+/* Línea — gema — línea */
+.sc-ld-rule { display: flex; align-items: center; gap: 12px; }
+.sc-ld-rule i {
+  display: block;
+  width: clamp(40px, 9vw, 72px); height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-accent, #C9A84C));
+  transform: scaleX(0);
+}
+.sc-ld-rule i:last-child { background: linear-gradient(270deg, transparent, var(--gold-accent, #C9A84C)); }
+.sc-ld-rule i:first-child { transform-origin: 100% 50%; }
+.sc-ld-rule i:last-child  { transform-origin: 0 50%; }
+.sc-ld-rule b {
+  display: block; width: 7px; height: 7px;
+  background: var(--gold-accent, #C9A84C);
+  box-shadow: 0 0 14px rgba(201,168,76,.55);
+  transform: rotate(45deg) scale(0);
+}
+
+.sc-ld-tag {
+  margin: 0;
+  font-family: var(--serif, 'Cormorant Garamond', Georgia, serif);
+  font-style: italic; font-weight: 300;
+  font-size: clamp(15px, 1.5vw, 18px);
+  letter-spacing: .3em;
+  text-indent: .3em;                       /* compensa el tracking final para centrar */
+  color: var(--text-muted, #8899BB);
+  opacity: 0;
+}
+
+/* ── INTRO ─────────────────────────────────────── */
+#sc-loader.is-in .sc-ld-core::before { animation: sc-ld-fade .9s var(--sc-ease) forwards; }
+#sc-loader.is-in .sc-ld-mark {
+  animation:
+    sc-ld-wipe  .85s var(--sc-ease) forwards,
+    sc-ld-sheen 1.05s ease-in-out .3s forwards;
+}
+#sc-loader.is-in .sc-ld-rule i { animation: sc-ld-line .6s var(--sc-ease) .55s forwards; }
+#sc-loader.is-in .sc-ld-rule b { animation: sc-ld-gem .6s var(--sc-ease) .45s forwards; }
+#sc-loader.is-in .sc-ld-tag    { animation: sc-ld-tag .8s var(--sc-ease) .6s forwards; }
+
+@keyframes sc-ld-fade  { to { opacity: 1; } }
+@keyframes sc-ld-wipe  { to { clip-path: inset(0 0 0 0); } }
+@keyframes sc-ld-sheen { to { background-position: 250% 0, 0 0; } }
+@keyframes sc-ld-line  { to { transform: scaleX(1); } }
+@keyframes sc-ld-gem   { to { transform: rotate(45deg) scale(1); } }
+@keyframes sc-ld-tag   { to { opacity: 1; letter-spacing: .2em; text-indent: .2em; } }
+
+/* ── SALIDA: el telón se abre sobre el hero ────── */
+#sc-loader.is-out .sc-ld-core { animation: sc-ld-lift .5s ease-in forwards; }
+#sc-loader.is-out .sc-ld-seam { animation: sc-ld-seam 1s var(--sc-ease) forwards; }
+#sc-loader.is-out .sc-ld-top  { animation: sc-ld-up   .95s var(--sc-split) .35s forwards; }
+#sc-loader.is-out .sc-ld-bot  { animation: sc-ld-down .95s var(--sc-split) .35s forwards; }
+
+@keyframes sc-ld-lift { to { opacity: 0; transform: scale(1.04); } }
+@keyframes sc-ld-seam {
+  0%   { transform: scaleX(0); opacity: 1; }
+  35%  { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+@keyframes sc-ld-up   { to { transform: translateY(-101%); } }
+@keyframes sc-ld-down { to { transform: translateY(101%); } }
+
+/* ── CARGA RÁPIDA: sin ceremonia, solo un desvanecido ── */
+#sc-loader.is-fast { opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+
+/* ── MOVIMIENTO REDUCIDO: logo estático y desvanecido simple ── */
+@media (prefers-reduced-motion: reduce) {
+  #sc-loader .sc-ld-mark { clip-path: none; background-position: -150% 0, 0 0; }
+  #sc-loader .sc-ld-core::before,
+  #sc-loader .sc-ld-tag { opacity: 1; }
+  #sc-loader .sc-ld-rule i { transform: scaleX(1); }
+  #sc-loader .sc-ld-rule b { transform: rotate(45deg) scale(1); }
+  #sc-loader .sc-ld-core,
+  #sc-loader .sc-ld-seam,
+  #sc-loader .sc-ld-half { animation: none !important; }
+  #sc-loader:not(.is-in) .sc-ld-core { opacity: 0; }   /* carga rápida: ni se ve el logo */
+  #sc-loader.is-out { opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+}

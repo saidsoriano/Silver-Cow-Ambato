@@ -14,6 +14,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" as="style">
 
+  <!-- Loader de marca (013): va primero para cubrir desde el primer pintado -->
+  <link rel="preload" href="assets/loader-logo.png" as="image" crossorigin>
+  <!-- Primer cuadro del hero: se pide temprano para que aparezca antes -->
+  <link rel="preload" href="assets/hero/poster-1.jpg" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="css/loader.css">
+  <script>
+    // Bloquea scroll y pausa el hero hasta que js/loader.js abra el telón.
+    // Red de seguridad: si algo falla, a los 6 s se libera todo.
+    document.documentElement.classList.add('sc-loading');
+    setTimeout(function () {
+      document.documentElement.classList.remove('sc-loading');
+      var l = document.getElementById('sc-loader'); if (l) l.remove();
+    }, 6000);
+  </script>
+  <noscript><style>#sc-loader{display:none}html.sc-loading,html.sc-loading body{overflow:auto}</style></noscript>
+
   <!-- Estilos separados en archivo externo para mejor rendimiento -->
   <link rel="stylesheet" href="estilos.css">
 
@@ -23,6 +39,22 @@
 </head>
 
 <body>
+
+<!-- ══════════════════════════════════════════════════
+     LOADER DE MARCA (013) — se anima con css/loader.css y js/loader.js
+     y se elimina solo al terminar. Sin JS, <noscript> lo oculta.
+══════════════════════════════════════════════════ -->
+<div id="sc-loader" role="status" aria-label="Cargando Silver Cow Ambato">
+  <div class="sc-ld-half sc-ld-top"></div>
+  <div class="sc-ld-half sc-ld-bot"></div>
+  <div class="sc-ld-seam" aria-hidden="true"></div>
+  <div class="sc-ld-core" aria-hidden="true">
+    <div class="sc-ld-mark"></div>
+    <div class="sc-ld-rule"><i></i><b></b><i></i></div>
+    <p class="sc-ld-tag">Exclusividad hecha plata</p>
+  </div>
+</div>
+<script src="js/loader.js" defer></script>
 
 <!-- ══════════════════════════════════════════════════
      NAVBAR — BARRA DE NAVEGACIÓN
@@ -94,14 +126,17 @@
 ══════════════════════════════════════════════════ -->
 <section id="hero">
 
-  <!-- Canvas WebGL: anillo 3D animado (Three.js) — fallback si no hay WebGL -->
-  <canvas id="gl" aria-hidden="true"></canvas>
-
-  <!-- Video del anillo (fondo del hero) — si reproduce, se oculta el 3D -->
-  <video id="ringVideo" muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" src="assets/hero-anillo.mp4"></video>
-
-  <!-- Piso de rejilla en perspectiva -->
-  <div class="grid-floor" aria-hidden="true"></div>
+  <!-- Fondo de videos (014): 3 columnas en escritorio; en móvil rota un clip a la vez.
+       Clips (de Instagram/imagenes/MK): 1 = IMG_6475 (blusa celeste, pulsera, 7.8-14.3 s),
+       2 = IMG_7450 (cadena con cruz y pulseras), 3 = IMG_6474 (lentes, cadena con cruz).
+       Ningún video trae src en el HTML: js/hero-videos.js elige la versión
+       (data-src 720×1280 en escritorio, data-src-m 540×960 liviana en celular) y
+       no descarga nada con movimiento reducido o ahorro de datos (solo el poster). -->
+  <div class="hero-reel" id="heroReel" aria-hidden="true">
+    <div class="clip on"><video id="heroClip1" data-src="assets/hero/clip-1.mp4" data-src-m="assets/hero/clip-1-m.mp4" poster="assets/hero/poster-1.jpg" muted loop playsinline preload="none" disablepictureinpicture></video></div>
+    <div class="clip"><video data-src="assets/hero/clip-2.mp4" data-src-m="assets/hero/clip-2-m.mp4" poster="assets/hero/poster-2.jpg" muted loop playsinline preload="none" disablepictureinpicture></video></div>
+    <div class="clip"><video data-src="assets/hero/clip-3.mp4" data-src-m="assets/hero/clip-3-m.mp4" poster="assets/hero/poster-3.jpg" muted loop playsinline preload="none" disablepictureinpicture></video></div>
+  </div>
 
   <!-- Contenido central -->
   <div class="hero-copy">
@@ -111,9 +146,6 @@
       <span class="ln"><span class="sil" style="--i:1">Es tu distinción</span></span>
       <span class="ln"><span style="--i:2">hecha plata.</span></span>
     </h1>
-
-    <!-- Subtítulo descriptivo — PUEDES EDITAR ESTE TEXTO -->
-    <p class="sub">Piezas únicas creadas bajo pedido, verificadas con precisión absoluta. Para quienes saben que la exclusividad no se encuentra: se encarga.</p>
 
     <!-- Botones de acción -->
     <div class="cta-row">
@@ -125,20 +157,6 @@
       <a class="btn ghost" href="#catalogo">Ver catálogo</a>
     </div>
   </div>
-
-  <!-- Vistas del anillo -->
-  <div class="views" role="group" aria-label="Vista de la joya">
-    <div class="chips">
-      <button class="chip on" data-v="giro">Giro 360°</button>
-      <button class="chip" data-v="frontal">Frontal</button>
-      <button class="chip" data-v="tres">3/4</button>
-      <button class="chip" data-v="lateral">Lateral</button>
-      <button class="chip" data-v="posterior">Posterior</button>
-    </div>
-  </div>
-
-  <!-- Indicador de scroll -->
-  <div class="scroll-hint" aria-hidden="true">EXPLORAR<i></i></div>
 
 </section>
 
@@ -1189,11 +1207,8 @@ function agregarAlCarrito(nombre, precio, esPedido = false, codigo = '') {
 
 
 </script>
-<!-- Three.js (r128) — motor del anillo 3D del hero -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-
-<!-- Lógica del hero — anillo 3D + video + vistas -->
-<script src="js/hero-ring.js" defer></script>
+<!-- Videos del hero (014): reproducción, rotación en móvil y pausa fuera de pantalla -->
+<script src="js/hero-videos.js" defer></script>
 
 <script src="js/pixel-card.js" defer></script>
 <script src="js/magic-bento.js" defer></script>
