@@ -4,3 +4,4 @@
 .venv
 extraer_proveedor.py
 opencode.json
+firebase-debug.log

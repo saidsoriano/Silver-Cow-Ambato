@@ -1,7 +1,7 @@
 # Sesión 037 — Cupones por vendedor + apertura de 012-paneles-vendedores (2026-11-09)
 
 **Fecha:** 2026-11-09
-**Estado:** Cerrada — código y docs locales, **sin commit/push**. Cubre la Fase 0 a la 4 de `012-paneles-vendedores` + avisos; sigue en `sesion-038.md`
+**Estado:** Cerrada — publicado en el commit `5eecc59` (2026-11-10, junto con la sesión 038). Cubre la Fase 0 a la 4 de `012-paneles-vendedores` + avisos; sigue en `sesion-038.md`
 **Objetivo:** Reemplazar los cupones VIP por los 3 vendedores y abrir la
 feature de paneles de vendedores a partir del doc de requerimientos.
 
